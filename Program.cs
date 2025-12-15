@@ -8,6 +8,7 @@ namespace AssinadorNFTS;
 class Program
 {
 
+    private static string xmlExemplo = "<tpNFTS><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500</ValorServicos><ValorDeducoes>1300</ValorDeducoes><CodigoServico>1001</CodigoServico><AliquotaServicos>1</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><Prestador><CPFCNPJ><CPF>12345678909</CPF></CPFCNPJ><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador></Prestador><RegimeTributacao>5</RegimeTributacao><TipoNFTS>2</TipoNFTS></tpNFTS>";
     
     static void Main(string[] args)
     {
@@ -22,7 +23,11 @@ class Program
             string senhaCertificado = "Unimed2025";
             
             ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado);
-            //ProcessarNFTSDeString(caminhoXml, caminhoCertificado, senhaCertificado);
+            ProcessarNFTSDeString(xmlExemplo, caminhoCertificado, senhaCertificado);
+
+            ProcessarNFTSDeString(xmlExemplo.Replace(
+                "<DataPrestacao>2025-01-15</DataPrestacao>", "<DataPrestacao>20250115</DataPrestacao>"
+                ), caminhoCertificado, senhaCertificado);
             
             Console.WriteLine("Classes geradas com sucesso!");
             Console.WriteLine("Use o método ProcessarNFTS para assinar um XML de NFTS.");
@@ -41,8 +46,7 @@ class Program
         X509Certificate2 certificado = new X509Certificate2(caminhoCertificado, senhaCertificado);
         Console.WriteLine($"Certificado carregado: {certificado.Subject}");
 
-        string xmlParaAssinar = "<tpNFTS><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>12345678</InscricaoMunicipal><SerieNFTS>A</SerieNFTS><NumeroDocumento>1</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-12-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>0.01</ValorServicos><ValorDeducoes>0.00</ValorDeducoes><CodigoServico>1234</CodigoServico><AliquotaServicos>0.01</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><Prestador><CPFCNPJ><CPF>12345678909</CPF></CPFCNPJ><RazaoSocialPrestador>PRESTADOR</RazaoSocialPrestador></Prestador><RegimeTributacao>0</RegimeTributacao><TipoNFTS>1</TipoNFTS></tpNFTS>";
-        byte[] assinatura = AssinadorXml.AssinarXmlString(certificado, xmlParaAssinar);
+        byte[] assinatura = AssinadorXml.AssinarXmlString(certificado, xmlString);
         string assinaturaBase64 = Convert.ToBase64String(assinatura);
         Console.WriteLine("Assinatura=" + assinaturaBase64);
 

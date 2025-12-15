@@ -1,0 +1,1 @@
+py sign_xml_soap_nfts_original.py nfts_original.xml "Fesp cert A1.pfx" Unimed2025 nfts_assinado_original.xml
