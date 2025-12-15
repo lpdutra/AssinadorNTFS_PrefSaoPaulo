@@ -1,4 +1,5 @@
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Xml.Serialization;
 using AssinadorNFTS.Models;
 
@@ -50,6 +51,13 @@ class Program
 
         // 3. Assinar a NFTS
         Console.WriteLine("Assinando NFTS...");
+        
+        // Mostrar o XML que será usado para gerar a assinatura
+        var xmlParaAssinar = Encoding.UTF8.GetString(AssinadorXml.SimpleXmlFragment(nfts));
+        Console.WriteLine("\n=== String XML utilizada para gerar a assinatura ===");
+        Console.WriteLine(xmlParaAssinar);
+        Console.WriteLine("=== Fim da string XML ===\n");
+        
         nfts.Assinatura = AssinadorXml.Assinar(certificado, nfts);
         Console.WriteLine($"Assinatura gerada: {Convert.ToBase64String(nfts.Assinatura).Substring(0, 50)}...");
 
@@ -110,14 +118,14 @@ class Program
     /// </summary>
     private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts)
     {
-        var sb = new System.Text.StringBuilder();
-        using (var stringWriter = new System.IO.StringWriter(sb))
-        using (var xmlWriter = System.Xml.XmlWriter.Create(stringWriter, new System.Xml.XmlWriterSettings
+        using (var memoryStream = new MemoryStream())
         {
-            OmitXmlDeclaration = false,
-            Indent = false,
-            Encoding = System.Text.Encoding.UTF8
-        }))
+            using (var xmlWriter = System.Xml.XmlWriter.Create(memoryStream, new System.Xml.XmlWriterSettings
+            {
+                OmitXmlDeclaration = false,
+                Indent = false,
+                Encoding = System.Text.Encoding.UTF8
+            }))
         {
             xmlWriter.WriteStartDocument();
             xmlWriter.WriteStartElement("PedidoEnvioLoteNFTS", "http://www.prefeitura.sp.gov.br/nfts");
@@ -271,9 +279,11 @@ class Program
             
             xmlWriter.WriteEndElement(); // PedidoEnvioLoteNFTS
             xmlWriter.WriteEndDocument();
+            }
+            
+            // Converter o MemoryStream para string UTF-8
+            return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
-        
-        return sb.ToString();
     }
 
     /// <summary>
