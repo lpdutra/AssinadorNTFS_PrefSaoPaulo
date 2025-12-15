@@ -96,18 +96,210 @@ class Program
     }
 
     /// <summary>
-    /// Salva objeto NFTS em arquivo XML
+    /// Salva objeto NFTS em arquivo XML no formato PedidoEnvioLoteNFTS
     /// </summary>
     private static void SalvarXml(TpNfts nfts, string caminhoArquivo)
     {
-        XmlSerializer serializer = new XmlSerializer(typeof(TpNfts));
-        XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
-        namespaces.Add(string.Empty, string.Empty);
+        // Gerar apenas o conteúdo do PedidoEnvioLoteNFTS
+        string conteudo = GerarPedidoEnvioLoteNFTS(nfts);
+        File.WriteAllText(caminhoArquivo, conteudo, System.Text.Encoding.UTF8);
+    }
 
-        using (StreamWriter writer = new StreamWriter(caminhoArquivo))
+    /// <summary>
+    /// Gera o XML do PedidoEnvioLoteNFTS com a NFTS assinada
+    /// </summary>
+    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts)
+    {
+        var sb = new System.Text.StringBuilder();
+        using (var stringWriter = new System.IO.StringWriter(sb))
+        using (var xmlWriter = System.Xml.XmlWriter.Create(stringWriter, new System.Xml.XmlWriterSettings
         {
-            serializer.Serialize(writer, nfts, namespaces);
+            OmitXmlDeclaration = false,
+            Indent = false,
+            Encoding = System.Text.Encoding.UTF8
+        }))
+        {
+            xmlWriter.WriteStartDocument();
+            xmlWriter.WriteStartElement("PedidoEnvioLoteNFTS", "http://www.prefeitura.sp.gov.br/nfts");
+            xmlWriter.WriteAttributeString("xmlns", "xsd", null, "http://www.w3.org/2001/XMLSchema");
+            xmlWriter.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
+            
+            // Cabeçalho
+            xmlWriter.WriteStartElement("Cabecalho", "");
+            xmlWriter.WriteAttributeString("Versao", "1");
+            
+            xmlWriter.WriteStartElement("Remetente");
+            xmlWriter.WriteStartElement("CPFCNPJ");
+            xmlWriter.WriteElementString("CNPJ", nfts.Prestador?.Cpfcnpj?.Cnpj ?? "");
+            xmlWriter.WriteEndElement(); // CPFCNPJ
+            xmlWriter.WriteEndElement(); // Remetente
+            
+            xmlWriter.WriteElementString("transacao", "true");
+            xmlWriter.WriteElementString("dtInicio", DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd"));
+            xmlWriter.WriteElementString("dtFim", DateTime.Now.ToString("yyyy-MM-dd"));
+            xmlWriter.WriteElementString("QtdNFTS", "1");
+            xmlWriter.WriteElementString("ValorTotalServicos", nfts.ValorServicos.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+            
+            xmlWriter.WriteEndElement(); // Cabecalho
+            
+            // NFTS
+            xmlWriter.WriteStartElement("NFTS", "");
+            
+            // TipoDocumento
+            xmlWriter.WriteElementString("TipoDocumento", nfts.TipoDocumento switch
+            {
+                TpTipoDocumentoNfts.Item01 => "01",
+                TpTipoDocumentoNfts.Item02 => "02",
+                TpTipoDocumentoNfts.Item03 => "03",
+                _ => "02"
+            });
+            
+            // ChaveDocumento
+            if (nfts.ChaveDocumento != null)
+            {
+                xmlWriter.WriteStartElement("ChaveDocumento");
+                xmlWriter.WriteElementString("InscricaoMunicipal", nfts.ChaveDocumento.InscricaoMunicipal.ToString());
+                xmlWriter.WriteElementString("SerieNFTS", nfts.ChaveDocumento.SerieNfts ?? "");
+                xmlWriter.WriteElementString("NumeroDocumento", nfts.ChaveDocumento.NumeroDocumento.ToString());
+                xmlWriter.WriteEndElement(); // ChaveDocumento
+            }
+            
+            // Outros campos
+            xmlWriter.WriteElementString("DataPrestacao", nfts.DataPrestacao.ToString("yyyy-MM-dd"));
+            xmlWriter.WriteElementString("StatusNFTS", nfts.StatusNfts == TpStatusNfts.C ? "C" : "N");
+            xmlWriter.WriteElementString("TributacaoNFTS", nfts.TributacaoNfts switch
+            {
+                TpTributacaoNfts.I => "I",
+                TpTributacaoNfts.J => "J",
+                _ => "T"
+            });
+            
+            xmlWriter.WriteElementString("ValorServicos", nfts.ValorServicos.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+            xmlWriter.WriteElementString("ValorDeducoes", nfts.ValorDeducoes.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+            xmlWriter.WriteElementString("CodigoServico", nfts.CodigoServico.ToString("D4"));
+            
+            if (nfts.CodigoSubItemSpecified)
+                xmlWriter.WriteElementString("CodigoSubItem", nfts.CodigoSubItem.ToString("D3"));
+            
+            xmlWriter.WriteElementString("AliquotaServicos", nfts.AliquotaServicos.ToString("F3", System.Globalization.CultureInfo.InvariantCulture));
+            xmlWriter.WriteElementString("ISSRetidoTomador", nfts.IssRetidoTomador.ToString().ToLower());
+            
+            if (nfts.IssRetidoIntermediarioSpecified)
+                xmlWriter.WriteElementString("ISSRetidoIntermediario", nfts.IssRetidoIntermediario.ToString().ToLower());
+            
+            // Prestador
+            if (nfts.Prestador != null)
+            {
+                xmlWriter.WriteStartElement("Prestador");
+                
+                if (nfts.Prestador.Cpfcnpj != null)
+                {
+                    xmlWriter.WriteStartElement("CPFCNPJ");
+                    if (!string.IsNullOrEmpty(nfts.Prestador.Cpfcnpj.Cnpj))
+                        xmlWriter.WriteElementString("CNPJ", nfts.Prestador.Cpfcnpj.Cnpj);
+                    else if (!string.IsNullOrEmpty(nfts.Prestador.Cpfcnpj.Cpf))
+                        xmlWriter.WriteElementString("CPF", nfts.Prestador.Cpfcnpj.Cpf);
+                    xmlWriter.WriteEndElement(); // CPFCNPJ
+                }
+                
+                if (nfts.Prestador.InscricaoMunicipalSpecified)
+                    xmlWriter.WriteElementString("InscricaoMunicipal", nfts.Prestador.InscricaoMunicipal.ToString());
+                
+                xmlWriter.WriteElementString("RazaoSocialPrestador", nfts.Prestador.RazaoSocialPrestador ?? "");
+                
+                // Endereço (se existir)
+                if (nfts.Prestador.Endereco != null)
+                {
+                    xmlWriter.WriteStartElement("Endereco");
+                    xmlWriter.WriteElementString("TipoLogradouro", nfts.Prestador.Endereco.TipoLogradouro ?? "");
+                    xmlWriter.WriteElementString("Logradouro", nfts.Prestador.Endereco.Logradouro ?? "");
+                    xmlWriter.WriteElementString("NumeroEndereco", nfts.Prestador.Endereco.NumeroEndereco ?? "");
+                    if (!string.IsNullOrEmpty(nfts.Prestador.Endereco.ComplementoEndereco))
+                        xmlWriter.WriteElementString("ComplementoEndereco", nfts.Prestador.Endereco.ComplementoEndereco);
+                    xmlWriter.WriteElementString("Bairro", nfts.Prestador.Endereco.Bairro ?? "");
+                    xmlWriter.WriteElementString("Cidade", nfts.Prestador.Endereco.Cidade ?? "");
+                    xmlWriter.WriteElementString("UF", nfts.Prestador.Endereco.Uf ?? "");
+                    if (nfts.Prestador.Endereco.CepSpecified)
+                        xmlWriter.WriteElementString("CEP", nfts.Prestador.Endereco.Cep.ToString());
+                    xmlWriter.WriteEndElement(); // Endereco
+                }
+                
+                if (!string.IsNullOrEmpty(nfts.Prestador.Email))
+                    xmlWriter.WriteElementString("Email", nfts.Prestador.Email);
+                
+                xmlWriter.WriteEndElement(); // Prestador
+            }
+            
+            xmlWriter.WriteElementString("RegimeTributacao", nfts.RegimeTributacao.ToString());
+            
+            if (nfts.DataPagamentoSpecified)
+                xmlWriter.WriteElementString("DataPagamento", nfts.DataPagamento.ToString("yyyy-MM-dd"));
+            
+            xmlWriter.WriteElementString("Discriminacao", nfts.Discriminacao ?? "");
+            xmlWriter.WriteElementString("TipoNFTS", nfts.TipoNfts.ToString());
+            
+            // Tomador
+            if (nfts.Tomador != null)
+            {
+                xmlWriter.WriteStartElement("Tomador");
+                
+                if (nfts.Tomador.Cpfcnpj != null)
+                {
+                    xmlWriter.WriteStartElement("CPFCNPJ");
+                    if (!string.IsNullOrEmpty(nfts.Tomador.Cpfcnpj.Cnpj))
+                        xmlWriter.WriteElementString("CNPJ", nfts.Tomador.Cpfcnpj.Cnpj);
+                    else if (!string.IsNullOrEmpty(nfts.Tomador.Cpfcnpj.Cpf))
+                        xmlWriter.WriteElementString("CPF", nfts.Tomador.Cpfcnpj.Cpf);
+                    xmlWriter.WriteEndElement(); // CPFCNPJ
+                }
+                
+                xmlWriter.WriteElementString("RazaoSocial", nfts.Tomador.RazaoSocial ?? "");
+                
+                xmlWriter.WriteEndElement(); // Tomador
+            }
+            
+            // Assinatura
+            if (nfts.Assinatura != null)
+            {
+                xmlWriter.WriteElementString("Assinatura", Convert.ToBase64String(nfts.Assinatura));
+            }
+            
+            xmlWriter.WriteEndElement(); // NFTS
+            
+            // Adicionar assinatura digital XML (ds:Signature)
+            xmlWriter.WriteRaw(GerarAssinaturaXml());
+            
+            xmlWriter.WriteEndElement(); // PedidoEnvioLoteNFTS
+            xmlWriter.WriteEndDocument();
         }
+        
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// Gera a estrutura de assinatura XML digital (placeholder)
+    /// </summary>
+    private static string GerarAssinaturaXml()
+    {
+        return @"<ds:Signature xmlns:ds=""http://www.w3.org/2000/09/xmldsig#"">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm=""http://www.w3.org/2001/10/xml-exc-c14n#""/>
+<ds:SignatureMethod Algorithm=""http://www.w3.org/2000/09/xmldsig#rsa-sha1""/>
+<ds:Reference URI="""">
+<ds:Transforms>
+<ds:Transform Algorithm=""http://www.w3.org/2000/09/xmldsig#enveloped-signature""/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm=""http://www.w3.org/2000/09/xmldsig#sha1""/>
+<ds:DigestValue></ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue></ds:SignatureValue>
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate></ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</ds:Signature>";
     }
 
     /// <summary>
@@ -191,9 +383,11 @@ class Program
 
             // Valores
             nfts.ValorServicos = decimal.Parse(nftsNode.SelectSingleNode("ValorServicos")?.InnerText ?? 
-                                              nftsNode.SelectSingleNode("nfts:ValorServicos", namespaceManager)?.InnerText ?? "0");
+                                              nftsNode.SelectSingleNode("nfts:ValorServicos", namespaceManager)?.InnerText ?? "0",
+                                              System.Globalization.CultureInfo.InvariantCulture);
             nfts.ValorDeducoes = decimal.Parse(nftsNode.SelectSingleNode("ValorDeducoes")?.InnerText ?? 
-                                              nftsNode.SelectSingleNode("nfts:ValorDeducoes", namespaceManager)?.InnerText ?? "0");
+                                              nftsNode.SelectSingleNode("nfts:ValorDeducoes", namespaceManager)?.InnerText ?? "0",
+                                              System.Globalization.CultureInfo.InvariantCulture);
 
             // Códigos
             nfts.CodigoServico = int.Parse(nftsNode.SelectSingleNode("CodigoServico")?.InnerText ?? 
@@ -209,7 +403,8 @@ class Program
 
             // Alíquota
             nfts.AliquotaServicos = decimal.Parse(nftsNode.SelectSingleNode("AliquotaServicos")?.InnerText ?? 
-                                                  nftsNode.SelectSingleNode("nfts:AliquotaServicos", namespaceManager)?.InnerText ?? "0");
+                                                  nftsNode.SelectSingleNode("nfts:AliquotaServicos", namespaceManager)?.InnerText ?? "0",
+                                                  System.Globalization.CultureInfo.InvariantCulture);
 
             // ISS Retido
             nfts.IssRetidoTomador = bool.Parse(nftsNode.SelectSingleNode("ISSRetidoTomador")?.InnerText ?? 
@@ -256,6 +451,39 @@ class Program
 
                 nfts.Prestador.RazaoSocialPrestador = prestadorNode.SelectSingleNode("RazaoSocialPrestador")?.InnerText ?? 
                                                       prestadorNode.SelectSingleNode("nfts:RazaoSocialPrestador", namespaceManager)?.InnerText;
+                
+                // Carregar endereço do prestador
+                var enderecoNode = prestadorNode.SelectSingleNode("Endereco") ?? 
+                                  prestadorNode.SelectSingleNode("nfts:Endereco", namespaceManager);
+                if (enderecoNode != null)
+                {
+                    var cep = enderecoNode.SelectSingleNode("CEP")?.InnerText ?? 
+                             enderecoNode.SelectSingleNode("nfts:CEP", namespaceManager)?.InnerText;
+                    
+                    nfts.Prestador.Endereco = new TpEndereco
+                    {
+                        TipoLogradouro = enderecoNode.SelectSingleNode("TipoLogradouro")?.InnerText ?? 
+                                        enderecoNode.SelectSingleNode("nfts:TipoLogradouro", namespaceManager)?.InnerText,
+                        Logradouro = enderecoNode.SelectSingleNode("Logradouro")?.InnerText ?? 
+                                    enderecoNode.SelectSingleNode("nfts:Logradouro", namespaceManager)?.InnerText,
+                        NumeroEndereco = enderecoNode.SelectSingleNode("NumeroEndereco")?.InnerText ?? 
+                                        enderecoNode.SelectSingleNode("nfts:NumeroEndereco", namespaceManager)?.InnerText,
+                        ComplementoEndereco = enderecoNode.SelectSingleNode("ComplementoEndereco")?.InnerText ?? 
+                                             enderecoNode.SelectSingleNode("nfts:ComplementoEndereco", namespaceManager)?.InnerText,
+                        Bairro = enderecoNode.SelectSingleNode("Bairro")?.InnerText ?? 
+                                enderecoNode.SelectSingleNode("nfts:Bairro", namespaceManager)?.InnerText,
+                        Cidade = enderecoNode.SelectSingleNode("Cidade")?.InnerText ?? 
+                                enderecoNode.SelectSingleNode("nfts:Cidade", namespaceManager)?.InnerText,
+                        Uf = enderecoNode.SelectSingleNode("UF")?.InnerText ?? 
+                            enderecoNode.SelectSingleNode("nfts:UF", namespaceManager)?.InnerText
+                    };
+                    
+                    if (!string.IsNullOrEmpty(cep))
+                    {
+                        nfts.Prestador.Endereco.Cep = int.Parse(cep);
+                        nfts.Prestador.Endereco.CepSpecified = true;
+                    }
+                }
                 
                 nfts.Prestador.Email = prestadorNode.SelectSingleNode("Email")?.InnerText ?? 
                                       prestadorNode.SelectSingleNode("nfts:Email", namespaceManager)?.InnerText;

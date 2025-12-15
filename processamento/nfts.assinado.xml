@@ -1,38 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<tpNFTS>
-  <TipoDocumento>02</TipoDocumento>
-  <ChaveDocumento>
-    <InscricaoMunicipal>10259627</InscricaoMunicipal>
-    <SerieNFTS>12345</SerieNFTS>
-    <NumeroDocumento>12345</NumeroDocumento>
-  </ChaveDocumento>
-  <DataPrestacao>2025-01-15</DataPrestacao>
-  <StatusNFTS>N</StatusNFTS>
-  <TributacaoNFTS>T</TributacaoNFTS>
-  <ValorServicos>150030</ValorServicos>
-  <ValorDeducoes>130030</ValorDeducoes>
-  <CodigoServico>1001</CodigoServico>
-  <CodigoSubItem>1</CodigoSubItem>
-  <AliquotaServicos>25</AliquotaServicos>
-  <ISSRetidoTomador>false</ISSRetidoTomador>
-  <ISSRetidoIntermediario>false</ISSRetidoIntermediario>
-  <Prestador>
-    <CPFCNPJ>
-      <CNPJ>43643139000166</CNPJ>
-    </CPFCNPJ>
-    <InscricaoMunicipal>10259627</InscricaoMunicipal>
-    <RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador>
-    <Email>contato@yahoo.com</Email>
-  </Prestador>
-  <RegimeTributacao>5</RegimeTributacao>
-  <DataPagamento>2025-01-20</DataPagamento>
-  <Discriminacao>TESTE</Discriminacao>
-  <TipoNFTS>2</TipoNFTS>
-  <Tomador>
-    <CPFCNPJ>
-      <CNPJ>43643139000166</CNPJ>
-    </CPFCNPJ>
-    <RazaoSocial>CLIENTEFICTICIO</RazaoSocial>
-  </Tomador>
-  <Assinatura>Ep5t+sRY1yu1UVmwawhmkSwcEDSmLuhZdpbcCo0kqTDHn520QhdzO+EcrQI0iyj7NZ3/XKCMbzEcv5gpxP1Dj7j7MH99WfvnBuygL2EUz0z9nxDXe4ebhrMtYs0lv6auKkWplVBVX5rj/4hkO/6mNaA7Ri+FRbh1ux1Pm8oPtW0/Ph2tsNG+leeUVw6vf37FfcPRsF65rs279n0VnwiH4NkyMMAgjFFZPTZkkdIKfMCHUWBdPn2u/R3L+WO/q6KvxD4I80uwOqqI/hBUCaR2hXOcfuzuM8sdlgng98F30Uzw0O8ccRyTsI6cIhzkuJeJGJX5Ru+8NG9Qq5bB4IwoNg==</Assinatura>
-</tpNFTS>
+﻿<?xml version="1.0" encoding="utf-16"?><PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho Versao="1" xmlns=""><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>true</transacao><dtInicio>2025-11-15</dtInicio><dtFim>2025-12-15</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>1500.30</ValorTotalServicos></Cabecalho><NFTS xmlns=""><TipoDocumento>02</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.30</ValorServicos><ValorDeducoes>1300.30</ValorDeducoes><CodigoServico>1001</CodigoServico><CodigoSubItem>001</CodigoSubItem><AliquotaServicos>0.025</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>100</NumeroEndereco><ComplementoEndereco>SALA10</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco><Email>contato@yahoo.com</Email></Prestador><RegimeTributacao>5</RegimeTributacao><DataPagamento>2025-01-20</DataPagamento><Discriminacao>TESTE</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>CLIENTEFICTICIO</RazaoSocial></Tomador><Assinatura>OhwxBcGTqOT8RPoOUUU3keFgVDynLryEjPEisYfaqOWZisYIcWeBC/aW5dmTXj9KHRBoxrOD4dUAtzGCSeycUCnOWX55EuGdUDgAybX+VF+K2gYJ7sSUDw+CZuyxRQeNDqLsbpTukjD0HaEj5ze3cKRUcj66ZxtMwONmLjlj9S1EE7Piy31axefI4Gx8cnLMXfTc+kgbdVXFuUTQTcFn7JowF0E6vyl3U2zUsknGtGCiJ+GOigkgPY3K0MGIu+vWX/ysI/e2pRLFI5sD+tYQOk2GXWjqll2lRW3/WiKTlVRFI1ofUl8A+nCV0F418EQ6aC1E0xwPES0oOII4Gf5ZFA==</Assinatura></NFTS><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<ds:Reference URI="">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<ds:DigestValue></ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue></ds:SignatureValue>
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate></ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</ds:Signature></PedidoEnvioLoteNFTS>
