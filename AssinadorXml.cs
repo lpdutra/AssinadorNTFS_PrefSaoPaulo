@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -20,6 +21,18 @@ public class AssinadorXml
     public static byte[] Assinar(X509Certificate2 x509certificate, object detalheItem)
     {
         byte[] arrayToSign = SimpleXmlFragment(detalheItem);
+        return CreateSignaturePKCS1(x509certificate, arrayToSign);
+    }
+
+    /// <summary>
+    /// Assina uma string XML utilizando certificado digital X509
+    /// </summary>
+    /// <param name="x509certificate">Certificado digital para assinatura</param>
+    /// <param name="xmlString">String XML a ser assinada</param>
+    /// <returns>Array de bytes com a assinatura</returns>
+    public static byte[] AssinarXmlString(X509Certificate2 x509certificate, string xmlString)
+    {
+        byte[] arrayToSign = Encoding.UTF8.GetBytes(xmlString);
         return CreateSignaturePKCS1(x509certificate, arrayToSign);
     }
 

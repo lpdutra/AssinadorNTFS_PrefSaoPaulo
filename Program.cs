@@ -7,6 +7,8 @@ namespace AssinadorNFTS;
 
 class Program
 {
+
+    
     static void Main(string[] args)
     {
         Console.WriteLine("=== Assinador de NFTS - Prefeitura de São Paulo ===");
@@ -15,11 +17,12 @@ class Program
         try
         {
             // Exemplo de uso (descomente e adapte conforme necessário)
-            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts.xml";
+            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-manual.xml";
             string caminhoCertificado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\Fesp cert A1.pfx";
             string senhaCertificado = "Unimed2025";
             
             ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado);
+            //ProcessarNFTSDeString(caminhoXml, caminhoCertificado, senhaCertificado);
             
             Console.WriteLine("Classes geradas com sucesso!");
             Console.WriteLine("Use o método ProcessarNFTS para assinar um XML de NFTS.");
@@ -29,6 +32,21 @@ class Program
             Console.WriteLine($"Erro: {ex.Message}");
             Console.WriteLine($"Stack trace: {ex.StackTrace}");
         }
+    }
+
+    public static void ProcessarNFTSDeString(string xmlString, string caminhoCertificado, string senhaCertificado)
+    {
+        // 1. Carregar certificado digital
+        Console.WriteLine("Carregando certificado digital...");
+        X509Certificate2 certificado = new X509Certificate2(caminhoCertificado, senhaCertificado);
+        Console.WriteLine($"Certificado carregado: {certificado.Subject}");
+
+        string xmlParaAssinar = "<tpNFTS><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>12345678</InscricaoMunicipal><SerieNFTS>A</SerieNFTS><NumeroDocumento>1</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-12-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>0.01</ValorServicos><ValorDeducoes>0.00</ValorDeducoes><CodigoServico>1234</CodigoServico><AliquotaServicos>0.01</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><Prestador><CPFCNPJ><CPF>12345678909</CPF></CPFCNPJ><RazaoSocialPrestador>PRESTADOR</RazaoSocialPrestador></Prestador><RegimeTributacao>0</RegimeTributacao><TipoNFTS>1</TipoNFTS></tpNFTS>";
+        byte[] assinatura = AssinadorXml.AssinarXmlString(certificado, xmlParaAssinar);
+        string assinaturaBase64 = Convert.ToBase64String(assinatura);
+        Console.WriteLine("Assinatura=" + assinaturaBase64);
+
+
     }
 
     /// <summary>
@@ -47,6 +65,7 @@ class Program
         // 2. Carregar NFTS do arquivo XML
         Console.WriteLine($"Carregando NFTS do arquivo: {caminhoXml}");
         TpNfts nfts = CarregarNFTSDoXml(caminhoXml);
+        //TpNfts nfts = CriarNFTSExemploMinimo(); // Usar exemplo para teste
         Console.WriteLine($"NFTS carregada - Inscrição: {nfts.ChaveDocumento?.InscricaoMunicipal}, Valor: {nfts.ValorServicos:C2}");
 
         // 3. Assinar a NFTS
@@ -75,29 +94,97 @@ class Program
     {
         var nfts = new TpNfts
         {
-            TipoDocumento = TpTipoDocumentoNfts.Item02,
+            TipoDocumento = TpTipoDocumentoNfts.Item01,
             ChaveDocumento = new TpChaveDocumento
             {
                 InscricaoMunicipal = 12345678,
                 NumeroDocumento = 1,
+                NumeroDocumentoSpecified = true,  // Necessário para incluir o campo na serialização
                 SerieNfts = "A"
             },
             DataPrestacao = DateTime.Now,
             StatusNfts = TpStatusNfts.N,
             TributacaoNfts = TpTributacaoNfts.T,
-            ValorServicos = 1000.00m,
-            ValorDeducoes = 0.00m,
+            ValorServicos = 0.01m,  // 1 centavo para minimizar riscos
+            ValorDeducoes = 0.01m,  // 1 centavo
             CodigoServico = 1234,
-            AliquotaServicos = 0.05m,
+            AliquotaServicos = 0.01m,  // 1%
             IssRetidoTomador = false,
-            RegimeTributacao = 0,
+            RegimeTributacao = 0,  // 0=Normal, 4=Simples Nacional, 5=MEI
             TipoNfts = 1,
             Prestador = new TpPrestador
             {
-                Cpfcnpj = new TpCpfcnpj { Cnpj = "12345678000190" },
-                RazaoSocialPrestador = "Empresa Exemplo LTDA"
+                Cpfcnpj = new TpCpfcnpj { Cpf = "12345678909" },  // CPF válido para teste
+                RazaoSocialPrestador = "PRESTADORFICTICIO"  // Sem espaços
             },
-            Discriminacao = "Serviços de consultoria"
+            Discriminacao = "TESTE"  // Simples, sem espaços
+        };
+
+        return nfts;
+    }
+
+    /// <summary>
+    /// Cria um exemplo de NFTS mínimo para teste (apenas campos obrigatórios)
+    /// </summary>
+    private static TpNfts CriarNFTSExemploMinimo()
+    {
+        var nfts = new TpNfts
+        {
+            // Obrigatório: TipoDocumento
+            TipoDocumento = TpTipoDocumentoNfts.Item01,
+            
+            // Obrigatório: ChaveDocumento
+            ChaveDocumento = new TpChaveDocumento
+            {
+                InscricaoMunicipal = 12345678,
+                NumeroDocumento = 1,
+                NumeroDocumentoSpecified = true,
+                SerieNfts = "A"
+            },
+            
+            // Obrigatório: DataPrestacao
+            DataPrestacao = DateTime.Now,
+            
+            // Obrigatório: StatusNFTS
+            StatusNfts = TpStatusNfts.N,
+            
+            // Obrigatório: TributacaoNFTS
+            TributacaoNfts = TpTributacaoNfts.T,
+            
+            // Obrigatório: ValorServicos
+            ValorServicos = 0.01m,
+            
+            // Obrigatório: ValorDeducoes
+            ValorDeducoes = 0.00m,
+            
+            // Obrigatório: CodigoServico
+            CodigoServico = 1234,
+            
+            // Obrigatório: AliquotaServicos
+            AliquotaServicos = 0.01m,
+            
+            // Obrigatório: ISSRetidoTomador
+            IssRetidoTomador = false,
+            
+            // Obrigatório: Prestador
+            Prestador = new TpPrestador
+            {
+                Cpfcnpj = new TpCpfcnpj { Cpf = "12345678909" },
+                RazaoSocialPrestador = "PRESTADOR"
+            },
+            
+            // Obrigatório: RegimeTributacao
+            RegimeTributacao = 0,
+            
+            // Obrigatório: TipoNFTS
+            TipoNfts = 1
+            
+            // Campos opcionais removidos:
+            // - Discriminacao (se não incluída, tag não será gerada)
+            // - CodigoSubItem
+            // - ISSRetidoIntermediario
+            // - DataPagamento
+            // - Tomador
         };
 
         return nfts;
@@ -138,7 +225,11 @@ class Program
             
             xmlWriter.WriteStartElement("Remetente");
             xmlWriter.WriteStartElement("CPFCNPJ");
-            xmlWriter.WriteElementString("CNPJ", nfts.Prestador?.Cpfcnpj?.Cnpj ?? "");
+            // Usar CPF ou CNPJ dependendo do que está preenchido
+            if (!string.IsNullOrEmpty(nfts.Prestador?.Cpfcnpj?.Cpf))
+                xmlWriter.WriteElementString("CPF", nfts.Prestador.Cpfcnpj.Cpf);
+            else
+                xmlWriter.WriteElementString("CNPJ", nfts.Prestador?.Cpfcnpj?.Cnpj ?? "");
             xmlWriter.WriteEndElement(); // CPFCNPJ
             xmlWriter.WriteEndElement(); // Remetente
             
@@ -243,7 +334,10 @@ class Program
             if (nfts.DataPagamentoSpecified)
                 xmlWriter.WriteElementString("DataPagamento", nfts.DataPagamento.ToString("yyyy-MM-dd"));
             
-            xmlWriter.WriteElementString("Discriminacao", nfts.Discriminacao ?? "");
+            // Discriminacao é opcional, mas se incluído deve ter pelo menos 1 caractere
+            if (!string.IsNullOrEmpty(nfts.Discriminacao))
+                xmlWriter.WriteElementString("Discriminacao", nfts.Discriminacao);
+            
             xmlWriter.WriteElementString("TipoNFTS", nfts.TipoNfts.ToString());
             
             // Tomador
