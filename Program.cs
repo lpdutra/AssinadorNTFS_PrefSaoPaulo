@@ -71,7 +71,7 @@ class Program
         // 2. Carregar NFTS do arquivo XML
         Console.WriteLine($"Carregando NFTS do arquivo: {caminhoXml}");
         TpNfts nfts = CarregarNFTSDoXml(caminhoXml);
-        CabecalhoLote? cabecalho = CarregarCabecalhoDoXml(caminhoXml);
+        CabecalhoPedidoEnvioLote? cabecalho = CarregarCabecalhoDoXml(caminhoXml);
         //TpNfts nfts = CriarNFTSExemploMinimo(); // Usar exemplo para teste
         Console.WriteLine($"NFTS carregada - Inscrição: {nfts.ChaveDocumento?.InscricaoMunicipal}, Valor: {nfts.ValorServicos:C2}");
         if (cabecalho != null)
@@ -98,6 +98,10 @@ class Program
         string caminhoSaida = Path.Combine(Path.GetDirectoryName(caminhoXml)!, "request.assinado.xml");
         SalvarXmlSoap(nfts, caminhoSaida, certificado, cabecalho);
         Console.WriteLine($"XML assinado salvo em: {caminhoSaida}");
+
+        // 5. Comparar com arquivo original usando WinMerge
+        string arquivoOriginal = @"D:\Workspace\FESP\Projeto_NTFS\nfts_assinado_original.xml";
+        AbrirWinMerge(caminhoSaida, arquivoOriginal);
     }
 
     /// <summary>
@@ -216,7 +220,7 @@ class Program
     /// <summary>
     /// Salva objeto NFTS em arquivo XML no formato SOAP TesteEnvioLoteNFTSRequest com CDATA
     /// </summary>
-    private static void SalvarXmlSoap(TpNfts nfts, string caminhoArquivo, X509Certificate2 certificado, CabecalhoLote? cabecalho = null)
+    private static void SalvarXmlSoap(TpNfts nfts, string caminhoArquivo, X509Certificate2 certificado, CabecalhoPedidoEnvioLote? cabecalho = null)
     {
         // Gerar o PedidoEnvioLoteNFTS
         string pedidoXml = GerarPedidoEnvioLoteNFTS(nfts, cabecalho);
@@ -270,19 +274,10 @@ class Program
         }
     }
 
-    // Classe para armazenar dados do cabeçalho
-    private class CabecalhoLote
-    {
-        public DateTime DtInicio { get; set; }
-        public DateTime DtFim { get; set; }
-        public int QtdNFTS { get; set; }
-        public decimal ValorTotalServicos { get; set; }
-    }
-
     /// <summary>
     /// Gera o XML do PedidoEnvioLoteNFTS com a NFTS assinada
     /// </summary>
-    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts, CabecalhoLote? cabecalho = null)
+    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts, CabecalhoPedidoEnvioLote? cabecalho = null)
     {
         using (var memoryStream = new MemoryStream())
         {
@@ -300,6 +295,7 @@ class Program
             
             // Cabeçalho
             xmlWriter.WriteStartElement("Cabecalho", "");
+            xmlWriter.WriteAttributeString("xmlns", ""); // Força xmlns="" a aparecer primeiro
             xmlWriter.WriteAttributeString("Versao", "1");
             
             xmlWriter.WriteStartElement("Remetente");
@@ -319,7 +315,7 @@ class Program
             {
                 xmlWriter.WriteElementString("dtInicio", cabecalho.DtInicio.ToString("yyyy-MM-dd"));
                 xmlWriter.WriteElementString("dtFim", cabecalho.DtFim.ToString("yyyy-MM-dd"));
-                xmlWriter.WriteElementString("QtdNFTS", cabecalho.QtdNFTS.ToString());
+                xmlWriter.WriteElementString("QtdNFTS", cabecalho.QtdNfts.ToString());
                 xmlWriter.WriteElementString("ValorTotalServicos", cabecalho.ValorTotalServicos.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
             }
             else
@@ -522,7 +518,7 @@ class Program
     /// <summary>
     /// Carrega o cabeçalho do lote de um arquivo XML (PedidoEnvioLoteNFTS)
     /// </summary>
-    private static CabecalhoLote? CarregarCabecalhoDoXml(string caminhoArquivo)
+    private static CabecalhoPedidoEnvioLote? CarregarCabecalhoDoXml(string caminhoArquivo)
     {
         try
         {
@@ -539,7 +535,7 @@ class Program
             if (cabecalhoNode == null)
                 return null;
 
-            var cabecalho = new CabecalhoLote();
+            var cabecalho = new CabecalhoPedidoEnvioLote();
 
             // Ler dtInicio
             var dtInicioText = cabecalhoNode.SelectSingleNode("dtInicio")?.InnerText ?? 
@@ -557,7 +553,7 @@ class Program
             var qtdText = cabecalhoNode.SelectSingleNode("QtdNFTS")?.InnerText ?? 
                          cabecalhoNode.SelectSingleNode("nfts:QtdNFTS", namespaceManager)?.InnerText;
             if (int.TryParse(qtdText, out int qtd))
-                cabecalho.QtdNFTS = qtd;
+                cabecalho.QtdNfts = qtd;
 
             // Ler ValorTotalServicos
             var valorText = cabecalhoNode.SelectSingleNode("ValorTotalServicos")?.InnerText ?? 
@@ -820,6 +816,57 @@ class Program
                 Console.WriteLine($"Erro interno: {ex.InnerException.Message}");
             }
             throw;
+        }
+    }
+
+    /// <summary>
+    /// Abre o WinMerge para comparar dois arquivos XML
+    /// </summary>
+    private static void AbrirWinMerge(string arquivo1, string arquivo2)
+    {
+        try
+        {
+            if (!File.Exists(arquivo1))
+            {
+                Console.WriteLine($"Arquivo não encontrado: {arquivo1}");
+                return;
+            }
+
+            if (!File.Exists(arquivo2))
+            {
+                Console.WriteLine($"Arquivo não encontrado: {arquivo2}");
+                return;
+            }
+
+            // Localização padrão do WinMerge
+            string winMergePath = @"C:\Program Files\WinMerge\WinMergeU.exe";
+            
+            if (!File.Exists(winMergePath))
+            {
+                // Tentar localização alternativa
+                winMergePath = @"C:\Program Files (x86)\WinMerge\WinMergeU.exe";
+            }
+
+            if (!File.Exists(winMergePath))
+            {
+                Console.WriteLine("WinMerge não encontrado. Por favor, instale o WinMerge ou ajuste o caminho no código.");
+                return;
+            }
+
+            Console.WriteLine("\nAbrindo WinMerge para comparação...");
+            var processStartInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = winMergePath,
+                Arguments = $"\"{arquivo1}\" \"{arquivo2}\"",
+                UseShellExecute = true
+            };
+            
+            System.Diagnostics.Process.Start(processStartInfo);
+            Console.WriteLine("WinMerge aberto com sucesso!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao abrir WinMerge: {ex.Message}");
         }
     }
 
