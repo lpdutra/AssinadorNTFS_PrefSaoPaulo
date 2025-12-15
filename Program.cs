@@ -8,7 +8,9 @@ namespace AssinadorNFTS;
 class Program
 {
 
-    private static string xmlExemplo = "<tpNFTS><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500</ValorServicos><ValorDeducoes>1300</ValorDeducoes><CodigoServico>1001</CodigoServico><AliquotaServicos>1</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><Prestador><CPFCNPJ><CPF>12345678909</CPF></CPFCNPJ><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador></Prestador><RegimeTributacao>5</RegimeTributacao><TipoNFTS>2</TipoNFTS></tpNFTS>";
+    private static string xmlExemplo = "<tpNFTS><TipoDocumento>2</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.30</ValorServicos><ValorDeducoes>1300.30</ValorDeducoes><CodigoServico>1001</CodigoServico><CodigoSubItem>1</CodigoSubItem><AliquotaServicos>0.03</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>100</NumeroEndereco><ComplementoEndereco>SALA10</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco><Email>contato@yahoo.com</Email></Prestador><RegimeTributacao>5</RegimeTributacao><DataPagamento>2025-01-20</DataPagamento><Discriminacao>TESTE</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>CLIENTEFICTICIO</RazaoSocial></Tomador></tpNFTS>";
+
+    private static string DEBUG_DIR = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_debug";
     
     static void Main(string[] args)
     {
@@ -18,16 +20,16 @@ class Program
         try
         {
             // Exemplo de uso (descomente e adapte conforme necessário)
-            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-manual.xml";
+            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts.xml";
             string caminhoCertificado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\Fesp cert A1.pfx";
             string senhaCertificado = "Unimed2025";
             
             ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado);
             ProcessarNFTSDeString(xmlExemplo, caminhoCertificado, senhaCertificado);
 
-            ProcessarNFTSDeString(xmlExemplo.Replace(
-                "<DataPrestacao>2025-01-15</DataPrestacao>", "<DataPrestacao>20250115</DataPrestacao>"
-                ), caminhoCertificado, senhaCertificado);
+            // ProcessarNFTSDeString(xmlExemplo.Replace(
+            //     "<DataPrestacao>2025-01-15</DataPrestacao>", "<DataPrestacao>20250115</DataPrestacao>"
+            //     ), caminhoCertificado, senhaCertificado);
             
             Console.WriteLine("Classes geradas com sucesso!");
             Console.WriteLine("Use o método ProcessarNFTS para assinar um XML de NFTS.");
@@ -69,11 +71,17 @@ class Program
         // 2. Carregar NFTS do arquivo XML
         Console.WriteLine($"Carregando NFTS do arquivo: {caminhoXml}");
         TpNfts nfts = CarregarNFTSDoXml(caminhoXml);
+        CabecalhoLote? cabecalho = CarregarCabecalhoDoXml(caminhoXml);
         //TpNfts nfts = CriarNFTSExemploMinimo(); // Usar exemplo para teste
         Console.WriteLine($"NFTS carregada - Inscrição: {nfts.ChaveDocumento?.InscricaoMunicipal}, Valor: {nfts.ValorServicos:C2}");
+        if (cabecalho != null)
+            Console.WriteLine($"Cabeçalho carregado - Período: {cabecalho.DtInicio:yyyy-MM-dd} a {cabecalho.DtFim:yyyy-MM-dd}");
 
         // 3. Assinar a NFTS
         Console.WriteLine("Assinando NFTS...");
+        
+        // Criar diretório de debug se não existir
+        Console.WriteLine($"Debug dir: {DEBUG_DIR}");
         
         // Mostrar o XML que será usado para gerar a assinatura
         var xmlParaAssinar = Encoding.UTF8.GetString(AssinadorXml.SimpleXmlFragment(nfts));
@@ -81,13 +89,14 @@ class Program
         Console.WriteLine(xmlParaAssinar);
         Console.WriteLine("=== Fim da string XML ===\n");
         
-        nfts.Assinatura = AssinadorXml.Assinar(certificado, nfts);
-        Console.WriteLine($"Assinatura gerada: {Convert.ToBase64String(nfts.Assinatura).Substring(0, 50)}...");
+        // Assinar passando o diretório de debug e o contador (1 para a primeira NFTS)
+        nfts.Assinatura = AssinadorXml.Assinar(certificado, nfts, DEBUG_DIR, 1);
+        Console.WriteLine($"Assinatura gerada: {Convert.ToBase64String(nfts.Assinatura)}");
 
         // 4. Salvar XML assinado
         Console.WriteLine("Salvando XML assinado...");
-        string caminhoSaida = Path.ChangeExtension(caminhoXml, ".assinado.xml");
-        SalvarXml(nfts, caminhoSaida);
+        string caminhoSaida = Path.Combine(Path.GetDirectoryName(caminhoXml)!, "request.assinado.xml");
+        SalvarXmlSoap(nfts, caminhoSaida, certificado, cabecalho);
         Console.WriteLine($"XML assinado salvo em: {caminhoSaida}");
     }
 
@@ -205,17 +214,83 @@ class Program
     }
 
     /// <summary>
+    /// Salva objeto NFTS em arquivo XML no formato SOAP TesteEnvioLoteNFTSRequest com CDATA
+    /// </summary>
+    private static void SalvarXmlSoap(TpNfts nfts, string caminhoArquivo, X509Certificate2 certificado, CabecalhoLote? cabecalho = null)
+    {
+        // Gerar o PedidoEnvioLoteNFTS
+        string pedidoXml = GerarPedidoEnvioLoteNFTS(nfts, cabecalho);
+        
+        // Adicionar quebra de linha após a declaração XML (primeira ocorrência apenas)
+        int firstDeclarationEnd = pedidoXml.IndexOf("?>");
+        if (firstDeclarationEnd > 0)
+        {
+            pedidoXml = pedidoXml.Substring(0, firstDeclarationEnd + 2) + "\n" + pedidoXml.Substring(firstDeclarationEnd + 2);
+        }
+        
+        // Criar envelope SOAP
+        using (var memoryStream = new MemoryStream())
+        {
+            var settings = new System.Xml.XmlWriterSettings
+            {
+                OmitXmlDeclaration = false,
+                Indent = true,
+                IndentChars = "  ",
+                Encoding = System.Text.Encoding.UTF8
+            };
+
+            using (var xmlWriter = System.Xml.XmlWriter.Create(memoryStream, settings))
+            {
+                xmlWriter.WriteStartDocument();
+                
+                // soap:Envelope
+                xmlWriter.WriteStartElement("soap", "Envelope", "http://schemas.xmlsoap.org/soap/envelope/");
+                
+                // soap:Body
+                xmlWriter.WriteStartElement("soap", "Body", "http://schemas.xmlsoap.org/soap/envelope/");
+                
+                // TesteEnvioLoteNFTSRequest
+                xmlWriter.WriteStartElement("ns0", "TesteEnvioLoteNFTSRequest", "http://www.prefeitura.sp.gov.br/nfts");
+                
+                // VersaoSchema
+                xmlWriter.WriteElementString("ns0", "VersaoSchema", "http://www.prefeitura.sp.gov.br/nfts", "2");
+                
+                // MensagemXML com CDATA
+                xmlWriter.WriteStartElement("ns0", "MensagemXML", "http://www.prefeitura.sp.gov.br/nfts");
+                xmlWriter.WriteCData(pedidoXml);
+                xmlWriter.WriteEndElement(); // MensagemXML
+                
+                xmlWriter.WriteEndElement(); // TesteEnvioLoteNFTSRequest
+                xmlWriter.WriteEndElement(); // Body
+                xmlWriter.WriteEndElement(); // Envelope
+                xmlWriter.WriteEndDocument();
+            }
+            
+            File.WriteAllBytes(caminhoArquivo, memoryStream.ToArray());
+        }
+    }
+
+    // Classe para armazenar dados do cabeçalho
+    private class CabecalhoLote
+    {
+        public DateTime DtInicio { get; set; }
+        public DateTime DtFim { get; set; }
+        public int QtdNFTS { get; set; }
+        public decimal ValorTotalServicos { get; set; }
+    }
+
+    /// <summary>
     /// Gera o XML do PedidoEnvioLoteNFTS com a NFTS assinada
     /// </summary>
-    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts)
+    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts, CabecalhoLote? cabecalho = null)
     {
         using (var memoryStream = new MemoryStream())
         {
             using (var xmlWriter = System.Xml.XmlWriter.Create(memoryStream, new System.Xml.XmlWriterSettings
             {
-                OmitXmlDeclaration = false,
+                OmitXmlDeclaration = false,  // Incluir declaração XML
                 Indent = false,
-                Encoding = System.Text.Encoding.UTF8
+                Encoding = new System.Text.UTF8Encoding(false) // false = sem BOM
             }))
         {
             xmlWriter.WriteStartDocument();
@@ -238,10 +313,22 @@ class Program
             xmlWriter.WriteEndElement(); // Remetente
             
             xmlWriter.WriteElementString("transacao", "true");
-            xmlWriter.WriteElementString("dtInicio", DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd"));
-            xmlWriter.WriteElementString("dtFim", DateTime.Now.ToString("yyyy-MM-dd"));
-            xmlWriter.WriteElementString("QtdNFTS", "1");
-            xmlWriter.WriteElementString("ValorTotalServicos", nfts.ValorServicos.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+            
+            // Usar datas do cabeçalho se fornecido, senão usar datas dinâmicas
+            if (cabecalho != null)
+            {
+                xmlWriter.WriteElementString("dtInicio", cabecalho.DtInicio.ToString("yyyy-MM-dd"));
+                xmlWriter.WriteElementString("dtFim", cabecalho.DtFim.ToString("yyyy-MM-dd"));
+                xmlWriter.WriteElementString("QtdNFTS", cabecalho.QtdNFTS.ToString());
+                xmlWriter.WriteElementString("ValorTotalServicos", cabecalho.ValorTotalServicos.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+            }
+            else
+            {
+                xmlWriter.WriteElementString("dtInicio", DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd"));
+                xmlWriter.WriteElementString("dtFim", DateTime.Now.ToString("yyyy-MM-dd"));
+                xmlWriter.WriteElementString("QtdNFTS", "1");
+                xmlWriter.WriteElementString("ValorTotalServicos", nfts.ValorServicos.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+            }
             
             xmlWriter.WriteEndElement(); // Cabecalho
             
@@ -379,8 +466,30 @@ class Program
             xmlWriter.WriteEndDocument();
             }
             
-            // Converter o MemoryStream para string UTF-8
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
+            // Converter o MemoryStream para string UTF-8 sem BOM
+            byte[] xmlBytes = memoryStream.ToArray();
+            string xmlString = new System.Text.UTF8Encoding(false).GetString(xmlBytes);
+            
+
+            
+            // Remover BOM se existir (BOM UTF-8 = 0xEF, 0xBB, 0xBF ou char code 65279)
+            if (xmlString.Length > 0 && xmlString[0] == '\uFEFF')
+            {
+                xmlString = xmlString.Substring(1);
+            }
+            
+            // Substituir a declaração XML completa com aspas simples
+            if (xmlString.StartsWith("<?xml"))
+            {
+                int endDeclaration = xmlString.IndexOf("?>");
+                if (endDeclaration > 0)
+                {
+                    // Remover a declaração antiga e adicionar a nova
+                    xmlString = "<?xml version='1.0' encoding='utf-8'?>" + xmlString.Substring(endDeclaration + 2);
+                }
+            }
+            
+            return xmlString;
         }
     }
 
@@ -408,6 +517,61 @@ class Program
 </ds:X509Data>
 </ds:KeyInfo>
 </ds:Signature>";
+    }
+
+    /// <summary>
+    /// Carrega o cabeçalho do lote de um arquivo XML (PedidoEnvioLoteNFTS)
+    /// </summary>
+    private static CabecalhoLote? CarregarCabecalhoDoXml(string caminhoArquivo)
+    {
+        try
+        {
+            var xmlDoc = new System.Xml.XmlDocument();
+            xmlDoc.Load(caminhoArquivo);
+
+            var namespaceManager = new System.Xml.XmlNamespaceManager(xmlDoc.NameTable);
+            namespaceManager.AddNamespace("nfts", "http://www.prefeitura.sp.gov.br/nfts");
+
+            // Buscar o nó Cabecalho
+            var cabecalhoNode = xmlDoc.SelectSingleNode("//nfts:Cabecalho", namespaceManager) ?? 
+                               xmlDoc.SelectSingleNode("//Cabecalho");
+
+            if (cabecalhoNode == null)
+                return null;
+
+            var cabecalho = new CabecalhoLote();
+
+            // Ler dtInicio
+            var dtInicioText = cabecalhoNode.SelectSingleNode("dtInicio")?.InnerText ?? 
+                              cabecalhoNode.SelectSingleNode("nfts:dtInicio", namespaceManager)?.InnerText;
+            if (DateTime.TryParse(dtInicioText, out DateTime dtInicio))
+                cabecalho.DtInicio = dtInicio;
+
+            // Ler dtFim
+            var dtFimText = cabecalhoNode.SelectSingleNode("dtFim")?.InnerText ?? 
+                           cabecalhoNode.SelectSingleNode("nfts:dtFim", namespaceManager)?.InnerText;
+            if (DateTime.TryParse(dtFimText, out DateTime dtFim))
+                cabecalho.DtFim = dtFim;
+
+            // Ler QtdNFTS
+            var qtdText = cabecalhoNode.SelectSingleNode("QtdNFTS")?.InnerText ?? 
+                         cabecalhoNode.SelectSingleNode("nfts:QtdNFTS", namespaceManager)?.InnerText;
+            if (int.TryParse(qtdText, out int qtd))
+                cabecalho.QtdNFTS = qtd;
+
+            // Ler ValorTotalServicos
+            var valorText = cabecalhoNode.SelectSingleNode("ValorTotalServicos")?.InnerText ?? 
+                           cabecalhoNode.SelectSingleNode("nfts:ValorTotalServicos", namespaceManager)?.InnerText;
+            if (decimal.TryParse(valorText, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal valor))
+                cabecalho.ValorTotalServicos = valor;
+
+            return cabecalho;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Aviso: Não foi possível carregar cabeçalho do XML: {ex.Message}");
+            return null;
+        }
     }
 
     /// <summary>

@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
+using AssinadorNFTS.Models;
 
 namespace AssinadorNFTS;
 
@@ -20,8 +21,64 @@ public class AssinadorXml
     /// <returns>Array de bytes com a assinatura</returns>
     public static byte[] Assinar(X509Certificate2 x509certificate, object detalheItem)
     {
+        return Assinar(x509certificate, detalheItem, null, 0);
+    }
+
+    /// <summary>
+    /// Assina um objeto utilizando certificado digital X509 e salva o arquivo canonical para debug
+    /// </summary>
+    /// <param name="x509certificate">Certificado digital para assinatura</param>
+    /// <param name="detalheItem">Objeto a ser assinado</param>
+    /// <param name="debugDir">Diretório onde salvar arquivos de debug (null para não salvar)</param>
+    /// <param name="nftsCounter">Contador da NFTS (para nomear o arquivo)</param>
+    /// <returns>Array de bytes com a assinatura</returns>
+    public static byte[] Assinar(X509Certificate2 x509certificate, object detalheItem, string? debugDir, int nftsCounter)
+    {
         byte[] arrayToSign = SimpleXmlFragment(detalheItem);
-        return CreateSignaturePKCS1(x509certificate, arrayToSign);
+        
+        // Salvar arquivo canonical para debug
+        if (!string.IsNullOrEmpty(debugDir))
+        {
+            try
+            {
+                Directory.CreateDirectory(debugDir);
+                string canonicalFile = Path.Combine(debugDir, $"canonical_NFTS_{nftsCounter}.bin");
+                string canonicalTxtFile = Path.Combine(debugDir, $"canonical_NFTS_{nftsCounter}.txt");
+                
+                File.WriteAllBytes(canonicalFile, arrayToSign);
+                File.WriteAllText(canonicalTxtFile, Encoding.UTF8.GetString(arrayToSign), Encoding.UTF8);
+                
+                Console.WriteLine($" canonical salvo em: {canonicalFile} (len={arrayToSign.Length})");
+                Console.WriteLine($" canonical (texto) salvo em: {canonicalTxtFile}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Aviso: Não foi possível salvar arquivo canonical: {ex.Message}");
+            }
+        }
+        
+        byte[] signature = CreateSignaturePKCS1(x509certificate, arrayToSign);
+        
+        // Salvar arquivos de assinatura para debug
+        if (!string.IsNullOrEmpty(debugDir))
+        {
+            try
+            {
+                string signatureBinFile = Path.Combine(debugDir, $"signature_NFTS_{nftsCounter}.bin");
+                string signatureB64File = Path.Combine(debugDir, $"signature_NFTS_{nftsCounter}.b64");
+                
+                File.WriteAllBytes(signatureBinFile, signature);
+                File.WriteAllText(signatureB64File, Convert.ToBase64String(signature), Encoding.ASCII);
+                
+                Console.WriteLine($" assinatura salva em: {signatureBinFile} / {signatureB64File}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Aviso: Não foi possível salvar arquivos de assinatura: {ex.Message}");
+            }
+        }
+        
+        return signature;
     }
 
     /// <summary>
@@ -95,6 +152,10 @@ public class AssinadorXml
         {
             xml = xml.Remove(0, byteOrderMarkUtf8.Length);
         }
+
+        // Ajustar TipoDocumento para 1 dígito (conforme especificação para assinatura)
+        // Substitui <TipoDocumento>01</TipoDocumento> por <TipoDocumento>1</TipoDocumento>
+        xml = Regex.Replace(xml, @"<TipoDocumento>0([1-3])</TipoDocumento>", "<TipoDocumento>$1</TipoDocumento>");
 
         return Encoding.UTF8.GetBytes(xml);
     }

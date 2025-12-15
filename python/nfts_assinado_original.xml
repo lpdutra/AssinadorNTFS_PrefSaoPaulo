@@ -4,7 +4,7 @@
     <ns0:TesteEnvioLoteNFTSRequest xmlns:ns0="http://www.prefeitura.sp.gov.br/nfts">
       <ns0:VersaoSchema>2</ns0:VersaoSchema>
       <ns0:MensagemXML><![CDATA[<?xml version='1.0' encoding='utf-8'?>
-<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho xmlns="" Versao="1"><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>true</transacao><dtInicio>2025-01-01</dtInicio><dtFim>2025-01-31</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>1500.30</ValorTotalServicos></Cabecalho><NFTS xmlns=""><TipoDocumento>02</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.30</ValorServicos><ValorDeducoes>1300.30</ValorDeducoes><CodigoServico>1001</CodigoServico><CodigoSubItem>001</CodigoSubItem><AliquotaServicos>0.025</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>100</NumeroEndereco><ComplementoEndereco>SALA10</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco><Email>contato@yahoo.com</Email></Prestador><RegimeTributacao>5</RegimeTributacao><DataPagamento>2025-01-20</DataPagamento><Discriminacao>TESTE</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>CLIENTEFICTICIO</RazaoSocial></Tomador><Assinatura>OqhuRdcsBAgQl0nXVQ5QaFqNxrSJlYmj4QxP0FSA+2axWBYLA4+Vr7CQ6DrM025CC7WBpdszUSRzB+j5dTwkFjaNuljZ0n9YpAEwCL7pRVtI34Hw9YTRql5M1otnuBtn2ssMlybwBaRG3fE4nN43BNtLlHkcQZQYZa3V0GfyR3CyWJNDOiVflN6n3eqFFuwGqPNrpXt2xjxPVI/aKke1Qo7F8x/iv6ApXPLWyw+z5/cp+NdAqql8iu2Vrc4llON3M8JFB+CUuZmovZ5Vy4HE7oyrZn+h6EaLvLt5gC/1vf+o6UhhyHBT68YR99QJbt15pydj6GrQVG+IOS4e3TJHgw==</Assinatura></NFTS><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho xmlns="" Versao="1"><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>true</transacao><dtInicio>2025-01-01</dtInicio><dtFim>2025-01-31</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>1500.30</ValorTotalServicos></Cabecalho><NFTS xmlns=""><TipoDocumento>02</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.30</ValorServicos><ValorDeducoes>1300.30</ValorDeducoes><CodigoServico>1001</CodigoServico><CodigoSubItem>001</CodigoSubItem><AliquotaServicos>0.05</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>100</NumeroEndereco><ComplementoEndereco>SALA10</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco><Email>contato@yahoo.com</Email></Prestador><RegimeTributacao>5</RegimeTributacao><DataPagamento>2025-01-20</DataPagamento><Discriminacao>TESTE</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>CLIENTEFICTICIO</RazaoSocial></Tomador><Assinatura>d8OfGeAH9UkuN0oXCzwIEBtb0PSZFVYXGw+J7pxIVik5IQRRrmriTSdGvFbxRIYZPVm2/KfMniWE4qHPlL94kKqdJ9+wk0oK+T4kp2kBzAPLdUo9RkN6a8b5oy2ibLLFxHBy0f4l+T3AqFGPBuXGiy9XPN72opFcM0VtfFOURkJ8x5RcaakHcawxUTGspj7iorIazc/glvQfTFRMeaAjAz4KE2hbe5+klJggjAd8pY0Z8Uws+p24xGmlhukBuI4fk/nw6zSoDdtYtt6m2PUIyo6hiqvXMn4mfurQXMz2gHnj7D+OyooXp3fRuFS0ftp7XHObrjmGlAww8ler0ZsLpw==</Assinatura></NFTS><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
 <ds:SignedInfo>
 <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
@@ -13,15 +13,15 @@
 <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
 </ds:Transforms>
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>dQ/0NpGtMTnCDXjV9NaWzYgjOBk=</ds:DigestValue>
+<ds:DigestValue>FHBPNydS9aKtjsW7vNaqTJPot5c=</ds:DigestValue>
 </ds:Reference>
 </ds:SignedInfo>
-<ds:SignatureValue>s4aPWN2hypnBseIoxqwR5TzHZeL/pzKlfAHVqyA2F0QvxLIP1+qcvahsL4ayoo4k
-WOkag59pLlMuatn55GVbuXNDG3te7yQ9fGf/JIttPRzjBTBYDUUhu7tSkxCbcN1Z
-ag5V1QvbqzljwjE6HNlc93+yF3rWEGQe0wbosLySmqrMKP70jU0VaQMXkA3jfaV0
-bc7y0CbMcGLjpW0ZXEfk2bDa5AW2bBxmvPp8KmODg5A56A4vbCz1aVtYPOqWlZzi
-AQUOiej02mTfoCvsATrhT8NnIoYzjbuqPXdg+AoOY6HwVVghBGY+mlzqHWNBLcvt
-z6jq7N9WSNxDISGNN25/Sw==</ds:SignatureValue>
+<ds:SignatureValue>m09ZLvvkVXw7Lsyw9WAZEjZs2UyEyf+O7ZrPukAnBMSB5oGoKjHDZmSC5XzRDA/k
+Wbr05uLYvLwW5WV4WaMT4u2TxZCQWSH3dH5jb83Pe3PqgjZ8V9uNXdg+8V/NXmkR
+hkgr5JLjtLfLgum3Gf2EbAC4vWZrgTOf6sxNTSm006t8b0SWfBaluTNTbUt+SewX
+XGnpYBBrtzVxLW2lFwNKXtt62R/N8/zXMzoBJj3Sof3FgbgOOrmAS5YSSVTja9Tk
+XXZaMozw792/Qn9ua4w8E2oOjR+RAYAkkQ4yTU0ZUyI1gKK5ggmeDZGgQUbJadgL
+JcskfWewr6SP75Ot0NBFMA==</ds:SignatureValue>
 <ds:KeyInfo>
 <ds:X509Data>
 <ds:X509Certificate>MIIIJTCCBg2gAwIBAgIQcclX3XrAmRWmNUSp7HuLZzANBgkqhkiG9w0BAQsFADB4

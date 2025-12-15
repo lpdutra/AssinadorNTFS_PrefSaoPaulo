@@ -367,9 +367,13 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
         canonical_bytes = build_tpNFTS_bytes(nfts)  # bytes for signing
 
         canonical_file = os.path.join(debug_dir, f"canonical_NFTS_{i}.bin") # LINHA COMENTADA
+        canonical_txt_file = os.path.join(debug_dir, f"canonical_NFTS_{i}.txt")
         with open(canonical_file, "wb") as cf: # LINHA COMENTADA
             cf.write(canonical_bytes) # LINHA COMENTADA
+        with open(canonical_txt_file, "w", encoding="utf-8") as ctf:
+            ctf.write(canonical_bytes.decode("utf-8"))
         logger.critical(" canonical salvo em: %s (len=%d)", canonical_file, len(canonical_bytes)) # LINHA COMENTADA
+        logger.critical(" canonical (texto) salvo em: %s", canonical_txt_file)
 
         # sign with SHA1 PKCS#1 v1.5
         sig_bytes = sign_bytes_sha1_pkcs1(private_key, canonical_bytes)

@@ -29,7 +29,7 @@
     <ValorDeducoes>1300.30</ValorDeducoes>
     <CodigoServico>1001</CodigoServico>
     <CodigoSubItem>001</CodigoSubItem>
-    <AliquotaServicos>0.025</AliquotaServicos>
+    <AliquotaServicos>0.05</AliquotaServicos>
     <ISSRetidoTomador>false</ISSRetidoTomador>
     <ISSRetidoIntermediario>false</ISSRetidoIntermediario>
     <Prestador>
