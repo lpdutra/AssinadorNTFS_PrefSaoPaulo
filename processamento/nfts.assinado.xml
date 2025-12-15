@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tpNFTS>
+  <TipoDocumento>02</TipoDocumento>
+  <ChaveDocumento>
+    <InscricaoMunicipal>10259627</InscricaoMunicipal>
+    <SerieNFTS>12345</SerieNFTS>
+    <NumeroDocumento>12345</NumeroDocumento>
+  </ChaveDocumento>
+  <DataPrestacao>2025-01-15</DataPrestacao>
+  <StatusNFTS>N</StatusNFTS>
+  <TributacaoNFTS>T</TributacaoNFTS>
+  <ValorServicos>150030</ValorServicos>
+  <ValorDeducoes>130030</ValorDeducoes>
+  <CodigoServico>1001</CodigoServico>
+  <CodigoSubItem>1</CodigoSubItem>
+  <AliquotaServicos>25</AliquotaServicos>
+  <ISSRetidoTomador>false</ISSRetidoTomador>
+  <ISSRetidoIntermediario>false</ISSRetidoIntermediario>
+  <Prestador>
+    <CPFCNPJ>
+      <CNPJ>43643139000166</CNPJ>
+    </CPFCNPJ>
+    <InscricaoMunicipal>10259627</InscricaoMunicipal>
+    <RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador>
+    <Email>contato@yahoo.com</Email>
+  </Prestador>
+  <RegimeTributacao>5</RegimeTributacao>
+  <DataPagamento>2025-01-20</DataPagamento>
+  <Discriminacao>TESTE</Discriminacao>
+  <TipoNFTS>2</TipoNFTS>
+  <Tomador>
+    <CPFCNPJ>
+      <CNPJ>43643139000166</CNPJ>
+    </CPFCNPJ>
+    <RazaoSocial>CLIENTEFICTICIO</RazaoSocial>
+  </Tomador>
+  <Assinatura>Ep5t+sRY1yu1UVmwawhmkSwcEDSmLuhZdpbcCo0kqTDHn520QhdzO+EcrQI0iyj7NZ3/XKCMbzEcv5gpxP1Dj7j7MH99WfvnBuygL2EUz0z9nxDXe4ebhrMtYs0lv6auKkWplVBVX5rj/4hkO/6mNaA7Ri+FRbh1ux1Pm8oPtW0/Ph2tsNG+leeUVw6vf37FfcPRsF65rs279n0VnwiH4NkyMMAgjFFZPTZkkdIKfMCHUWBdPn2u/R3L+WO/q6KvxD4I80uwOqqI/hBUCaR2hXOcfuzuM8sdlgng98F30Uzw0O8ccRyTsI6cIhzkuJeJGJX5Ru+8NG9Qq5bB4IwoNg==</Assinatura>
+</tpNFTS>
