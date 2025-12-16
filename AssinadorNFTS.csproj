@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.1" />
     <PackageReference Include="XmlSchemaClassGenerator.Console" Version="3.0.1188" />
   </ItemGroup>
 

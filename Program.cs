@@ -25,7 +25,7 @@ class Program
             string senhaCertificado = "Unimed2025";
             
             ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado);
-            ProcessarNFTSDeString(xmlExemplo, caminhoCertificado, senhaCertificado);
+            // ProcessarNFTSDeString(xmlExemplo, caminhoCertificado, senhaCertificado);
 
             // ProcessarNFTSDeString(xmlExemplo.Replace(
             //     "<DataPrestacao>2025-01-15</DataPrestacao>", "<DataPrestacao>20250115</DataPrestacao>"
@@ -100,7 +100,7 @@ class Program
         Console.WriteLine($"XML assinado salvo em: {caminhoSaida}");
 
         // 5. Comparar com arquivo original usando WinMerge
-        string arquivoOriginal = @"D:\Workspace\FESP\Projeto_NTFS\nfts_assinado_original.xml";
+        string arquivoOriginal = @"D:\Workspace\FESP\Projeto_NTFS\python\nfts_assinado_original.xml";
         AbrirWinMerge(caminhoSaida, arquivoOriginal);
     }
 
@@ -223,7 +223,7 @@ class Program
     private static void SalvarXmlSoap(TpNfts nfts, string caminhoArquivo, X509Certificate2 certificado, CabecalhoPedidoEnvioLote? cabecalho = null)
     {
         // Gerar o PedidoEnvioLoteNFTS
-        string pedidoXml = GerarPedidoEnvioLoteNFTS(nfts, cabecalho);
+        string pedidoXml = GerarPedidoEnvioLoteNFTS(nfts, cabecalho, certificado);
         
         // Adicionar quebra de linha após a declaração XML (primeira ocorrência apenas)
         int firstDeclarationEnd = pedidoXml.IndexOf("?>");
@@ -240,7 +240,8 @@ class Program
                 OmitXmlDeclaration = false,
                 Indent = true,
                 IndentChars = "  ",
-                Encoding = System.Text.Encoding.UTF8
+                Encoding = new System.Text.UTF8Encoding(false), // UTF-8 sem BOM
+                NewLineChars = "\n" // Unix line endings (LF)
             };
 
             using (var xmlWriter = System.Xml.XmlWriter.Create(memoryStream, settings))
@@ -277,7 +278,7 @@ class Program
     /// <summary>
     /// Gera o XML do PedidoEnvioLoteNFTS com a NFTS assinada
     /// </summary>
-    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts, CabecalhoPedidoEnvioLote? cabecalho = null)
+    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts, CabecalhoPedidoEnvioLote? cabecalho = null, X509Certificate2? certificado = null)
     {
         using (var memoryStream = new MemoryStream())
         {
@@ -367,7 +368,8 @@ class Program
             if (nfts.CodigoSubItemSpecified)
                 xmlWriter.WriteElementString("CodigoSubItem", nfts.CodigoSubItem.ToString("D3"));
             
-            xmlWriter.WriteElementString("AliquotaServicos", nfts.AliquotaServicos.ToString("F3", System.Globalization.CultureInfo.InvariantCulture));
+            // AliquotaServicos sem formatação específica - usa o valor natural do decimal
+            xmlWriter.WriteElementString("AliquotaServicos", nfts.AliquotaServicos.ToString(System.Globalization.CultureInfo.InvariantCulture));
             xmlWriter.WriteElementString("ISSRetidoTomador", nfts.IssRetidoTomador.ToString().ToLower());
             
             if (nfts.IssRetidoIntermediarioSpecified)
@@ -455,9 +457,6 @@ class Program
             
             xmlWriter.WriteEndElement(); // NFTS
             
-            // Adicionar assinatura digital XML (ds:Signature)
-            xmlWriter.WriteRaw(GerarAssinaturaXml());
-            
             xmlWriter.WriteEndElement(); // PedidoEnvioLoteNFTS
             xmlWriter.WriteEndDocument();
             }
@@ -485,34 +484,151 @@ class Program
                 }
             }
             
+            // Adicionar assinatura XMLDSig se certificado fornecido
+            if (certificado != null)
+            {
+                xmlString = AdicionarAssinaturaXmlDSig(xmlString, certificado);
+            }
+            
             return xmlString;
         }
     }
 
     /// <summary>
-    /// Gera a estrutura de assinatura XML digital (placeholder)
+    /// Adiciona a assinatura XMLDSig ao XML do PedidoEnvioLoteNFTS
     /// </summary>
-    private static string GerarAssinaturaXml()
+    private static string AdicionarAssinaturaXmlDSig(string xmlString, X509Certificate2 certificado)
     {
-        return @"<ds:Signature xmlns:ds=""http://www.w3.org/2000/09/xmldsig#"">
-<ds:SignedInfo>
-<ds:CanonicalizationMethod Algorithm=""http://www.w3.org/2001/10/xml-exc-c14n#""/>
-<ds:SignatureMethod Algorithm=""http://www.w3.org/2000/09/xmldsig#rsa-sha1""/>
-<ds:Reference URI="""">
-<ds:Transforms>
-<ds:Transform Algorithm=""http://www.w3.org/2000/09/xmldsig#enveloped-signature""/>
-</ds:Transforms>
-<ds:DigestMethod Algorithm=""http://www.w3.org/2000/09/xmldsig#sha1""/>
-<ds:DigestValue></ds:DigestValue>
-</ds:Reference>
-</ds:SignedInfo>
-<ds:SignatureValue></ds:SignatureValue>
-<ds:KeyInfo>
-<ds:X509Data>
-<ds:X509Certificate></ds:X509Certificate>
-</ds:X509Data>
-</ds:KeyInfo>
-</ds:Signature>";
+        try
+        {
+            // 1. Carregar o XML
+            var xmlDoc = new System.Xml.XmlDocument { PreserveWhitespace = false };
+            xmlDoc.LoadXml(xmlString);
+
+            // 2. Criar a assinatura XML
+            var signedXml = new System.Security.Cryptography.Xml.SignedXml(xmlDoc);
+            
+            // Configurar método de canonicalização (Exclusive XML Canonicalization)
+            signedXml.SignedInfo.CanonicalizationMethod = System.Security.Cryptography.Xml.SignedXml.XmlDsigExcC14NTransformUrl;
+            
+            // Configurar método de assinatura (RSA-SHA1)
+            signedXml.SignedInfo.SignatureMethod = System.Security.Cryptography.Xml.SignedXml.XmlDsigRSASHA1Url;
+            
+            // Usar a chave privada do certificado
+            signedXml.SigningKey = certificado.GetRSAPrivateKey();
+
+            // 3. Configurar a referência (todo o documento)
+            var reference = new System.Security.Cryptography.Xml.Reference("");
+            reference.AddTransform(new System.Security.Cryptography.Xml.XmlDsigEnvelopedSignatureTransform());
+            reference.DigestMethod = System.Security.Cryptography.Xml.SignedXml.XmlDsigSHA1Url;
+            signedXml.AddReference(reference);
+
+            // 4. Configurar informações do certificado
+            var keyInfo = new System.Security.Cryptography.Xml.KeyInfo();
+            keyInfo.AddClause(new System.Security.Cryptography.Xml.KeyInfoX509Data(certificado));
+            signedXml.KeyInfo = keyInfo;
+
+            // 5. Computar a assinatura
+            signedXml.ComputeSignature();
+
+            // 6. Obter o elemento da assinatura e formatá-lo
+            var signatureElement = signedXml.GetXml();
+
+            // 7. Formatar a assinatura com quebras de linha
+            string signatureXml = FormatarAssinaturaXml(signatureElement, certificado);
+
+            // 8. Adicionar a assinatura formatada ao final do XML (antes de </PedidoEnvioLoteNFTS>)
+            // Encontrar a posição de fechamento do PedidoEnvioLoteNFTS
+            int closingTagIndex = xmlString.LastIndexOf("</PedidoEnvioLoteNFTS>");
+            if (closingTagIndex > 0)
+            {
+                xmlString = xmlString.Substring(0, closingTagIndex) + signatureXml + xmlString.Substring(closingTagIndex);
+            }
+
+            return xmlString;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao gerar assinatura XMLDSig: {ex.Message}");
+            Console.WriteLine($"Stack: {ex.StackTrace}");
+            return xmlString; // Retornar o XML sem assinatura em caso de erro
+        }
+    }
+
+    /// <summary>
+    /// Formata a assinatura XMLDSig com quebras de linha
+    /// </summary>
+    private static string FormatarAssinaturaXml(System.Xml.XmlElement signatureElement, X509Certificate2 certificado)
+    {
+        var nsmgr = GetNamespaceManager(signatureElement.OwnerDocument);
+        
+        var sb = new StringBuilder();
+        sb.Append("<ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">\n");
+        sb.Append("<ds:SignedInfo>\n");
+        sb.Append("<ds:CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/>\n");
+        sb.Append("<ds:SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\"/>\n");
+        sb.Append("<ds:Reference URI=\"\">\n");
+        sb.Append("<ds:Transforms>\n");
+        sb.Append("<ds:Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>\n");
+        sb.Append("</ds:Transforms>\n");
+        sb.Append("<ds:DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\"/>\n");
+        
+        // Extrair DigestValue do elemento computado
+        var digestValueNode = signatureElement.SelectSingleNode("descendant::ds:DigestValue", nsmgr);
+        var digestValue = digestValueNode?.InnerText ?? "";
+        sb.Append($"<ds:DigestValue>{digestValue}</ds:DigestValue>\n");
+        
+        sb.Append("</ds:Reference>\n");
+        sb.Append("</ds:SignedInfo>\n");
+        
+        // Extrair SignatureValue do elemento computado e formatar em múltiplas linhas
+        var signatureValueNode = signatureElement.SelectSingleNode("descendant::ds:SignatureValue", nsmgr);
+        var signatureValue = signatureValueNode?.InnerText ?? "";
+        sb.Append("<ds:SignatureValue>");
+        sb.Append(FormatarBase64EmLinhas(signatureValue, 64));
+        sb.Append("</ds:SignatureValue>\n");
+        
+        sb.Append("<ds:KeyInfo>\n");
+        sb.Append("<ds:X509Data>\n");
+        
+        // Extrair certificado e formatar em múltiplas linhas
+        var certBytes = certificado.Export(System.Security.Cryptography.X509Certificates.X509ContentType.Cert);
+        var certBase64 = Convert.ToBase64String(certBytes);
+        sb.Append("<ds:X509Certificate>");
+        sb.Append(FormatarBase64EmLinhas(certBase64, 64));
+        sb.Append("\n</ds:X509Certificate>\n");
+        
+        sb.Append("</ds:X509Data>\n");
+        sb.Append("</ds:KeyInfo>\n");
+        sb.Append("</ds:Signature>");
+        
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// Formata uma string Base64 em múltiplas linhas
+    /// </summary>
+    private static string FormatarBase64EmLinhas(string base64, int larguraLinha)
+    {
+        var sb = new StringBuilder();
+        sb.Append("\n");
+        for (int i = 0; i < base64.Length; i += larguraLinha)
+        {
+            int length = Math.Min(larguraLinha, base64.Length - i);
+            sb.Append(base64.Substring(i, length));
+            sb.Append("\n");
+        }
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// Cria um namespace manager para XMLDSig
+    /// </summary>
+    private static System.Xml.XmlNamespaceManager GetNamespaceManager(System.Xml.XmlDocument doc)
+    {
+        var nsmgr = new System.Xml.XmlNamespaceManager(doc.NameTable);
+        nsmgr.AddNamespace("ds", "http://www.w3.org/2000/09/xmldsig#");
+        return nsmgr;
     }
 
     /// <summary>
