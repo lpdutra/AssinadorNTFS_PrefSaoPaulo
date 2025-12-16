@@ -596,7 +596,7 @@ class Program
         var certBase64 = Convert.ToBase64String(certBytes);
         sb.Append("<ds:X509Certificate>");
         sb.Append(FormatarBase64EmLinhas(certBase64, 64));
-        sb.Append("\n</ds:X509Certificate>\n");
+        sb.Append("</ds:X509Certificate>\n");
         
         sb.Append("</ds:X509Data>\n");
         sb.Append("</ds:KeyInfo>\n");
@@ -611,7 +611,6 @@ class Program
     private static string FormatarBase64EmLinhas(string base64, int larguraLinha)
     {
         var sb = new StringBuilder();
-        sb.Append("\n");
         for (int i = 0; i < base64.Length; i += larguraLinha)
         {
             int length = Math.Min(larguraLinha, base64.Length - i);

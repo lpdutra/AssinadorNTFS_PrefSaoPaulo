@@ -16,8 +16,7 @@
 <ds:DigestValue>FHBPNydS9aKtjsW7vNaqTJPot5c=</ds:DigestValue>
 </ds:Reference>
 </ds:SignedInfo>
-<ds:SignatureValue>
-KAhK0Se1ACTAujZj3WlYV1DXAuiz7C+hmzIkskbcM3jg5JvkVnOyHrybex6LS10j
+<ds:SignatureValue>KAhK0Se1ACTAujZj3WlYV1DXAuiz7C+hmzIkskbcM3jg5JvkVnOyHrybex6LS10j
 /gAK9KgWea6Rraji7Omp0Z0AynZY7yNW+LUQGtk3+pH3RljXd2gzLyv53GZ/7yTL
 BBNG3NlHIJpqRmns6e8osrAn7QETPswHcF40XhxOGecJEECbFRHQCyTP/eCxvhJy
 ectxDBdvIhbhsVxIfbLWxNHjvM6twMxkyJz6Xwsc0ZrVRdqV9r4e/kWjBL/fDnkT
@@ -26,8 +25,7 @@ EjqGyfSz9aVN9dhDASLrLQ==
 </ds:SignatureValue>
 <ds:KeyInfo>
 <ds:X509Data>
-<ds:X509Certificate>
-MIIIJTCCBg2gAwIBAgIQcclX3XrAmRWmNUSp7HuLZzANBgkqhkiG9w0BAQsFADB4
+<ds:X509Certificate>MIIIJTCCBg2gAwIBAgIQcclX3XrAmRWmNUSp7HuLZzANBgkqhkiG9w0BAQsFADB4
 MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2Vj
 cmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYD
 VQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTI1MDYxMjE0NDUzMloXDTI2MDYx
@@ -71,7 +69,6 @@ VKRv6coGtLOm+cQNWr1Xb2h5y6JoU2H0l8Tcrn86B79o7Lovs45mukEhnH2t1Akc
 VLEttf8FmaL+dPX683ImFFr6es30Gwoz8KA9DMkDHaH4+zzJFhcfqwMPoqk/P++x
 QhoPMoxvRvfrTndflQEcLOHsqXkvuRbCxA+a866YfsKNvgSE9Lfu4QcuuxWnPjTj
 bQinEXlGFtJIPBC9oyS8PrIATnNi5BYSfw==
-
 </ds:X509Certificate>
 </ds:X509Data>
 </ds:KeyInfo>
