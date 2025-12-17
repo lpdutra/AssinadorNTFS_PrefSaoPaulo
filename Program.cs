@@ -225,12 +225,8 @@ class Program
         // Gerar o PedidoEnvioLoteNFTS
         string pedidoXml = GerarPedidoEnvioLoteNFTS(nfts, cabecalho, certificado);
         
-        // Adicionar quebra de linha após a declaração XML (primeira ocorrência apenas)
-        int firstDeclarationEnd = pedidoXml.IndexOf("?>");
-        if (firstDeclarationEnd > 0)
-        {
-            pedidoXml = pedidoXml.Substring(0, firstDeclarationEnd + 2) + "\n" + pedidoXml.Substring(firstDeclarationEnd + 2);
-        }
+        // Trocar aspas simples por duplas na declaração XML
+        pedidoXml = pedidoXml.Replace("<?xml version='1.0' encoding='utf-8'?>", "<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         
         // Criar envelope SOAP
         using (var memoryStream = new MemoryStream())
@@ -286,7 +282,8 @@ class Program
             {
                 OmitXmlDeclaration = false,  // Incluir declaração XML
                 Indent = false,
-                Encoding = new System.Text.UTF8Encoding(false) // false = sem BOM
+                Encoding = new System.Text.UTF8Encoding(false), // false = sem BOM
+                NewLineHandling = System.Xml.NewLineHandling.None // Remove todas as quebras de linha
             }))
         {
             xmlWriter.WriteStartDocument();
