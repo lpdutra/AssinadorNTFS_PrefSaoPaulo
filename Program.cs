@@ -501,8 +501,9 @@ class Program
     {
         try
         {
-            // 1. Carregar o XML
-            var xmlDoc = new System.Xml.XmlDocument { PreserveWhitespace = false };
+            // 1. Carregar o XML preservando espaços em branco
+            // IMPORTANTE: PreserveWhitespace = true para que a assinatura seja calculada sobre o XML exato
+            var xmlDoc = new System.Xml.XmlDocument { PreserveWhitespace = true };
             xmlDoc.LoadXml(xmlString);
 
             // 2. Criar a assinatura XML
@@ -534,10 +535,11 @@ class Program
             // 6. Obter o elemento da assinatura e formatá-lo
             var signatureElement = signedXml.GetXml();
 
-            // 7. Formatar a assinatura com quebras de linha
-            string signatureXml = FormatarAssinaturaXml(signatureElement, certificado);
+            // 7. Obter a assinatura como XML compacto (sem formatação)
+            // IMPORTANTE: Não formatar com quebras de linha, pois isso invalida o DigestValue
+            string signatureXml = signatureElement.OuterXml;
 
-            // 8. Adicionar a assinatura formatada ao final do XML (antes de </PedidoEnvioLoteNFTS>)
+            // 8. Adicionar a assinatura ao final do XML (antes de </PedidoEnvioLoteNFTS>)
             // Encontrar a posição de fechamento do PedidoEnvioLoteNFTS
             int closingTagIndex = xmlString.LastIndexOf("</PedidoEnvioLoteNFTS>");
             if (closingTagIndex > 0)
