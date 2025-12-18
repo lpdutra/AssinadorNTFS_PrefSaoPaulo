@@ -13,7 +13,7 @@
     <dtInicio>2025-01-01</dtInicio>
     <dtFim>2025-01-31</dtFim>
     <QtdNFTS>1</QtdNFTS>
-    <ValorTotalServicos>1500.31</ValorTotalServicos>
+    <ValorTotalServicos>1500.30</ValorTotalServicos>
   </Cabecalho>
   <NFTS xmlns="">
   <TipoDocumento>02</TipoDocumento> 
@@ -25,11 +25,11 @@
 	<DataPrestacao>2025-01-15</DataPrestacao>
     <StatusNFTS>N</StatusNFTS>
     <TributacaoNFTS>T</TributacaoNFTS>
-    <ValorServicos>1500.31</ValorServicos>
-    <ValorDeducoes>1300.31</ValorDeducoes>
+    <ValorServicos>1500.30</ValorServicos>
+    <ValorDeducoes>1300.30</ValorDeducoes>
     <CodigoServico>1001</CodigoServico>
-    <CodigoSubItem>1</CodigoSubItem>
-    <AliquotaServicos>1.11</AliquotaServicos>
+    <CodigoSubItem>001</CodigoSubItem>
+    <AliquotaServicos>0.05</AliquotaServicos>
     <ISSRetidoTomador>false</ISSRetidoTomador>
     <ISSRetidoIntermediario>false</ISSRetidoIntermediario>
     <Prestador>

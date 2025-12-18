@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts">
+<Cabecalho xmlns="" Versao="1">
+<Remetente>
+<CPFCNPJ>
+<CNPJ>57529050000188</CNPJ>
+</CPFCNPJ>
+</Remetente>
+<transacao>false</transacao>
+<dtInicio>2014-10-01</dtInicio>
+<dtFim>2014-10-03</dtFim>
+<QtdNFTS>1</QtdNFTS>
+<ValorTotalServicos>100</ValorTotalServicos>
+<ValorTotalDeducoes>0</ValorTotalDeducoes>
+</Cabecalho>
+<NFTS xmlns="">
+<TipoDocumento>01</TipoDocumento>
+<ChaveDocumento>
+<InscricaoMunicipal>13580200127</InscricaoMunicipal>
+<SerieNFTS>A</SerieNFTS>
+<NumeroDocumento>350</NumeroDocumento>
+</ChaveDocumento>
+<DataPrestacao>2014-10-02</DataPrestacao>
+<StatusNFTS>N</StatusNFTS>
+<TributacaoNFTS>T</TributacaoNFTS>
+<ValorServicos>100</ValorServicos>
+<ValorDeducoes>0</ValorDeducoes>
+<CodigoServico>9999</CodigoServico>
+<CodigoCnae>0</CodigoCnae>
+<AliquotaServicos>0.03</AliquotaServicos>
+<ISSRetidoTomador>true</ISSRetidoTomador>
+<Prestador>
+<CPFCNPJ>
+<CNPJ>32250824000106</CNPJ>
+</CPFCNPJ>
+<RazaoSocialPrestador>Prestador Teste</RazaoSocialPrestador>
+<Endereco>
+<NumeroEndereco>100</NumeroEndereco>
+<CEP>44020200</CEP>
+</Endereco>
+<Email>jose@uol.com.br</Email>
+</Prestador>
+<RegimeTributacao>0</RegimeTributacao>
+<Discriminacao>Emissao de NFTS</Discriminacao>
+<TipoNFTS>1</TipoNFTS>
+<Assinatura> 1t7ACSennOWUb3IL+1Jn1SEHfS5sGX3RHgW2bfcZeNaVs4IlES+lbJ6kZ1oyCR5X2O15SO4tb3I8VZqknLKRs9yTYu99V3Twy32sRx9iZZzluvCN9fGJsXXB6fcVCTnlQfRlr90s8k1O/FqaPpKwbNaXT5FIeXoEG/jWccCDKXfr3t5cmowYXnQQ9OedTtRaZW+JLoIHUbot2Lk5tUA7GuagrvwnRkLGm7WG5XKhpcWMYSoCh2ot80XdP/1owCLsvQKuojWCV0PDMkh/GJ5SlwcY3eDGEVX0x66XjhNINK9Xfe5i2fccvsL5hT8JFpQQjBXmo4iLo60od6sqXQ3tLQ==</Assinatura>
+</NFTS>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>fPeEebi7SQNRGKwQ3q9WgVUOzc4=</DigestValue></Reference></SignedInfo><SignatureValue>YTj2GXm9IoAng/kmLYSmlcGPyankIa9rBslQ54Pyt5r2gaCRsF6yaVMSyHSUVnn5aaULaFt228IFl6B8lL2LWQrxpA7ab3QFOTU7pjdIkbWR3LjoX1IJc9wflUXgWtM0eqDGEZ1pUWZsOZnuLWqRkrYVyogKI+1+CFxgU3SwHTnnWcHDumKzVyztRmrkZjiRnTxzvKDXOmyA5oXV9Uf7tjPSroSkayZAnR60MDlED0135qQLzpjsdD6KXSsRdQESvUBdK6iwpr6KiDhL7Lzqdpw4F7IECAcvhmGiufs76euZEKqPI+RDbuF3zxHiu5AQKGuosMciLuqSp6fx0MGdyw==</SignatureValue><KeyInfo><X509Data><X509Certificate>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</X509Certificate></X509Data></KeyInfo></Signature></PedidoEnvioLoteNFTS>

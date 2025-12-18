@@ -1,5 +1,7 @@
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 using AssinadorNFTS.Models;
 
@@ -8,7 +10,7 @@ namespace AssinadorNFTS;
 class Program
 {
 
-    private static string xmlExemplo = "<tpNFTS><TipoDocumento>2</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.30</ValorServicos><ValorDeducoes>1300.30</ValorDeducoes><CodigoServico>1001</CodigoServico><CodigoSubItem>1</CodigoSubItem><AliquotaServicos>0.03</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>100</NumeroEndereco><ComplementoEndereco>SALA10</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco><Email>contato@yahoo.com</Email></Prestador><RegimeTributacao>5</RegimeTributacao><DataPagamento>2025-01-20</DataPagamento><Discriminacao>TESTE</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>CLIENTEFICTICIO</RazaoSocial></Tomador></tpNFTS>";
+    private static string xmlExemplo = "<tpNFTS><TipoDocumento>2</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.31</ValorServicos><ValorDeducoes>1300.31</ValorDeducoes><CodigoServico>1001</CodigoServico><CodigoSubItem>1</CodigoSubItem><AliquotaServicos>1.11</AliquotaServicos><ISSRetidoTomador>False</ISSRetidoTomador><ISSRetidoIntermediario>False</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>100</NumeroEndereco><ComplementoEndereco>SALA10</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco><Email>contato@yahoo.com</Email></Prestador><RegimeTributacao>5</RegimeTributacao><DataPagamento>2025-01-20</DataPagamento><Discriminacao>TESTE</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>CLIENTEFICTICIO</RazaoSocial></Tomador></tpNFTS>";
 
     private static string DEBUG_DIR = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_debug";
     
@@ -28,8 +30,13 @@ class Program
             
             // Enviar para o servidor
             string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\request.assinado.xml";
-            await EnviarParaServidor(caminhoRequestAssinado, caminhoCertificado, senhaCertificado);
-            // ProcessarNFTSDeString(xmlExemplo, caminhoCertificado, senhaCertificado);
+            // await EnviarParaServidor(caminhoRequestAssinado, caminhoCertificado, senhaCertificado);
+            //ProcessarNFTSDeString(xmlExemplo, caminhoCertificado, senhaCertificado);
+
+
+            // === EXEMPLO 2: Recalcular apenas a assinatura XMLDSig de um XML existente ===
+            string caminhoXmlSalvador = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\pref_salvador\\ntfs_salvador_original.xml";
+            RecalcularAssinaturaXmlDSig(caminhoXmlSalvador, caminhoCertificado, senhaCertificado);
 
             // ProcessarNFTSDeString(xmlExemplo.Replace(
             //     "<DataPrestacao>2025-01-15</DataPrestacao>", "<DataPrestacao>20250115</DataPrestacao>"
@@ -41,6 +48,91 @@ class Program
         {
             Console.WriteLine($"Erro: {ex.Message}");
             Console.WriteLine($"Stack trace: {ex.StackTrace}");
+        }
+    }
+
+    public static void RecalcularAssinaturaXmlDSig(string caminhoXmlOriginal, string caminhoCertificado, string senhaCertificado)
+    {
+        try
+        {
+            Console.WriteLine("\n=== RECALCULANDO ASSINATURA XMLDSIG ===");
+            
+            // 1. Carregar certificado
+            var certificado = new X509Certificate2(caminhoCertificado, senhaCertificado);
+            Console.WriteLine($"✓ Certificado carregado: {certificado.Subject}");
+
+            // 2. Ler o XML original
+            string xmlContent = File.ReadAllText(caminhoXmlOriginal, Encoding.UTF8);
+            Console.WriteLine($"✓ XML lido: {caminhoXmlOriginal}");
+
+            // 3. Remover assinatura XMLDSig existente (se houver)
+            XmlDocument docOriginal = new XmlDocument();
+            docOriginal.PreserveWhitespace = true;
+            docOriginal.LoadXml(xmlContent);
+
+            // Remover tag <Signature> se existir
+            XmlNamespaceManager nsManager = new XmlNamespaceManager(docOriginal.NameTable);
+            nsManager.AddNamespace("ds", "http://www.w3.org/2000/09/xmldsig#");
+            
+            XmlNode signatureNode = docOriginal.SelectSingleNode("//ds:Signature", nsManager);
+            if (signatureNode != null)
+            {
+                signatureNode.ParentNode.RemoveChild(signatureNode);
+                Console.WriteLine("✓ Assinatura XMLDSig anterior removida");
+            }
+
+            // 4. Obter o XML sem assinatura em formato compacto (1 linha)
+            string xmlSemAssinatura = docOriginal.OuterXml;
+
+            // 5. Adicionar nova assinatura XMLDSig
+            XmlDocument docParaAssinar = new XmlDocument();
+            docParaAssinar.PreserveWhitespace = true;
+            docParaAssinar.LoadXml(xmlSemAssinatura);
+
+            SignedXml signedXml = new SignedXml(docParaAssinar);
+            signedXml.SigningKey = certificado.GetRSAPrivateKey();
+
+            // Configurar a referência
+            Reference reference = new Reference("");
+            reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
+            reference.DigestMethod = "http://www.w3.org/2000/09/xmldsig#sha1";
+            signedXml.AddReference(reference);
+
+            // Configurar o método de assinatura
+            signedXml.SignedInfo.CanonicalizationMethod = "http://www.w3.org/2001/10/xml-exc-c14n#";
+            signedXml.SignedInfo.SignatureMethod = "http://www.w3.org/2000/09/xmldsig#rsa-sha1";
+
+            // Adicionar informações do certificado
+            KeyInfo keyInfo = new KeyInfo();
+            keyInfo.AddClause(new KeyInfoX509Data(certificado));
+            signedXml.KeyInfo = keyInfo;
+
+            // Calcular a assinatura
+            signedXml.ComputeSignature();
+
+            // Obter o elemento de assinatura
+            XmlElement xmlSignature = signedXml.GetXml();
+
+            // 6. Importar e adicionar ao documento
+            XmlNode importedSignature = docParaAssinar.ImportNode(xmlSignature, true);
+            docParaAssinar.DocumentElement.AppendChild(importedSignature);
+
+            // 7. Salvar o arquivo assinado em formato compacto (1 linha)
+            string caminhoAssinado = caminhoXmlOriginal.Replace(".xml", "-assinado.xml");
+            
+            using (var writer = new StreamWriter(caminhoAssinado, false, new UTF8Encoding(false)))
+            {
+                writer.Write(docParaAssinar.OuterXml);
+            }
+
+            Console.WriteLine($"✓ Arquivo assinado salvo: {caminhoAssinado}");
+            Console.WriteLine("\n=== ASSINATURA XMLDSIG RECALCULADA COM SUCESSO ===\n");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"\n❌ ERRO ao recalcular assinatura: {ex.Message}");
+            Console.WriteLine($"Stack trace: {ex.StackTrace}");
+            throw;
         }
     }
 

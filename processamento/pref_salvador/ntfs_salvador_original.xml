@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts">
+<Cabecalho xmlns="" Versao="1">
+<Remetente>
+<CPFCNPJ>
+<CNPJ>57529050000188</CNPJ>
+</CPFCNPJ>
+</Remetente>
+<transacao>false</transacao>
+<dtInicio>2014-10-01</dtInicio>
+<dtFim>2014-10-03</dtFim>
+<QtdNFTS>1</QtdNFTS>
+<ValorTotalServicos>100</ValorTotalServicos>
+<ValorTotalDeducoes>0</ValorTotalDeducoes>
+</Cabecalho>
+<NFTS xmlns="">
+<TipoDocumento>01</TipoDocumento>
+<ChaveDocumento>
+<InscricaoMunicipal>13580200127</InscricaoMunicipal>
+<SerieNFTS>A</SerieNFTS>
+<NumeroDocumento>350</NumeroDocumento>
+</ChaveDocumento>
+<DataPrestacao>2014-10-02</DataPrestacao>
+<StatusNFTS>N</StatusNFTS>
+<TributacaoNFTS>T</TributacaoNFTS>
+<ValorServicos>100</ValorServicos>
+<ValorDeducoes>0</ValorDeducoes>
+<CodigoServico>9999</CodigoServico>
+<CodigoCnae>0</CodigoCnae>
+<AliquotaServicos>0.03</AliquotaServicos>
+<ISSRetidoTomador>true</ISSRetidoTomador>
+<Prestador>
+<CPFCNPJ>
+<CNPJ>32250824000106</CNPJ>
+</CPFCNPJ>
+<RazaoSocialPrestador>Prestador Teste</RazaoSocialPrestador>
+<Endereco>
+<NumeroEndereco>100</NumeroEndereco>
+<CEP>44020200</CEP>
+</Endereco>
+<Email>jose@uol.com.br</Email>
+</Prestador>
+<RegimeTributacao>0</RegimeTributacao>
+<Discriminacao>Emissao de NFTS</Discriminacao>
+<TipoNFTS>1</TipoNFTS>
+<Assinatura> 1t7ACSennOWUb3IL+1Jn1SEHfS5sGX3RHgW2bfcZeNaVs4IlES+lbJ6kZ1oyCR5X2O15SO4tb3I8VZqknLKRs9yTYu99V3Twy32sRx9iZZzluvCN9fGJsXXB6fcVCTnlQfRlr90s8k1O/FqaPpKwbNaXT5FIeXoEG/jWccCDKXfr3t5cmowYXnQQ9OedTtRaZW+JLoIHUbot2Lk5tUA7GuagrvwnRkLGm7WG5XKhpcWMYSoCh2ot80XdP/1owCLsvQKuojWCV0PDMkh/GJ5SlwcY3eDGEVX0x66XjhNINK9Xfe5i2fccvsL5hT8JFpQQjBXmo4iLo60od6sqXQ3tLQ==</Assinatura>
+</NFTS>
+</PedidoEnvioLoteNFTS>
