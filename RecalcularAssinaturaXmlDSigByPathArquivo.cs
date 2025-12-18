@@ -138,7 +138,7 @@ namespace AssinadorNFTS
 
         private static string SalvarArquivoAssinado(XmlDocument docAssinado)
         {
-            string caminhoAssinado = _caminhoXmlOriginal.Replace(".xml", "-assinado.xml");
+            string caminhoAssinado = _caminhoXmlOriginal.Replace(".xml", "-ass.dig.xml");
 
             using (var writer = new StreamWriter(caminhoAssinado, false, new UTF8Encoding(false)))
             {

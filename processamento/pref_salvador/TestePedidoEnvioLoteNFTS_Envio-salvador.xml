@@ -1,0 +1,72 @@
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="https://nfse.salvador.ba.gov.br/nfts">
+  <Cabecalho Versao="1" xmlns="">
+    <Remetente>
+      <CPFCNPJ>
+        <CNPJ>57529050000188</CNPJ>
+      </CPFCNPJ>
+    </Remetente>
+    <transacao>false</transacao>
+    <dtInicio>2014-10-01</dtInicio>
+    <dtFim>2014-10-03</dtFim>
+    <QtdNFTS>1</QtdNFTS>
+    <ValorTotalServicos>100</ValorTotalServicos>
+    <ValorTotalDeducoes>0</ValorTotalDeducoes>
+  </Cabecalho>
+  <NFTS xmlns="">
+    <TipoDocumento>01</TipoDocumento>
+    <ChaveDocumento>
+      <InscricaoMunicipal>13580200127</InscricaoMunicipal>
+      <SerieNFTS>A</SerieNFTS>
+      <NumeroDocumento>350</NumeroDocumento>
+    </ChaveDocumento>
+    <DataPrestacao>2014-10-02</DataPrestacao>
+    <StatusNFTS>N</StatusNFTS>
+    <TributacaoNFTS>T</TributacaoNFTS>
+    <ValorServicos>100</ValorServicos>
+    <ValorDeducoes>0</ValorDeducoes>
+    <CodigoServico>9999</CodigoServico>
+    <CodigoCnae>0</CodigoCnae>
+    <AliquotaServicos>0.03</AliquotaServicos>
+    <ISSRetidoTomador>true</ISSRetidoTomador>
+    <Prestador>
+      <CPFCNPJ>
+        <CNPJ>32250824000106</CNPJ>
+      </CPFCNPJ>
+      <RazaoSocialPrestador>Prestador Teste</RazaoSocialPrestador>
+      <Endereco>
+        <NumeroEndereco>100</NumeroEndereco>
+        <CEP>44020200</CEP>
+      </Endereco>
+      <Email>jose@uol.com.br</Email>
+    </Prestador>
+    <RegimeTributacao>0</RegimeTributacao>
+    <Discriminacao>Emissao de NFTS</Discriminacao>
+    <TipoNFTS>1</TipoNFTS>
+    <Assinatura>
+    1t7ACSennOWUb3IL+1Jn1SEHfS5sGX3RHgW2bfcZeNaVs4IlES+lbJ6kZ1oyCR5X2O15SO4tb3I8VZqknLKRs9yTYu99V3Twy32sRx9iZZzluvCN9fGJsXXB6fcVCTnlQfRlr90s8k1O/FqaPpKwbNaXT5FIeXoEG/jWccCDKXfr3t5cmowYXnQQ9OedTtRaZW+JLoIHUbot2Lk5tUA7GuagrvwnRkLGm7WG5XKhpcWMYSoCh2ot80XdP/1owCLsvQKuojWCV0PDMkh/GJ5SlwcY3eDGEVX0x66XjhNINK9Xfe5i2fccvsL5hT8JFpQQjBXmo4iLo60od6sqXQ3tLQ==</Assinatura>
+  </NFTS>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+          <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>SUAVQt2F2m6+X5XoIyz8WhaHZUo=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>
+    jS08thE0QKkxnh23+RTEpy8+Tk3Hkh84aZYJwnjeSqFzt9JzeI8Di4JfPPBxtk33N9oTn1T4KMdxz0hCDMS7iB2YO/M1DNBy5o0NHyYxQlmui4EJMmIAe4zfFqQCsNqb+D/rCaHl2JbOYzqrHgNeQPeLY1fShA/AioFNWvBcofMpt34q3aFLo7ermdS7hSUFNIkeH6yFxb1Img1IgEAM6uvnqHR/wPJQjmHTvyMyTiIZxVYQIRAVAu2XbkavaT5b7fJLQ4Fh7oBPDIEMwSqdCqbv+i9QoP19yU9ts+vUy/EdAmmbfmnWEhsGW4VeC+/HdAL7LByzV+89W9R5zzvBbA==</SignatureValue>
+    <KeyInfo>
+      <X509Data>
+        <X509Certificate>
+        MIIErTCCA5WgAwIBAgIGAUeDyECjMA0GCSqGSIb3DQEBDQUAMIGjMRIwEAYDVQQIEwlTYW8gUGF1bG8xDzANBgNVBAsTBlByb2RhbTEgMB4GA1UECxMXUHJlZmVpdHVyYSBkZSBTYW8gUGF1bG8xFjAUBgNVBAoTDVBSRUZFSVRVUkEtU1AxCzAJBgNVBAYTAkJSMQswCQYDVQQIEwJTUDEoMCYGA1UEAxMfUHJvZGFtIEludGVybWVkaWF0ZSBDZXJ0aWZpY2F0ZTAeFw0xNDA3MjkyMDIwNDVaFw0xNzA3MjkyMDIwNDVaMIGVMRIwEAYDVQQIEwlTYW8gUGF1bG8xDzANBgNVBAsTBlByb2RhbTEgMB4GA1UECxMXUHJlZmVpdHVyYSBkZSBTYW8gUGF1bG8xFjAUBgNVBAoTDVBSRUZFSVRVUkEtU1AxCzAJBgNVBAYTAkJSMQswCQYDVQQIEwJTUDEaMBgGA1UEAxMRVEVDT04gU0FMVkFET1IgU0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDW5K3O1b74+PGB5IlWpmYiNYS7F6WNPmIZA6XkBgTIyk50+CEZ5M7XN0tuwZ0IBbiSe6BkPBzZEesIXBGa8j17dJshtz1f3Sg1fOhEmb482Qyr7jvCG9Y8aW9L7bNX9V77cir++Vetkln9nblyLKCBG5EUbH+CI/fXn3LQoFr0t1fjTOB4qSxQmr8ra7PbWSjdKN7TqSZkVKI5u5xGCjjgSjgcLPEX6nKhh26xRm7k37ntNSkksgIICqVH6M+NJARuBwXyBWQLgfXjkORpmiAt6VxhQw4NhqpcwVcw/HI/KT0l9A9PLTll8oYv05ARm+FLUiJm4FTFIlV75KH4FlX1AgMBAAGjgfIwge8wCQYDVR0TBAIwADAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0OBBYEFGFnzjLAQU7pdsHor7Sztql+iEy1MB8GA1UdIwQYMBaAFKPhhYpnWJ0V20WDWAQ00AmwBOWyMEkGA1UdIARCMEAwPgYHgTNjCQkJYzAzMDEGCCsGAQUFBwIBFiVodHRwOi8vcHJvZGFtLnNwLmdvdi5ici9jYS9wb2xpY3kuZHBjMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAoBgNVHREEITAfoB0GBWBMAQMDoBQMEjA4LjI2NC4xMzAvMDAwMS00MzANBgkqhkiG9w0BAQ0FAAOCAQEAK1Hb46AqB++6Ww460grQxTrUl2r5NZvwUsa8raSPK98re7HeNUWgdxmBhY2iiKJMxODhyjfbvVPPRAZZAGElr7o+OWwIna0o+4kYJyWWGm+nxujlXdej8rZg2pF3GMoI2sgSQJ2KcxO0KpOBaEZJTq4r4hlUkr22jaU1e90kw32t9RvhNC/Qk9jJ+/Vxxigxn9baAO0vjq030MTX9y/iPJMdy3F+g3wTKIyjdyDNdNZ1N3Wq4iS/et/jrhGSvcgG6LszUhisHQxx7j5axPf59/PS4vZLbtUQIurVmHSGFdjOYbauNoflLPNLG8toUpnaGWn10CCr9A38iD/lOV27jg==</X509Certificate>
+      </X509Data>
+    </KeyInfo>
+  </Signature>
+</PedidoEnvioLoteNFTS>

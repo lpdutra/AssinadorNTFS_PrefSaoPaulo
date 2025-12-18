@@ -26,7 +26,7 @@ class Program
             string caminhoCertificado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\Fesp cert A1.pfx";
             string senhaCertificado = "Unimed2025";
             
-            RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado);
+            // RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado);
             
             // Enviar para o servidor
             // string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\request.assinado.xml";
@@ -36,7 +36,21 @@ class Program
             // string caminhoXmlSalvador = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\pref_salvador\\ntfs_salvador_original.xml";
             // RecalcularAssinaturaXmlDSigByPathArquivo.DoProcess(caminhoXmlSalvador, caminhoCertificado, senhaCertificado);
 
-            RealizarAssinaturasXML.GetValorTagAssinaturaNFTS(xmlExemplo, caminhoCertificado, senhaCertificado);
+            // RealizarAssinaturasXML.GetValorTagAssinaturaNFTS(xmlExemplo, caminhoCertificado, senhaCertificado);
+
+            // === EXEMPLO 3: Validar assinatura de um XML existente ===
+            string caminhoXmlParaValidar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\pref_salvador\\TestePedidoEnvioLoteNFTS_Envio-salvador.xml";
+            
+            // Exibir informações do certificado
+            // ValidacaoArquivoXML.ExibirInformacoesCertificado(caminhoXmlParaValidar);
+            
+            // Validar a assinatura NFTS
+            bool assinaturaValida = ValidacaoArquivoXML.ValidarAssinaturaNFTS(caminhoXmlParaValidar);
+            
+            if (assinaturaValida)
+                Console.WriteLine("✅ O arquivo possui assinatura válida!");
+            else
+                Console.WriteLine("❌ O arquivo NÃO possui assinatura válida!");
             
         }
         catch (Exception ex)
