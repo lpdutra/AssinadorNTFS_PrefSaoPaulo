@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="77ebf46b-7817-4935-ab94-ab96ef898850" activeEnvironment="Default" name="Pref SP Clean" resourceRoot="" soapui-version="5.9.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="38a657f1-a8b1-4e75-aa20-b00a8de093a2" wsaVersion="NONE" name="LoteNFTSSoap" type="wsdl" bindingName="{http://www.prefeitura.sp.gov.br/nfts}LoteNFTSSoap" soapVersion="1_1" anonymous="optional" definition="file:/D:/Workspace/FESP/Projeto_NTFS/pref-sp.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/D:/Workspace/FESP/Projeto_NTFS/pref-sp.wsdl"><con:part><con:url>file:/D:/Workspace/FESP/Projeto_NTFS/pref-sp.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.prefeitura.sp.gov.br/nfts" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.prefeitura.sp.gov.br/nfts" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.prefeitura.sp.gov.br/nfts">
+      <s:element name="EnvioNFTSRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensagemXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnvioNFTSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetornoXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnvioLoteNFTSRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensagemXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnvioLoteNFTSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetornoXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TesteEnvioLoteNFTSRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensagemXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TesteEnvioLoteNFTSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetornoXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaInformacoesLoteNFTSRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensagemXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaInformacoesLoteNFTSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetornoXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelaNFTSRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensagemXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelaNFTSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetornoXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaNFTSRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensagemXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaNFTSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetornoXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaLoteNFTSRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensagemXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaLoteNFTSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetornoXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaAutEmissaoNFSERequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensagemXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaAutEmissaoNFSEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RetornoXML" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="EnvioNFTSSoapIn">
+    <wsdl:part name="parameters" element="tns:EnvioNFTSRequest"/>
+  </wsdl:message>
+  <wsdl:message name="EnvioNFTSSoapOut">
+    <wsdl:part name="parameters" element="tns:EnvioNFTSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="EnvioLoteNFTSSoapIn">
+    <wsdl:part name="parameters" element="tns:EnvioLoteNFTSRequest"/>
+  </wsdl:message>
+  <wsdl:message name="EnvioLoteNFTSSoapOut">
+    <wsdl:part name="parameters" element="tns:EnvioLoteNFTSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TesteEnvioLoteNFTSSoapIn">
+    <wsdl:part name="parameters" element="tns:TesteEnvioLoteNFTSRequest"/>
+  </wsdl:message>
+  <wsdl:message name="TesteEnvioLoteNFTSSoapOut">
+    <wsdl:part name="parameters" element="tns:TesteEnvioLoteNFTSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaInformacoesLoteNFTSSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaInformacoesLoteNFTSRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaInformacoesLoteNFTSSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaInformacoesLoteNFTSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CancelaNFTSSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelaNFTSRequest"/>
+  </wsdl:message>
+  <wsdl:message name="CancelaNFTSSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelaNFTSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaNFTSSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaNFTSRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaNFTSSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaNFTSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaLoteNFTSSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaLoteNFTSRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaLoteNFTSSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaLoteNFTSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaAutEmissaoNFSESoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaAutEmissaoNFSERequest"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaAutEmissaoNFSESoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaAutEmissaoNFSEResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="LoteNFTSSoap">
+    <wsdl:operation name="EnvioNFTS">
+      <wsdl:input message="tns:EnvioNFTSSoapIn"/>
+      <wsdl:output message="tns:EnvioNFTSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="EnvioLoteNFTS">
+      <wsdl:input message="tns:EnvioLoteNFTSSoapIn"/>
+      <wsdl:output message="tns:EnvioLoteNFTSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="TesteEnvioLoteNFTS">
+      <wsdl:input message="tns:TesteEnvioLoteNFTSSoapIn"/>
+      <wsdl:output message="tns:TesteEnvioLoteNFTSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaInformacoesLoteNFTS">
+      <wsdl:input message="tns:ConsultaInformacoesLoteNFTSSoapIn"/>
+      <wsdl:output message="tns:ConsultaInformacoesLoteNFTSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="CancelaNFTS">
+      <wsdl:input message="tns:CancelaNFTSSoapIn"/>
+      <wsdl:output message="tns:CancelaNFTSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaNFTS">
+      <wsdl:input message="tns:ConsultaNFTSSoapIn"/>
+      <wsdl:output message="tns:ConsultaNFTSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaLoteNFTS">
+      <wsdl:input message="tns:ConsultaLoteNFTSSoapIn"/>
+      <wsdl:output message="tns:ConsultaLoteNFTSSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaAutEmissaoNFSE">
+      <wsdl:input message="tns:ConsultaAutEmissaoNFSESoapIn"/>
+      <wsdl:output message="tns:ConsultaAutEmissaoNFSESoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LoteNFTSSoap" type="tns:LoteNFTSSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="EnvioNFTS">
+      <soap:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/EnvioNFTS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnvioLoteNFTS">
+      <soap:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/EnvioLoteNFTS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TesteEnvioLoteNFTS">
+      <soap:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/TesteEnvioLoteNFTS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaInformacoesLoteNFTS">
+      <soap:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaInformacoesLoteNFTS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelaNFTS">
+      <soap:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/CancelaNFTS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaNFTS">
+      <soap:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaNFTS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaLoteNFTS">
+      <soap:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaLoteNFTS" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaAutEmissaoNFSE">
+      <soap:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaAutEmissaoNFSE" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="LoteNFTSSoap12" type="tns:LoteNFTSSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="EnvioNFTS">
+      <soap12:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/EnvioNFTS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnvioLoteNFTS">
+      <soap12:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/EnvioLoteNFTS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TesteEnvioLoteNFTS">
+      <soap12:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/TesteEnvioLoteNFTS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaInformacoesLoteNFTS">
+      <soap12:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaInformacoesLoteNFTS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelaNFTS">
+      <soap12:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/CancelaNFTS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaNFTS">
+      <soap12:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaNFTS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaLoteNFTS">
+      <soap12:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaLoteNFTS" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaAutEmissaoNFSE">
+      <soap12:operation soapAction="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaAutEmissaoNFSE" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LoteNFTS">
+    <wsdl:port name="LoteNFTSSoap" binding="tns:LoteNFTSSoap">
+      <soap:address location="https://nfe.prefeitura.sp.gov.br/ws/LoteNFTS.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="LoteNFTSSoap12" binding="tns:LoteNFTSSoap12">
+      <soap12:address location="https://nfe.prefeitura.sp.gov.br/ws/LoteNFTS.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://nfe.prefeitura.sp.gov.br/ws/LoteNFTS.asmx</con:endpoint></con:endpoints><con:operation id="b69f52df-3cff-4142-8846-8bb6881320f8" isOneWay="false" action="http://www.prefeitura.sp.gov.br/nfts/ws/CancelaNFTS" name="CancelaNFTS" bindingOperationName="CancelaNFTS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="d1ec466c-d131-435f-82c6-64ee286dde42" isOneWay="false" action="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaAutEmissaoNFSE" name="ConsultaAutEmissaoNFSE" bindingOperationName="ConsultaAutEmissaoNFSE" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="d15ae12e-46b8-47a1-9037-93bf10ebf584" isOneWay="false" action="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaInformacoesLoteNFTS" name="ConsultaInformacoesLoteNFTS" bindingOperationName="ConsultaInformacoesLoteNFTS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="992d132d-b674-43f7-b46a-1ab4af4f30dd" isOneWay="false" action="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaLoteNFTS" name="ConsultaLoteNFTS" bindingOperationName="ConsultaLoteNFTS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="6809ef85-14a2-43e4-97ef-fc4fadbd0e74" isOneWay="false" action="http://www.prefeitura.sp.gov.br/nfts/ws/ConsultaNFTS" name="ConsultaNFTS" bindingOperationName="ConsultaNFTS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="1f9fe8db-01fe-49a6-bef2-038533863d0b" isOneWay="false" action="http://www.prefeitura.sp.gov.br/nfts/ws/EnvioLoteNFTS" name="EnvioLoteNFTS" bindingOperationName="EnvioLoteNFTS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="a21ff132-302c-45da-935c-23e40fe14d77" isOneWay="false" action="http://www.prefeitura.sp.gov.br/nfts/ws/EnvioNFTS" name="EnvioNFTS" bindingOperationName="EnvioNFTS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation><con:operation id="327164c0-a164-4ef0-a7c8-ca16c13ef411" isOneWay="false" action="http://www.prefeitura.sp.gov.br/nfts/ws/TesteEnvioLoteNFTS" name="TesteEnvioLoteNFTS" bindingOperationName="TesteEnvioLoteNFTS" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3dbb491b-3260-4f8f-8b95-8911dfc26026" name="Request_TESTE"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://nfe.prefeitura.sp.gov.br/ws/LoteNFTS.asmx</con:endpoint><con:request><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns0:TesteEnvioLoteNFTSRequest xmlns:ns0="http://www.prefeitura.sp.gov.br/nfts">
+      <ns0:VersaoSchema>2</ns0:VersaoSchema>
+      <ns0:MensagemXML><![CDATA[<?xml version="1.0" encoding="utf-8"?><PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho xmlns="" Versao="1"><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>true</transacao><dtInicio>2025-01-01</dtInicio><dtFim>2025-01-31</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>1500.30</ValorTotalServicos></Cabecalho><NFTS xmlns=""><TipoDocumento>02</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.30</ValorServicos><ValorDeducoes>1300.30</ValorDeducoes><CodigoServico>1001</CodigoServico><CodigoSubItem>001</CodigoSubItem><AliquotaServicos>0.05</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>100</NumeroEndereco><ComplementoEndereco>SALA10</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco><Email>contato@yahoo.com</Email></Prestador><RegimeTributacao>5</RegimeTributacao><DataPagamento>2025-01-20</DataPagamento><Discriminacao>TESTE</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>CLIENTEFICTICIO</RazaoSocial></Tomador><Assinatura>d8OfGeAH9UkuN0oXCzwIEBtb0PSZFVYXGw+J7pxIVik5IQRRrmriTSdGvFbxRIYZPVm2/KfMniWE4qHPlL94kKqdJ9+wk0oK+T4kp2kBzAPLdUo9RkN6a8b5oy2ibLLFxHBy0f4l+T3AqFGPBuXGiy9XPN72opFcM0VtfFOURkJ8x5RcaakHcawxUTGspj7iorIazc/glvQfTFRMeaAjAz4KE2hbe5+klJggjAd8pY0Z8Uws+p24xGmlhukBuI4fk/nw6zSoDdtYtt6m2PUIyo6hiqvXMn4mfurQXMz2gHnj7D+OyooXp3fRuFS0ftp7XHObrjmGlAww8ler0ZsLpw==</Assinatura></NFTS><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>FHBPNydS9aKtjsW7vNaqTJPot5c=</DigestValue></Reference></SignedInfo><SignatureValue>KAhK0Se1ACTAujZj3WlYV1DXAuiz7C+hmzIkskbcM3jg5JvkVnOyHrybex6LS10j/gAK9KgWea6Rraji7Omp0Z0AynZY7yNW+LUQGtk3+pH3RljXd2gzLyv53GZ/7yTLBBNG3NlHIJpqRmns6e8osrAn7QETPswHcF40XhxOGecJEECbFRHQCyTP/eCxvhJyectxDBdvIhbhsVxIfbLWxNHjvM6twMxkyJz6Xwsc0ZrVRdqV9r4e/kWjBL/fDnkTqWyzcryJCFrChgCU1DHSQAMP06rSxVw3CU4oXPrkQ6U3gI7PGzNnMr2mG7h8gukoEjqGyfSz9aVN9dhDASLrLQ==</SignatureValue><KeyInfo><X509Data><X509Certificate>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</X509Certificate></X509Data></KeyInfo></Signature></PedidoEnvioLoteNFTS>]]]]>><![CDATA[</ns0:MensagemXML>
+    </ns0:TesteEnvioLoteNFTSRequest>
+  </soap:Body>
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.prefeitura.sp.gov.br/nfts/ws/TesteEnvioLoteNFTS"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

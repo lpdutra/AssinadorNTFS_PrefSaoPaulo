@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<RetornoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts">
+  <Cabecalho Versao="1" xmlns="">
+    <Sucesso>false</Sucesso>
+    <InformacoesLoteNFTS>
+      <NumeroLote>0</NumeroLote>
+      <Remetente>
+        <CPFCNPJ>
+          <CNPJ>43643139000166</CNPJ>
+        </CPFCNPJ>
+      </Remetente>
+      <dtEnvioLote>2025-12-18T10:12:17.3158013-03:00</dtEnvioLote>
+      <QtdeNFTSProcessadas>0</QtdeNFTSProcessadas>
+      <TempoProcessamento>0</TempoProcessamento>
+      <ValorTotalServicos>0</ValorTotalServicos>
+    </InformacoesLoteNFTS>
+  </Cabecalho>
+  <ListaRetornoLote xmlns="">
+    <Erro>
+      <Codigo>1009</Codigo>
+      <Descricao>Assinatura Digital da NFTS incorreta</Descricao>
+      <IdentificacaoDocumento>
+        <Posicao>1</Posicao>
+        <ChaveDocumento>
+          <InscricaoMunicipal>10259627</InscricaoMunicipal>
+          <SerieNFTS>12345</SerieNFTS>
+          <NumeroDocumento>12345</NumeroDocumento>
+        </ChaveDocumento>
+      </IdentificacaoDocumento>
+    </Erro>
+  </ListaRetornoLote>
+</RetornoEnvioLoteNFTS>

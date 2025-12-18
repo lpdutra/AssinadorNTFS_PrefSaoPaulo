@@ -12,7 +12,7 @@ class Program
 
     private static string DEBUG_DIR = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_debug";
     
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         Console.WriteLine("=== Assinador de NFTS - Prefeitura de São Paulo ===");
         Console.WriteLine();
@@ -24,14 +24,17 @@ class Program
             string caminhoCertificado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\Fesp cert A1.pfx";
             string senhaCertificado = "Unimed2025";
             
-            ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado);
+            // ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado);
+            
+            // Enviar para o servidor
+            string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\request.assinado.xml";
+            await EnviarParaServidor(caminhoRequestAssinado, caminhoCertificado, senhaCertificado);
             // ProcessarNFTSDeString(xmlExemplo, caminhoCertificado, senhaCertificado);
 
             // ProcessarNFTSDeString(xmlExemplo.Replace(
             //     "<DataPrestacao>2025-01-15</DataPrestacao>", "<DataPrestacao>20250115</DataPrestacao>"
             //     ), caminhoCertificado, senhaCertificado);
             
-            Console.WriteLine("Classes geradas com sucesso!");
             Console.WriteLine("Use o método ProcessarNFTS para assinar um XML de NFTS.");
         }
         catch (Exception ex)
@@ -981,6 +984,40 @@ class Program
         catch (Exception ex)
         {
             Console.WriteLine($"Erro ao abrir WinMerge: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Envia o XML assinado para o servidor da Prefeitura
+    /// </summary>
+    /// <param name="caminhoXmlAssinado">Caminho do arquivo request.assinado.xml</param>
+    private static async Task EnviarParaServidor(string caminhoXmlAssinado, string caminhoCertificado, string senhaCertificado)
+    {
+        try
+        {
+            // Carregar certificado para autenticação SSL
+            var certificado = new X509Certificate2(caminhoCertificado, senhaCertificado);
+            
+            var soapClient = new SoapClient(certificado);
+            string resposta = await soapClient.EnviarLoteNFTS(caminhoXmlAssinado);
+            
+            Console.WriteLine(resposta);
+            
+            // Salvar resposta em arquivo
+            string caminhoResposta = Path.Combine(
+                Path.GetDirectoryName(caminhoXmlAssinado)!,
+                "response.xml"
+            );
+            File.WriteAllText(caminhoResposta, resposta, Encoding.UTF8);
+            Console.WriteLine($"\nResposta salva em: {caminhoResposta}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"\n❌ Erro ao enviar para o servidor: {ex.Message}");
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"Detalhes: {ex.InnerException.Message}");
+            }
         }
     }
 
