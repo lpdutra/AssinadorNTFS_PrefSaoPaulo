@@ -253,4 +253,38 @@ public class SoapClient
             Console.WriteLine($"Aviso: Não foi possível analisar o retorno: {ex.Message}");
         }
     }
+
+    /// <summary>
+    /// Envia o XML assinado para o servidor da Prefeitura
+    /// </summary>
+    /// <param name="caminhoXmlAssinado">Caminho do arquivo request.assinado.xml</param>
+    private static async Task CallTesteEnvioLoteNFTS(string caminhoXmlAssinado, string caminhoCertificado, string senhaCertificado)
+    {
+        try
+        {
+            // Carregar certificado para autenticação SSL
+            var certificado = new X509Certificate2(caminhoCertificado, senhaCertificado);
+            
+            var soapClient = new SoapClient(certificado);
+            string resposta = await soapClient.EnviarLoteNFTS(caminhoXmlAssinado);
+            
+            Console.WriteLine(resposta);
+            
+            // Salvar resposta em arquivo
+            string caminhoResposta = Path.Combine(
+                Path.GetDirectoryName(caminhoXmlAssinado)!,
+                "response.xml"
+            );
+            File.WriteAllText(caminhoResposta, resposta, Encoding.UTF8);
+            Console.WriteLine($"\nResposta salva em: {caminhoResposta}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"\n❌ Erro ao enviar para o servidor: {ex.Message}");
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"Detalhes: {ex.InnerException.Message}");
+            }
+        }
+    }
 }
