@@ -14,6 +14,7 @@
     <dtFim>2025-01-31</dtFim>
     <QtdNFTS>1</QtdNFTS>
     <ValorTotalServicos>1500.31</ValorTotalServicos>
+    <ValorTotalDeducoes>0.00</ValorTotalDeducoes>
   </Cabecalho>
   <NFTS xmlns="">
   <TipoDocumento>01</TipoDocumento> 
@@ -32,7 +33,7 @@
     <ISSRetidoTomador>false</ISSRetidoTomador>
     <Prestador>
       <CPFCNPJ>
-        <CNPJ>45443039000111</CNPJ>
+        <CPF>52330209045</CPF>
       </CPFCNPJ>
       <RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador>
       <Endereco>
@@ -46,7 +47,7 @@
         <CEP>95082200</CEP>
       </Endereco>
     </Prestador>
-    <RegimeTributacao>5</RegimeTributacao>
+    <RegimeTributacao>0</RegimeTributacao>
     <TipoNFTS>1</TipoNFTS>
      </NFTS>
 </PedidoEnvioLoteNFTS>

@@ -22,7 +22,7 @@ class Program
         try
         {
             // Exemplo de uso (descomente e adapte conforme necessário)
-            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data.xml";
+            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
             string caminhoCertificado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\Fesp cert A1.pfx";
             string senhaCertificado = "Unimed2025";
             

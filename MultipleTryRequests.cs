@@ -11,7 +11,7 @@ public static class MultipleTryRequests
     private static readonly List<int> CodigosServicoPossiveis = new()
     {
         02660, 02668, 02684, 02692, 02800, 02693, 02881, 02919, 02920, 02935,
-        02962, 02963, 02961, 02685, 08658, 08659, 01741, 06940, 06956, 07324,
+        02685, 08658, 08659, 01741, 06940, 06956, 07324,
         02498, 02499, 06581, 06613, 03210, 07109, 07111, 07123, 07124, 02350,
         02366, 02404, 02412, 02431, 02447, 02340, 02489, 07870, 07889, 07579,
         07323
@@ -57,6 +57,7 @@ public static class MultipleTryRequests
         int contadorGerados = 0;
         int contadorAssinados = 0;
         int contadorEnviados = 0;
+        int contadorSemErros = 0;
         
         // Mapa para armazenar código de serviço e seus códigos de erro
         var mapaErros = new Dictionary<int, List<string>>();
@@ -109,6 +110,7 @@ public static class MultipleTryRequests
                         }
                         else
                         {
+                            contadorSemErros++;
                             Console.WriteLine($"   ✓ Sem erros\n");
                         }
                     }
@@ -135,6 +137,7 @@ public static class MultipleTryRequests
         Console.WriteLine($"XMLs origem gerados: {contadorGerados}");
         Console.WriteLine($"Requests assinados: {contadorAssinados}");
         Console.WriteLine($"Requests enviados: {contadorEnviados}");
+        Console.WriteLine($"Requests sem erros: {contadorSemErros}");
         
         // Exibir e salvar mapa de erros
         ExibirESalvarMapaErros(mapaErros, dirBase);
