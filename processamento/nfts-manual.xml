@@ -1,42 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<PedidoEnvioLoteNFTS
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://www.prefeitura.sp.gov.br/nfts">
-  <Cabecalho Versao="1" xmlns="">
-    <Remetente>
-      <CPFCNPJ>
-        <CNPJ>43643139000166</CNPJ>
-      </CPFCNPJ>
-    </Remetente>
-    <transacao>true</transacao>
-    <dtInicio>2025-01-01</dtInicio>
-    <dtFim>2025-01-31</dtFim>
-    <QtdNFTS>1</QtdNFTS>
-    <ValorTotalServicos>1500</ValorTotalServicos>
-  </Cabecalho>
-  <NFTS>
-    <TipoDocumento>01</TipoDocumento>
-    <ChaveDocumento>
-      <InscricaoMunicipal>10259627</InscricaoMunicipal>
-      <SerieNFTS>12345</SerieNFTS>
-      <NumeroDocumento>12345</NumeroDocumento>
-    </ChaveDocumento>
-    <DataPrestacao>2025-01-15</DataPrestacao>
-    <StatusNFTS>N</StatusNFTS>
-    <TributacaoNFTS>T</TributacaoNFTS>
-    <ValorServicos>1500</ValorServicos>
-    <ValorDeducoes>1300</ValorDeducoes>
-    <CodigoServico>1001</CodigoServico>
-    <AliquotaServicos>0.05</AliquotaServicos>
-    <ISSRetidoTomador>false</ISSRetidoTomador>
-    <Prestador>
-      <CPFCNPJ>
-        <CPF>12345678909</CPF>
-      </CPFCNPJ>
-      <RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador>
-    </Prestador>
-    <RegimeTributacao>5</RegimeTributacao>
-    <TipoNFTS>2</TipoNFTS>
-  </NFTS>
-</PedidoEnvioLoteNFTS>
+<?xml version='1.0' encoding='utf-8'?>
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho xmlns="" Versao="1"><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>true</transacao><dtInicio>2025-01-01</dtInicio><dtFim>2025-01-31</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>1500.31</ValorTotalServicos></Cabecalho><NFTS xmlns=""><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.31</ValorServicos><ValorDeducoes>1300.31</ValorDeducoes><CodigoServico>1001</CodigoServico><AliquotaServicos>0.05</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><Prestador><CPFCNPJ><CNPJ>45443039000111</CNPJ></CPFCNPJ><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>1001</NumeroEndereco><ComplementoEndereco>SALA</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco></Prestador><RegimeTributacao>5</RegimeTributacao><TipoNFTS>1</TipoNFTS><Assinatura>e5pZHVN9FjjTNVZcSUlv+aFwoUq/FY0SMj4gLCALong0vPg+BUvPPA5KKuCSThm+6YH7l1PjIhpp1mzh+8GhZcQxkBnStyyf1yzet9kgYmOWLV/x5PkhJ43W+DpQGRgbKKfbJpFyMtZkhh40pL+p4U7DWyA6SlUJnSShvd+Jnf36NSxBKqRA/QvD07dHeISsC2ugCibPP0GGwWZJwzzIe1joouZDDVMAmBC0QJddBAuN+05UTtTVreSIp1O7xt7QP5PJAIDabA9iwt4kYGrDjDPaj/tuUNcgLnaXGnOx/39krX8EDyH22iEE5ZhsajAlvrAhUyVJn0qGarPeooTCTQ==</Assinatura></NFTS><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<ds:Reference URI="">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<ds:DigestValue>62r7HcOjlCPuXrXVR1jgs1/e1EA=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue>W+YFkVK6/noxfvpEetbhNSKJLEh38mYlF+F1G1Fag6vVpvYmtK5tIs7mPg6YNHhH
+r/h66KAztAOyAHs7ZkKkfnlIX/qMRSy/TI9PzwgkIHmE/lFT8MRHMHGuSuBzHQ6d
+cWK4yn7nKlO2XpQZDbMRWwHUKarPkoxWwxbCLFLMmxPBzoVBjApQeDxrCfoWaGDS
+VZ95OD0D5xp7jPbXWiP1fEznStQrWRH2hJE2bqPxhanqbJe2+xMVxZCPhoi1tDlC
+c+6xCgXwSORWncSMrUQ6oepxUK+ZddDYxlPHFt0IRwcFtPDAjhBJjl9YCilGiuhK
+ChYZR5yeQADeaa2yTjK6NQ==</ds:SignatureValue>
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate>MIIIJTCCBg2gAwIBAgIQcclX3XrAmRWmNUSp7HuLZzANBgkqhkiG9w0BAQsFADB4
+MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2Vj
+cmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYD
+VQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTI1MDYxMjE0NDUzMloXDTI2MDYx
+MjE0NDUzMlowggERMQswCQYDVQQGEwJCUjETMBEGA1UECgwKSUNQLUJyYXNpbDEL
+MAkGA1UECAwCU1AxEjAQBgNVBAcMCVNhbyBQYXVsbzEZMBcGA1UECwwQVmlkZW9D
+b25mZXJlbmNpYTEXMBUGA1UECwwOMjMzMjkwMDAwMDAxMzUxNjA0BgNVBAsMLVNl
+Y3JldGFyaWEgZGEgUmVjZWl0YSBGZWRlcmFsIGRvIEJyYXNpbCAtIFJGQjEWMBQG
+A1UECwwNUkZCIGUtQ05QSiBBMTFIMEYGA1UEAww/VU5JTUVEIERPIEVTVEFETyBE
+RSBTQU8gUEFVTE8gRkVERVJBQ0FPIEVTVEFEVUFMOjQzNjQzMTM5MDAwMTY2MIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvh8NCVmHH987j1jPCukMVvmg
+r03kk2KAwvMNSt0h33RyjK+Ged+dJAJMHMAMLb7gsXoGQwzKL4bhlJJOGxwCdj86
+b8/MlmT1HRak0r/LuPgRWYYtV7aG52ezt/k2+anZZHcgUgP0rVic3DM0D5ji4JP8
+gi5BbrSP89885sQZRlKdbKFtMn5vJhD0mQq+KgYXmiO3b45K3m666KRewLZOWXyi
+bu8GojEIVxLDaBUqJSPn/t5kQic4SQom1RXVw1pnw9wvB6QF1j6/0oTQoKOG2F9D
+J/MfLNNMsyLn8/q/ZkScOQ0ghJ+sE6DHZAddvebr4nGyHO9VDwEvHBYFyiYUgQID
+AQABo4IDDjCCAwowgb0GA1UdEQSBtTCBsqA9BgVgTAEDBKA0BDIyMTA0MTk2MDAy
+NzEzMjM0ODU5MDAwMDAwMDAwMDAwMDAwMDAwMDgzMTA5MjVTU1BTUKAhBgVgTAED
+AqAYBBZBUk5BTERPIFBBU1NBRklOSSBORVRPoBkGBWBMAQMDoBAEDjQzNjQzMTM5
+MDAwMTY2oBcGBWBMAQMHoA4EDDAwMDAwMDAwMDAwMIEaY29tcHJhc0B1bmltZWRm
+ZXNwLmNvb3AuYnIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBRTfX+dvtFh0CC62p/j
+iacTc1jNQjB/BgNVHSAEeDB2MHQGBmBMAQIBDDBqMGgGCCsGAQUFBwIBFlxodHRw
+Oi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9B
+Q19DZXJ0aXNpZ25fUkZCL0RQQ19BQ19DZXJ0aXNpZ25fUkZCLnBkZjCBvAYDVR0f
+BIG0MIGxMFegVaBThlFodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJy
+L3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnblJGQkc1L0xhdGVzdENSTC5jcmww
+VqBUoFKGUGh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0
+b3Jpby9sY3IvQUNDZXJ0aXNpZ25SRkJHNS9MYXRlc3RDUkwuY3JsMA4GA1UdDwEB
+/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgawGCCsGAQUF
+BwEBBIGfMIGcMF8GCCsGAQUFBzAChlNodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNp
+Z24uY29tLmJyL3JlcG9zaXRvcmlvL2NlcnRpZmljYWRvcy9BQ19DZXJ0aXNpZ25f
+UkZCX0c1LnA3YzA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AtYWMtY2VydGlzaWdu
+LXJmYi5jZXJ0aXNpZ24uY29tLmJyMA0GCSqGSIb3DQEBCwUAA4ICAQAgAZZZvhbW
+ReOiAEsrNAaB/YMroOightyj/DlbObZnB48TWsMQ/rLufdxrJjlxOY1gW3HRdZ51
+KGauwdiDau7oaRtnSo9D14DPGlSjnxWjuxoKOsyp0dpQ90WRqR2i2BS5j+d93QUi
+RyzJgAxnm79u0m9VHH2HCKaRC898OvTqY5rvLgbRAaOZd8hPWDpLxn+S08b1+dAo
+CbcdzupzSJPoaAE6o9SX3fkrH1AeAu3Et0GX+UT0mDdyEy1Mrog5a2NLf5ZIC1wD
+Vtnq8sf2MYxXD6J8edc9Hg1IIHtm4Ntsi2lRDzLNXiUmicWzKyAjHAc6vnCynPRK
+Up1NP4Hm5ViV/E0RrsIO74xkXHahkxBlQuGeOGGF/6ellAsBkGdLD9ynLscrOdaA
+Gc4f0XcV+LBkGB54n1iwX0M6Dk2W3MT45z1ciQKE54BKf5TS0G+98gl8lpuW1xl3
+VKRv6coGtLOm+cQNWr1Xb2h5y6JoU2H0l8Tcrn86B79o7Lovs45mukEhnH2t1Akc
+VLEttf8FmaL+dPX683ImFFr6es30Gwoz8KA9DMkDHaH4+zzJFhcfqwMPoqk/P++x
+QhoPMoxvRvfrTndflQEcLOHsqXkvuRbCxA+a866YfsKNvgSE9Lfu4QcuuxWnPjTj
+bQinEXlGFtJIPBC9oyS8PrIATnNi5BYSfw==
+</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</ds:Signature></PedidoEnvioLoteNFTS>

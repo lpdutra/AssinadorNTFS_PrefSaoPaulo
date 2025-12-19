@@ -16,7 +16,7 @@
     <ValorTotalServicos>1500.31</ValorTotalServicos>
   </Cabecalho>
   <NFTS xmlns="">
-  <TipoDocumento>02</TipoDocumento> 
+  <TipoDocumento>01</TipoDocumento> 
     <ChaveDocumento>
       <InscricaoMunicipal>10259627</InscricaoMunicipal>
 	  <SerieNFTS>12345</SerieNFTS>
@@ -28,15 +28,12 @@
     <ValorServicos>1500.31</ValorServicos>
     <ValorDeducoes>1300.31</ValorDeducoes>
     <CodigoServico>1001</CodigoServico>
-    <CodigoSubItem>1</CodigoSubItem>
-    <AliquotaServicos>1.05</AliquotaServicos>
+    <AliquotaServicos>0.05</AliquotaServicos>
     <ISSRetidoTomador>false</ISSRetidoTomador>
-    <ISSRetidoIntermediario>false</ISSRetidoIntermediario>
     <Prestador>
       <CPFCNPJ>
-        <CNPJ>43643139000166</CNPJ>
+        <CNPJ>45443039000111</CNPJ>
       </CPFCNPJ>
-      <InscricaoMunicipal>10259627</InscricaoMunicipal>
       <RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador>
       <Endereco>
         <TipoLogradouro>RUA</TipoLogradouro>
@@ -48,17 +45,8 @@
         <UF>SP</UF>
         <CEP>95082200</CEP>
       </Endereco>
-      <Email>contato@yahoo.com</Email>
     </Prestador>
-    <RegimeTributacao>5</RegimeTributacao> 
-    <DataPagamento>2025-01-20</DataPagamento>
-    <Discriminacao>TESTE</Discriminacao>
-    <TipoNFTS>2</TipoNFTS>
-    <Tomador>
-      <CPFCNPJ>
-        <CNPJ>43643139000166</CNPJ>
-      </CPFCNPJ>
-      <RazaoSocial>CLIENTEFICTICIO</RazaoSocial>
-    </Tomador>
+    <RegimeTributacao>5</RegimeTributacao>
+    <TipoNFTS>1</TipoNFTS>
      </NFTS>
 </PedidoEnvioLoteNFTS>
