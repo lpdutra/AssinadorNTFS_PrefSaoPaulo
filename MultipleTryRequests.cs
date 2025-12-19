@@ -10,11 +10,12 @@ public static class MultipleTryRequests
     // Lista de códigos de serviço possíveis para testar
     private static readonly List<int> CodigosServicoPossiveis = new()
     {
-        02660, 02668, 02684, 02692, 02800, 02693, 02881, 02919, 02920, 02935,
-        02685, 08658, 08659, 01741, 06940, 06956, 07324,
-        02498, 02499, 06581, 06613, 03210, 07109, 07111, 07123, 07124, 02350,
-        02366, 02404, 02412, 02431, 02447, 02340, 02489, 07870, 07889, 07579,
-        07323
+        // 02660, 02668, 02684, 02692, 02800, 02693, 02881, 02919, 02920, 02935,
+        // 02685, 08658, 08659, 01741, 06940, 06956, 07324,
+        // 02498, 02499, 06581, 06613, 03210, 07109, 07111, 07123, 07124, 02350,
+        // 02366, 02404, 02412, 02431, 02447, 02340, 02489, 07870, 07889, 07579,
+        // 07323
+        2350, 2412, 2499, 2920, 6956, 7111, 7124, 7889, 8659
     };
 
     // Dicionário com descrições dos códigos de erro (será preenchido automaticamente)
@@ -39,12 +40,30 @@ public static class MultipleTryRequests
     {
         Console.WriteLine("=== Iniciando geração de XMLs com diferentes códigos de serviço ===\n");
 
-        // Criar diretórios se não existirem
+        // Definir diretórios
         string dirBase = Path.Combine(Path.GetDirectoryName(caminhoXmlOrigem)!, "..", "multiple_tries");
         string diretorioOrigem = Path.Combine(dirBase, "xml_origem");
         string diretorioRequests = Path.Combine(dirBase, "requests");
         string diretorioResponses = Path.Combine(dirBase, "responses");
         
+        // Limpar diretórios se já existirem
+        if (Directory.Exists(diretorioOrigem))
+        {
+            Directory.Delete(diretorioOrigem, true);
+            Console.WriteLine("✓ Diretório xml_origem limpo");
+        }
+        if (Directory.Exists(diretorioRequests))
+        {
+            Directory.Delete(diretorioRequests, true);
+            Console.WriteLine("✓ Diretório requests limpo");
+        }
+        if (Directory.Exists(diretorioResponses))
+        {
+            Directory.Delete(diretorioResponses, true);
+            Console.WriteLine("✓ Diretório responses limpo");
+        }
+        
+        // Criar diretórios
         Directory.CreateDirectory(diretorioOrigem);
         Directory.CreateDirectory(diretorioRequests);
         Directory.CreateDirectory(diretorioResponses);

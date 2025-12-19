@@ -27,13 +27,13 @@ class Program
             string senhaCertificado = "Unimed2025";
             
             // === EXEMPLO 1: Gerar múltiplos XMLs com diferentes códigos de serviço, assinar e enviar ===
-            await MultipleTryRequests.RealizarTentativas(caminhoXml, caminhoCertificado, senhaCertificado);
+            // await MultipleTryRequests.RealizarTentativas(caminhoXml, caminhoCertificado, senhaCertificado);
             
-            // RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
+            RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
             
             // Enviar para o servidor
-            // string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data.assinado.xml";
-            // await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado);
+            string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.assinado.xml";
+            await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado);
 
             // === EXEMPLO 2: Recalcular apenas a assinatura XMLDSig de um XML existente ===
             // string caminhoXMLReassinar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-recalcular-signature.xml";

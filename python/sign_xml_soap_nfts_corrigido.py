@@ -185,7 +185,8 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
             if isinstance(definition, str):
                 text_value = original_child.text or ""
                 if definition == "num_str":
-                    final = normalize_numeric_string(text_value)
+                    #final = normalize_numeric_string(text_value)
+                    final = text_value.replace('\xa0', ' ').strip()
                 elif definition == "float":
                     final = normalize_float_value(text_value)
                 elif definition == "bool":

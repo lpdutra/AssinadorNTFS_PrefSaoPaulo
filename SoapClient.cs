@@ -60,7 +60,7 @@ public class SoapClient
 
             string soapEnvelope = File.ReadAllText(xmlFilePath, Encoding.UTF8);
             Console.WriteLine($"Arquivo carregado: {xmlFilePath}");
-            Console.WriteLine($"Tamanho: {soapEnvelope.Length} caracteres\n");
+            // Console.WriteLine($"Tamanho: {soapEnvelope.Length} caracteres\n");
 
             // Validar se é um XML válido
             try
@@ -185,8 +185,7 @@ public class SoapClient
             var sucessoNode = retornoDoc.SelectSingleNode("//ns:Sucesso", namespaceManager);
             bool sucesso = sucessoNode?.InnerText.ToLower() == "true";
 
-            Console.WriteLine("=== RESULTADO DO ENVIO ===\n");
-            Console.WriteLine($"Sucesso: {(sucesso ? "✓ SIM" : "✗ NÃO")}");
+            Console.WriteLine($"=== RESULTADO DO ENVIO ===> {(sucesso ? "✓ SUCESSO" : "✗ FALHA")}\n");
 
             // Informações do lote
             var numeroLoteNode = retornoDoc.SelectSingleNode("//ns:NumeroLote", namespaceManager);

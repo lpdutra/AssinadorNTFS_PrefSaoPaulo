@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns0:TesteEnvioLoteNFTSRequest xmlns:ns0="http://www.prefeitura.sp.gov.br/nfts">
+      <ns0:VersaoSchema>2</ns0:VersaoSchema>
+      <ns0:MensagemXML><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts">
+  <Cabecalho xmlns="" Versao="1">
+    <Remetente>
+      <CPFCNPJ>
+        <CNPJ>43643139000166</CNPJ>
+      </CPFCNPJ>
+    </Remetente>
+    <transacao>true</transacao>
+    <dtInicio>2025-01-01</dtInicio>
+    <dtFim>2025-01-31</dtFim>
+    <QtdNFTS>1</QtdNFTS>
+    <ValorTotalServicos>1500.31</ValorTotalServicos>
+    <ValorTotalDeducoes>0.00</ValorTotalDeducoes>
+  </Cabecalho>
+  <NFTS xmlns="">
+    <TipoDocumento>01</TipoDocumento>
+    <ChaveDocumento>
+      <InscricaoMunicipal>10259627</InscricaoMunicipal>
+      <SerieNFTS>12345</SerieNFTS>
+      <NumeroDocumento>12345</NumeroDocumento>
+    </ChaveDocumento>
+    <DataPrestacao>2025-01-15</DataPrestacao>
+    <StatusNFTS>N</StatusNFTS>
+    <TributacaoNFTS>T</TributacaoNFTS>
+    <ValorServicos>1500.31</ValorServicos>
+    <ValorDeducoes>0.00</ValorDeducoes>
+    <CodigoServico>2350</CodigoServico>
+    <AliquotaServicos>0.05</AliquotaServicos>
+    <ISSRetidoTomador>false</ISSRetidoTomador>
+    <Prestador>
+      <CPFCNPJ>
+        <CPF>52330209045</CPF>
+      </CPFCNPJ>
+      <RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador>
+      <Endereco>
+        <TipoLogradouro>RUA</TipoLogradouro>
+        <Logradouro>TESTEPRESTADOR</Logradouro>
+        <NumeroEndereco>1001</NumeroEndereco>
+        <ComplementoEndereco>SALA</ComplementoEndereco>
+        <Bairro>CENTRO</Bairro>
+        <Cidade>3550308</Cidade>
+        <UF>SP</UF>
+        <CEP>95082200</CEP>
+      </Endereco>
+    </Prestador>
+    <RegimeTributacao>0</RegimeTributacao>
+    <TipoNFTS>1</TipoNFTS>
+    <Assinatura>JZrMlhOIncwJ9k8VdxqgDcLyMDHL60Hf44bOGtqSqvA3YmdFLRERezME8vlXFAPvantP7IIA/ZQiupw2UBwVOVzKD6t2DYqQTAjDxg1pqO9tb2jBGAb/DMhOpV4Km4owPrQ11r/JW0ETYy3IJsUVk9Ey+4wSADvVsNEFFueWFhntPk3FweHBHz4vipTBF/xrEYLEbxCubAZgCRVYmtk3KHlI0AU1PEbGreMDEKW/Gwl41ie9Zh31it2DQ4yKvMZcKJUkM80IKIqbotQrYGat7NdyCX9855Mh0pZhh2yf69pLMR3OY737Wt0G0Wq8SAysbXFOLK/A34muHJje64Hb3Q==</Assinatura>
+  </NFTS>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>7pMcINABYBQBEpXmxc3+hRE9dxQ=</DigestValue></Reference></SignedInfo><SignatureValue>XnolJyCO5zDqaDRuOVW7IPTvLmVbmSYDtdKuLmMT44pDrtfjoyBBaUqSh0VIO31vb7t7RYHcTZ4+FoABa1JZD1UoiIW1oFLaeFYv5RGml5fO8cPmEsKC5FQ3Jtg7hNQ/sgRotvqiDQt36bw5+IyPI72SZp6w4+MY0q0gz3+QWREQ5RWJDpLwGwno5y6cIZaMoE/xxmK/qAet09FKYau4ctPyzDeyjrvHMxgfPPJf0R74E2nRnUvvj9R+hN2Ip4jWERNpcU1wUiL2trJrJWDVzmt64r5Pl6iZbA0XxvDIoqLa2SsEw+GO2gxfpTKTelBLlKvDmuGXdG+RZdTm7W9RcQ==</SignatureValue><KeyInfo><X509Data><X509Certificate>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</X509Certificate></X509Data></KeyInfo></Signature></PedidoEnvioLoteNFTS>]]></ns0:MensagemXML>
+    </ns0:TesteEnvioLoteNFTSRequest>
+  </soap:Body>
+</soap:Envelope>
