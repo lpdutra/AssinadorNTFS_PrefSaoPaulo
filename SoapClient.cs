@@ -80,22 +80,22 @@ public class SoapClient
             content.Headers.ContentType.CharSet = "UTF-8"; // Maiúsculo como no SoapUI
 
             // Logar detalhes da requisição HTTP
-            Console.WriteLine("\n=== DETALHES DA REQUISIÇÃO HTTP ===");
-            Console.WriteLine($"Method: POST");
-            Console.WriteLine($"URL: {_endpoint}");
-            Console.WriteLine($"Content-Type: {content.Headers.ContentType}");
-            Console.WriteLine($"Content-Length: {content.Headers.ContentLength}");
-            Console.WriteLine("\nRequest Headers:");
-            foreach (var header in _httpClient.DefaultRequestHeaders)
-            {
-                Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
-            }
-            Console.WriteLine("===================================\n");
+            // Console.WriteLine("\n=== DETALHES DA REQUISIÇÃO HTTP ===");
+            // Console.WriteLine($"Method: POST");
+            // Console.WriteLine($"URL: {_endpoint}");
+            // Console.WriteLine($"Content-Type: {content.Headers.ContentType}");
+            // Console.WriteLine($"Content-Length: {content.Headers.ContentLength}");
+            // Console.WriteLine("\nRequest Headers:");
+            // foreach (var header in _httpClient.DefaultRequestHeaders)
+            // {
+            //     Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
+            // }
+            // Console.WriteLine("===================================\n");
 
             Console.WriteLine("Enviando requisição...");
             var response = await _httpClient.PostAsync(_endpoint, content);
 
-            Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
+            // Console.WriteLine($"Status: {(int)response.StatusCode} {response.StatusCode}");
 
             // Ler resposta
             string responseContent = await response.Content.ReadAsStringAsync();
@@ -103,11 +103,11 @@ public class SoapClient
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine($"\n❌ Erro HTTP: {response.StatusCode}");
-                Console.WriteLine($"Resposta:\n{responseContent}");
+                // Console.WriteLine($"Resposta:\n{responseContent}");
                 return responseContent;
             }
 
-            Console.WriteLine("\n✓ Requisição enviada com sucesso!\n");
+            // Console.WriteLine("\n✓ Requisição enviada com sucesso!\n");
 
             // Extrair e formatar o retorno
             return FormatarResposta(responseContent);
