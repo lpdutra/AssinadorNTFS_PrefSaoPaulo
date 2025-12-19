@@ -52,13 +52,14 @@ public static class RealizarAssinaturasXML
 
         // 4. Salvar XML assinado
         Console.WriteLine("Salvando XML assinado...");
-        string caminhoSaida = Path.Combine(Path.GetDirectoryName(caminhoXml)!, "request.assinado.xml");
+        // string caminhoSaida = Path.Combine(Path.GetDirectoryName(caminhoXml)!, "request.assinado.xml");
+        string caminhoSaida = caminhoXml.Replace(".xml", ".assinado.xml");
         SalvarXmlSoap(nfts, caminhoSaida, certificado, cabecalho);
         Console.WriteLine($"XML assinado salvo em: {caminhoSaida}");
 
         // 5. Comparar com arquivo original usando WinMerge
-        string arquivoOriginal = @"D:\Workspace\FESP\Projeto_NTFS\python\nfts_assinado_original.xml";
-        AbrirWinMerge(caminhoSaida, arquivoOriginal);
+        // string arquivoOriginal = @"D:\Workspace\FESP\Projeto_NTFS\python\nfts_assinado_original.xml";
+        // AbrirWinMerge(caminhoSaida, arquivoOriginal);
     }
 
     /// <summary>

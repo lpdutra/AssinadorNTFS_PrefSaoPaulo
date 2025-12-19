@@ -22,7 +22,7 @@ class Program
         try
         {
             // Exemplo de uso (descomente e adapte conforme necessário)
-            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts.xml";
+            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data.xml";
             string caminhoCertificado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\Fesp cert A1.pfx";
             string senhaCertificado = "Unimed2025";
             
@@ -33,7 +33,7 @@ class Program
             // await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado);
 
             // === EXEMPLO 2: Recalcular apenas a assinatura XMLDSig de um XML existente ===
-            string caminhoXMLReassinar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-manual.xml";
+            string caminhoXMLReassinar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-recalcular-signature.xml";
             RecalcularAssinaturaXmlDSigByPathArquivo.DoProcess(caminhoXMLReassinar, caminhoCertificado, senhaCertificado);
 
             // RealizarAssinaturasXML.GetValorTagAssinaturaNFTS(xmlExemplo, caminhoCertificado, senhaCertificado);
