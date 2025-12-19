@@ -19,7 +19,8 @@ public static class RealizarAssinaturasXML
     /// <param name="caminhoXml">Caminho do arquivo XML da NFTS</param>
     /// <param name="caminhoCertificado">Caminho do certificado digital (.pfx)</param>
     /// <param name="senhaCertificado">Senha do certificado</param>
-    public static void ProcessarNFTS(string caminhoXml, string caminhoCertificado, string senhaCertificado)
+    /// <param name="formatarXmlMensagem">Se true, formata o XML dentro da tag MensagemXML com indentação</param>
+    public static void ProcessarNFTS(string caminhoXml, string caminhoCertificado, string senhaCertificado, bool formatarXmlMensagem = false)
     {
         // 1. Carregar certificado digital
         Console.WriteLine("Carregando certificado digital...");
@@ -54,7 +55,7 @@ public static class RealizarAssinaturasXML
         Console.WriteLine("Salvando XML assinado...");
         // string caminhoSaida = Path.Combine(Path.GetDirectoryName(caminhoXml)!, "request.assinado.xml");
         string caminhoSaida = caminhoXml.Replace(".xml", ".assinado.xml");
-        SalvarXmlSoap(nfts, caminhoSaida, certificado, cabecalho);
+        SalvarXmlSoap(nfts, caminhoSaida, certificado, cabecalho, formatarXmlMensagem);
         Console.WriteLine($"XML assinado salvo em: {caminhoSaida}");
 
         // 5. Comparar com arquivo original usando WinMerge
@@ -82,10 +83,10 @@ public static class RealizarAssinaturasXML
     /// <summary>
     /// Salva objeto NFTS em arquivo XML no formato SOAP TesteEnvioLoteNFTSRequest com CDATA
     /// </summary>
-    private static void SalvarXmlSoap(TpNfts nfts, string caminhoArquivo, X509Certificate2 certificado, CabecalhoPedidoEnvioLote? cabecalho = null)
+    private static void SalvarXmlSoap(TpNfts nfts, string caminhoArquivo, X509Certificate2 certificado, CabecalhoPedidoEnvioLote? cabecalho = null, bool formatarXmlMensagem = false)
     {
         // Gerar o PedidoEnvioLoteNFTS
-        string pedidoXml = GerarPedidoEnvioLoteNFTS(nfts, cabecalho, certificado);
+        string pedidoXml = GerarPedidoEnvioLoteNFTS(nfts, cabecalho, certificado, formatarXmlMensagem);
         
         // Trocar aspas simples por duplas na declaração XML
         pedidoXml = pedidoXml.Replace("<?xml version='1.0' encoding='utf-8'?>", "<?xml version=\"1.0\" encoding=\"utf-8\"?>");
@@ -136,16 +137,17 @@ public static class RealizarAssinaturasXML
     /// <summary>
     /// Gera o XML do PedidoEnvioLoteNFTS com a NFTS assinada
     /// </summary>
-    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts, CabecalhoPedidoEnvioLote? cabecalho = null, X509Certificate2? certificado = null)
+    private static string GerarPedidoEnvioLoteNFTS(TpNfts nfts, CabecalhoPedidoEnvioLote? cabecalho = null, X509Certificate2? certificado = null, bool formatarXml = false)
     {
         using (var memoryStream = new MemoryStream())
         {
             using (var xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
             {
                 OmitXmlDeclaration = false,  // Incluir declaração XML
-                Indent = false,
+                Indent = formatarXml,
+                IndentChars = formatarXml ? "  " : "",
                 Encoding = new UTF8Encoding(false), // false = sem BOM
-                NewLineHandling = NewLineHandling.None // Remove todas as quebras de linha
+                NewLineHandling = formatarXml ? NewLineHandling.Replace : NewLineHandling.None
             }))
             {
                 xmlWriter.WriteStartDocument();
@@ -160,11 +162,14 @@ public static class RealizarAssinaturasXML
                 
                 xmlWriter.WriteStartElement("Remetente");
                 xmlWriter.WriteStartElement("CPFCNPJ");
-                // Usar CPF ou CNPJ dependendo do que está preenchido
-                if (!string.IsNullOrEmpty(nfts.Prestador?.Cpfcnpj?.Cpf))
-                    xmlWriter.WriteElementString("CPF", nfts.Prestador.Cpfcnpj.Cpf);
-                else
-                    xmlWriter.WriteElementString("CNPJ", nfts.Prestador?.Cpfcnpj?.Cnpj ?? "");
+                // Usar CPF ou CNPJ do cabeçalho se disponível, senão usar do Prestador
+                if (cabecalho?.Remetente?.Cpfcnpj != null)
+                {
+                    if (!string.IsNullOrEmpty(cabecalho.Remetente.Cpfcnpj.Cpf))
+                        xmlWriter.WriteElementString("CPF", cabecalho.Remetente.Cpfcnpj.Cpf);
+                    else if (!string.IsNullOrEmpty(cabecalho.Remetente.Cpfcnpj.Cnpj))
+                        xmlWriter.WriteElementString("CNPJ", cabecalho.Remetente.Cpfcnpj.Cnpj);
+                }
                 xmlWriter.WriteEndElement(); // CPFCNPJ
                 xmlWriter.WriteEndElement(); // Remetente
                 
@@ -177,6 +182,10 @@ public static class RealizarAssinaturasXML
                     xmlWriter.WriteElementString("dtFim", cabecalho.DtFim.ToString("yyyy-MM-dd"));
                     xmlWriter.WriteElementString("QtdNFTS", cabecalho.QtdNfts.ToString());
                     xmlWriter.WriteElementString("ValorTotalServicos", cabecalho.ValorTotalServicos.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                    
+                    // ValorTotalDeducoes é opcional
+                    if (cabecalho.ValorTotalDeducoesSpecified)
+                        xmlWriter.WriteElementString("ValorTotalDeducoes", cabecalho.ValorTotalDeducoes.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
                 }
                 else
                 {
@@ -433,6 +442,32 @@ public static class RealizarAssinaturasXML
 
             var cabecalho = new CabecalhoPedidoEnvioLote();
 
+            // Ler Remetente
+            var remetenteNode = cabecalhoNode.SelectSingleNode("Remetente") ?? 
+                               cabecalhoNode.SelectSingleNode("nfts:Remetente", namespaceManager);
+            if (remetenteNode != null)
+            {
+                var cpfcnpjNode = remetenteNode.SelectSingleNode("CPFCNPJ") ?? 
+                                 remetenteNode.SelectSingleNode("nfts:CPFCNPJ", namespaceManager);
+                if (cpfcnpjNode != null)
+                {
+                    var cnpj = cpfcnpjNode.SelectSingleNode("CNPJ")?.InnerText ?? 
+                              cpfcnpjNode.SelectSingleNode("nfts:CNPJ", namespaceManager)?.InnerText;
+                    var cpf = cpfcnpjNode.SelectSingleNode("CPF")?.InnerText ?? 
+                             cpfcnpjNode.SelectSingleNode("nfts:CPF", namespaceManager)?.InnerText;
+                    
+                    cabecalho.Remetente = new TpRemetente
+                    {
+                        Cpfcnpj = new TpCpfcnpj()
+                    };
+                    
+                    if (!string.IsNullOrEmpty(cnpj))
+                        cabecalho.Remetente.Cpfcnpj.Cnpj = cnpj;
+                    else if (!string.IsNullOrEmpty(cpf))
+                        cabecalho.Remetente.Cpfcnpj.Cpf = cpf;
+                }
+            }
+
             // Ler dtInicio
             var dtInicioText = cabecalhoNode.SelectSingleNode("dtInicio")?.InnerText ?? 
                               cabecalhoNode.SelectSingleNode("nfts:dtInicio", namespaceManager)?.InnerText;
@@ -456,6 +491,15 @@ public static class RealizarAssinaturasXML
                            cabecalhoNode.SelectSingleNode("nfts:ValorTotalServicos", namespaceManager)?.InnerText;
             if (decimal.TryParse(valorText, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal valor))
                 cabecalho.ValorTotalServicos = valor;
+
+            // Ler ValorTotalDeducoes
+            var valorDeducoesText = cabecalhoNode.SelectSingleNode("ValorTotalDeducoes")?.InnerText ?? 
+                                   cabecalhoNode.SelectSingleNode("nfts:ValorTotalDeducoes", namespaceManager)?.InnerText;
+            if (!string.IsNullOrEmpty(valorDeducoesText) && decimal.TryParse(valorDeducoesText, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal valorDeducoes))
+            {
+                cabecalho.ValorTotalDeducoes = valorDeducoes;
+                cabecalho.ValorTotalDeducoesSpecified = true;
+            }
 
             return cabecalho;
         }

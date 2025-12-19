@@ -258,7 +258,7 @@ public class SoapClient
     /// Envia o XML assinado para o servidor da Prefeitura
     /// </summary>
     /// <param name="caminhoXmlAssinado">Caminho do arquivo request.assinado.xml</param>
-    private static async Task CallTesteEnvioLoteNFTS(string caminhoXmlAssinado, string caminhoCertificado, string senhaCertificado)
+    public static async Task CallTesteEnvioLoteNFTS(string caminhoXmlAssinado, string caminhoCertificado, string senhaCertificado)
     {
         try
         {

@@ -155,7 +155,7 @@ public class AssinadorXml
 
         // Ajustar TipoDocumento para 1 dígito (conforme especificação para assinatura)
         // Substitui <TipoDocumento>01</TipoDocumento> por <TipoDocumento>1</TipoDocumento>
-        xml = Regex.Replace(xml, @"<TipoDocumento>0([1-3])</TipoDocumento>", "<TipoDocumento>$1</TipoDocumento>");
+        // xml = Regex.Replace(xml, @"<TipoDocumento>0([1-3])</TipoDocumento>", "<TipoDocumento>$1</TipoDocumento>");
 
         return Encoding.UTF8.GetBytes(xml);
     }

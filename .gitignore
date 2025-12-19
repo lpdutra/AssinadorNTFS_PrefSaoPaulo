@@ -39,3 +39,6 @@ artifacts/
 # Others
 *.pfx
 *.publishsettings
+
+# Multiple tries directory
+multiple_tries/
