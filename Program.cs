@@ -19,21 +19,26 @@ class Program
         Console.WriteLine("=== Assinador de NFTS - Prefeitura de São Paulo ===");
         Console.WriteLine();
 
+        string caminhoCertificado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\Fesp cert A1.pfx";
+        string senhaCertificado = "Unimed2025";
+
         try
         {
-            // Exemplo de uso (descomente e adapte conforme necessário)
-            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
-            string caminhoCertificado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\Fesp cert A1.pfx";
-            string senhaCertificado = "Unimed2025";
-            
             // === EXEMPLO 1: Gerar múltiplos XMLs com diferentes códigos de serviço, assinar e enviar ===
-            // await MultipleTryRequests.RealizarTentativas(caminhoXml, caminhoCertificado, senhaCertificado);
+            // string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
+            //await MultipleTryRequests.GerarArquivosERealizarTentativas(caminhoXml, caminhoCertificado, senhaCertificado);
+
+            // string caminhoPastaRequests = "D:\\Workspace\\FESP\\Projeto_NTFS\\multiple_tries";
+            // await MultipleTryRequests.FazerRequisicoesDosRequestsExistentes(caminhoPastaRequests, caminhoCertificado, senhaCertificado);
             
-            RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
+            string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\LOTE_421.xml";
+            // RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
             
             // Enviar para o servidor
-            string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.assinado.xml";
-            await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado);
+            // string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.assinado.xml";
+            string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\LOTE_421.assinado.xml";
+            string caminhoResponse = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\response.xml";
+            await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado, caminhoResponse);
 
             // === EXEMPLO 2: Recalcular apenas a assinatura XMLDSig de um XML existente ===
             // string caminhoXMLReassinar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-recalcular-signature.xml";

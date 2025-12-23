@@ -257,7 +257,8 @@ public class SoapClient
     /// Envia o XML assinado para o servidor da Prefeitura
     /// </summary>
     /// <param name="caminhoXmlAssinado">Caminho do arquivo request.assinado.xml</param>
-    public static async Task CallTesteEnvioLoteNFTS(string caminhoXmlAssinado, string caminhoCertificado, string senhaCertificado)
+    /// <param name="caminhoResponse">Caminho onde o arquivo de resposta será salvo</param>
+    public static async Task CallTesteEnvioLoteNFTS(string caminhoXmlAssinado, string caminhoCertificado, string senhaCertificado, string caminhoResponse)
     {
         try
         {
@@ -270,12 +271,8 @@ public class SoapClient
             Console.WriteLine(resposta);
             
             // Salvar resposta em arquivo
-            string caminhoResposta = Path.Combine(
-                Path.GetDirectoryName(caminhoXmlAssinado)!,
-                "response.xml"
-            );
-            File.WriteAllText(caminhoResposta, resposta, Encoding.UTF8);
-            Console.WriteLine($"\nResposta salva em: {caminhoResposta}");
+            File.WriteAllText(caminhoResponse, resposta, Encoding.UTF8);
+            Console.WriteLine($"\nResposta salva em: {caminhoResponse}");
         }
         catch (Exception ex)
         {

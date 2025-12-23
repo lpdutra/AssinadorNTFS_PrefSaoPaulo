@@ -31,12 +31,138 @@ public static class MultipleTryRequests
     };
 
     /// <summary>
+    /// Processa os arquivos de request já existentes na pasta de requests
+    /// </summary>
+    /// <param name="caminhoCertificado">Caminho do certificado digital (.pfx)</param>
+    /// <param name="senhaCertificado">Senha do certificado</param>
+    public static async Task FazerRequisicoesDosRequestsExistentes(string caminhoPastaRequests, string caminhoCertificado, string senhaCertificado)
+    {
+        Console.WriteLine("=== Iniciando processamento de requests existentes ===\n");
+
+        // Definir diretórios
+        string dirBase = caminhoPastaRequests;
+        string diretorioRequests = Path.Combine(dirBase, "requests");
+        string diretorioResponses = Path.Combine(dirBase, "responses");
+
+        // Verificar se o diretório de requests existe
+        if (!Directory.Exists(diretorioRequests))
+        {
+            Console.WriteLine($"❌ Diretório de requests não encontrado: {diretorioRequests}");
+            return;
+        }
+
+        if (Directory.Exists(diretorioResponses))
+        {
+            Directory.Delete(diretorioResponses, true);
+            Console.WriteLine("✓ Diretório responses limpo");
+        }
+
+        // Criar diretório de responses se não existir
+        if (!Directory.Exists(diretorioResponses))
+        {
+            Directory.CreateDirectory(diretorioResponses);
+            Console.WriteLine("✓ Diretório de responses criado");
+        }
+
+        // Buscar todos os arquivos XML na pasta de requests
+        var arquivosRequest = Directory.GetFiles(diretorioRequests, "*.xml")
+            .Where(f => !f.EndsWith("response.xml", StringComparison.OrdinalIgnoreCase))
+            .OrderBy(f => f)
+            .ToList();
+
+        if (arquivosRequest.Count == 0)
+        {
+            Console.WriteLine($"⚠️ Nenhum arquivo XML encontrado em: {diretorioRequests}");
+            return;
+        }
+
+        Console.WriteLine($"Diretório de requests: {diretorioRequests}");
+        Console.WriteLine($"Diretório de responses: {diretorioResponses}");
+        Console.WriteLine($"Total de requests encontrados: {arquivosRequest.Count}\n");
+
+        int contadorEnviados = 0;
+        int contadorSemErros = 0;
+        
+        // Mapa para armazenar código de serviço e seus códigos de erro
+        var mapaErros = new Dictionary<int, List<string>>();
+
+        foreach (string caminhoRequest in arquivosRequest)
+        {
+            try
+            {
+                // Extrair código de serviço do nome do arquivo
+                string nomeArquivo = Path.GetFileNameWithoutExtension(caminhoRequest);
+                int codigoServico = ExtrairCodigoServicoDaNomeArquivo(nomeArquivo);
+                
+                if (codigoServico == 0)
+                {
+                    Console.WriteLine($"⚠️ Não foi possível extrair código de serviço do arquivo: {Path.GetFileName(caminhoRequest)}\n");
+                    continue;
+                }
+
+                Console.WriteLine($"[{contadorEnviados + 1}/{arquivosRequest.Count}] Processando: {Path.GetFileName(caminhoRequest)} (Código: {codigoServico})");
+
+                // Realizar chamada SOAP
+                try
+                {
+                    string nomeResponse = nomeArquivo.Replace(".xml", "response.xml");
+                    string destinoResponse = Path.Combine(diretorioResponses, nomeResponse);
+                    
+                    await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequest, caminhoCertificado, senhaCertificado, destinoResponse);
+                    contadorEnviados++;
+                    
+                    if (File.Exists(destinoResponse))
+                    {
+                        Console.WriteLine($"[{contadorEnviados}/{arquivosRequest.Count}] ✓ Response salvo: {nomeResponse}");
+                        
+                        // Extrair códigos de erro da resposta
+                        var codigosErro = ExtrairCodigosErro(codigoServico, destinoResponse);
+                        mapaErros[codigoServico] = codigosErro;
+                        
+                        if (codigosErro.Count > 0)
+                        {
+                            Console.WriteLine($"   Erros encontrados: {string.Join(", ", codigosErro)}\n");
+                        }
+                        else
+                        {
+                            contadorSemErros++;
+                            Console.WriteLine($"   ✓ Sem erros\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[{contadorEnviados}/{arquivosRequest.Count}] ⚠ Response não encontrado\n");
+                        mapaErros[codigoServico] = new List<string> { "Response não encontrado" };
+                    }
+                }
+                catch (Exception exSoap)
+                {
+                    Console.WriteLine($"[{contadorEnviados + 1}/{arquivosRequest.Count}] ✗ Erro na chamada SOAP para código {codigoServico}: {exSoap.Message}\n");
+                    mapaErros[codigoServico] = new List<string> { $"Erro SOAP: {exSoap.Message}" };
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"✗ Erro ao processar arquivo {Path.GetFileName(caminhoRequest)}: {ex.Message}\n");
+            }
+        }
+
+        Console.WriteLine($"\n=== Processo concluído ===");
+        Console.WriteLine($"Requests processados: {arquivosRequest.Count}");
+        Console.WriteLine($"Requests enviados: {contadorEnviados}");
+        Console.WriteLine($"Requests sem erros: {contadorSemErros}");
+        
+        // Exibir e salvar mapa de erros
+        ExibirESalvarMapaErros(mapaErros, dirBase);
+    }
+
+    /// <summary>
     /// Realiza tentativas de geração, assinatura e envio de XMLs com diferentes códigos de serviço
     /// </summary>
     /// <param name="caminhoXmlOrigem">Caminho do XML de origem (nfts_minimum_data.xml)</param>
     /// <param name="caminhoCertificado">Caminho do certificado digital (.pfx)</param>
     /// <param name="senhaCertificado">Senha do certificado</param>
-    public static async Task RealizarTentativas(string caminhoXmlOrigem, string caminhoCertificado, string senhaCertificado)
+    public static async Task GerarArquivosERealizarTentativas(string caminhoXmlOrigem, string caminhoCertificado, string senhaCertificado)
     {
         Console.WriteLine("=== Iniciando geração de XMLs com diferentes códigos de serviço ===\n");
 
@@ -106,17 +232,14 @@ public static class MultipleTryRequests
                 // Realizar chamada SOAP
                 try
                 {
-                    await SoapClient.CallTesteEnvioLoteNFTS(destinoRequest, caminhoCertificado, senhaCertificado);
-                    contadorEnviados++;
-                    
-                    // Mover a resposta gerada para o diretório de responses
-                    string arquivoResponse = Path.Combine(diretorioRequests, "response.xml");
                     string nomeResponse = $"response_{codigoServico}.xml";
                     string destinoResponse = Path.Combine(diretorioResponses, nomeResponse);
                     
-                    if (File.Exists(arquivoResponse))
+                    await SoapClient.CallTesteEnvioLoteNFTS(destinoRequest, caminhoCertificado, senhaCertificado, destinoResponse);
+                    contadorEnviados++;
+                    
+                    if (File.Exists(destinoResponse))
                     {
-                        File.Move(arquivoResponse, destinoResponse, true);
                         Console.WriteLine($"[{contadorEnviados}/{CodigosServicoPossiveis.Count}] ✓ Response salvo: {nomeResponse}");
                         
                         // Extrair códigos de erro da resposta
@@ -393,28 +516,30 @@ public static class MultipleTryRequests
             Console.WriteLine($"⚠️ Erro ao salvar resumo em arquivo: {ex.Message}");
         }
     }
-    
-    /// <summary>
-    /// Retorna a lista de códigos de serviço possíveis
-    /// </summary>
-    public static List<int> ObterCodigosServicoPossiveis()
-    {
-        return new List<int>(CodigosServicoPossiveis);
-    }
 
     /// <summary>
-    /// Adiciona um código de serviço à lista
+    /// Extrai o código de serviço do nome do arquivo
     /// </summary>
-    public static void AdicionarCodigoServico(int codigoServico)
+    /// <param name="nomeArquivo">Nome do arquivo sem extensão</param>
+    /// <returns>Código de serviço ou 0 se não encontrado</returns>
+    private static int ExtrairCodigoServicoDaNomeArquivo(string nomeArquivo)
     {
-        if (!CodigosServicoPossiveis.Contains(codigoServico))
+        // Tentar extrair números do final do nome do arquivo
+        // Exemplos esperados: "nfts_minimum_data_2350.assinado", "request_7889", etc.
+        
+        // Remover sufixo .assinado se existir
+        nomeArquivo = nomeArquivo.Replace(".assinado", "");
+        
+        // Dividir por underscore e pegar a última parte
+        var partes = nomeArquivo.Split('_');
+        string ultimaParte = partes[^1];
+        
+        // Tentar converter para int
+        if (int.TryParse(ultimaParte, out int codigo))
         {
-            CodigosServicoPossiveis.Add(codigoServico);
-            Console.WriteLine($"Código de serviço {codigoServico} adicionado à lista.");
+            return codigo;
         }
-        else
-        {
-            Console.WriteLine($"Código de serviço {codigoServico} já existe na lista.");
-        }
+        
+        return 0;
     }
 }

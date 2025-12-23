@@ -341,8 +341,8 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
     tree = etree.fromstring(xml_bytes, parser=parser)
     root = tree if isinstance(tree, etree._Element) else tree.getroot()
 
-    #debug_dir = ensure_path_for_debug() # LINHA COMENTADA
-    #logger.critical("Debug dir: %s", debug_dir) # LINHA COMENTADA
+    debug_dir = ensure_path_for_debug() # LINHA COMENTADA
+    logger.critical("Debug dir: %s", debug_dir) # LINHA COMENTADA
 
     logger.critical("Extraindo chave privada e certificado do PFX...")
     private_key, cert = read_pkcs12(pfx_path, pfx_pass)
@@ -372,27 +372,27 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
 
         canonical_bytes = build_tpNFTS_bytes(nfts)  # bytes for signing
 
-        # canonical_file = os.path.join(debug_dir, f"canonical_NFTS_{i}.bin") # LINHA COMENTADA
-        # canonical_txt_file = os.path.join(debug_dir, f"canonical_NFTS_{i}.txt")
-        # with open(canonical_file, "wb") as cf: # LINHA COMENTADA
-        #     cf.write(canonical_bytes) # LINHA COMENTADA
-        # with open(canonical_txt_file, "w", encoding="utf-8") as ctf:
-        #     ctf.write(canonical_bytes.decode("utf-8"))
-        # logger.critical(" canonical salvo em: %s (len=%d)", canonical_file, len(canonical_bytes)) # LINHA COMENTADA
-        # logger.critical(" canonical (texto) salvo em: %s", canonical_txt_file)
+        canonical_file = os.path.join(debug_dir, f"canonical_NFTS_{i}.bin") # LINHA COMENTADA
+        canonical_txt_file = os.path.join(debug_dir, f"canonical_NFTS_{i}.txt")
+        with open(canonical_file, "wb") as cf: # LINHA COMENTADA
+            cf.write(canonical_bytes) # LINHA COMENTADA
+        with open(canonical_txt_file, "w", encoding="utf-8") as ctf:
+            ctf.write(canonical_bytes.decode("utf-8"))
+        logger.critical(" canonical salvo em: %s (len=%d)", canonical_file, len(canonical_bytes)) # LINHA COMENTADA
+        logger.critical(" canonical (texto) salvo em: %s", canonical_txt_file)
 
         # sign with SHA1 PKCS#1 v1.5
         sig_bytes = sign_bytes_sha1_pkcs1(private_key, canonical_bytes)
         sig_b64 = base64.b64encode(sig_bytes).decode("ascii")
 
         # write signature debug files
-        # sig_bin_file = os.path.join(debug_dir, f"signature_NFTS_{i}.bin") # LINHA COMENTADA
-        # sig_b64_file = os.path.join(debug_dir, f"signature_NFTS_{i}.b64") # LINHA COMENTADA
-        # with open(sig_bin_file, "wb") as sf: # LINHA COMENTADA
-        #     sf.write(sig_bytes) # LINHA COMENTADA
-        # with open(sig_b64_file, "w", encoding="utf-8") as sf64: # LINHA COMENTADA
-        #     sf64.write(sig_b64) # LINHA COMENTADA
-        # logger.critical(" assinatura salva em: %s / %s", sig_bin_file, sig_b64_file) # LINHA COMENTADA
+        sig_bin_file = os.path.join(debug_dir, f"signature_NFTS_{i}.bin") # LINHA COMENTADA
+        sig_b64_file = os.path.join(debug_dir, f"signature_NFTS_{i}.b64") # LINHA COMENTADA
+        with open(sig_bin_file, "wb") as sf: # LINHA COMENTADA
+            sf.write(sig_bytes) # LINHA COMENTADA
+        with open(sig_b64_file, "w", encoding="utf-8") as sf64: # LINHA COMENTADA
+            sf64.write(sig_b64) # LINHA COMENTADA
+        logger.critical(" assinatura salva em: %s / %s", sig_bin_file, sig_b64_file) # LINHA COMENTADA
 
         # insert Assinatura element (clean - remove whitespace/newlines)
         assin = find_child(nfts, "Assinatura")
@@ -429,7 +429,7 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
         out_f.write(soap_bytes)
 
     logger.critical("SOAP TesteEnvioLoteNFTS salvo em: %s", output_soap_path)
-    # logger.critical("Arquivos debug em: %s", debug_dir) # LINHA COMENTADA
+    logger.critical("Arquivos debug em: %s", debug_dir) # LINHA COMENTADA
 
     # cleanup temporary PEMs
     try:
