@@ -101,10 +101,14 @@ def normalize_numeric_string(text: Optional[str]) -> str:
     return clean_text
 
 def normalize_serie_nfts(text: Optional[str]) -> str:
+    """
+    REGRA DO MANUAL: "Não fazer padding de valores (com "0" ou " ") a esquerda ou a direita"
+    SerieNFTS deve ser usada SEM padding, apenas o valor como está
+    """
     if text is None:
         return "     "
     clean_text = text.replace('\xa0', ' ').strip()
-    return (clean_text + "     ")[:5]
+    return clean_text
 
 def normalize_float_value(text: Optional[str], format_decimals: bool = True) -> str:
     """
