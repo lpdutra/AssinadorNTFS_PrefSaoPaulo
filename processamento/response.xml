@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<RetornoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts">
+  <Cabecalho Versao="1" xmlns="">
+    <Sucesso>false</Sucesso>
+    <InformacoesLoteNFTS>
+      <NumeroLote>1634782967</NumeroLote>
+      <Remetente>
+        <CPFCNPJ>
+          <CNPJ>43643139000166</CNPJ>
+        </CPFCNPJ>
+      </Remetente>
+      <dtEnvioLote>2025-12-24T09:44:00.5375668-03:00</dtEnvioLote>
+      <QtdeNFTSProcessadas>0</QtdeNFTSProcessadas>
+      <TempoProcessamento>0</TempoProcessamento>
+      <ValorTotalServicos>0</ValorTotalServicos>
+    </InformacoesLoteNFTS>
+  </Cabecalho>
+  <ListaRetornoLote xmlns="">
+    <Alerta>
+      <Codigo>464</Codigo>
+      <Descricao>Detalhe: Os dados de endereço informados serão substituídos pelos relacionados ao CEP informado.</Descricao>
+      <IdentificacaoDocumento>
+        <Posicao>1</Posicao>
+        <ChaveDocumento>
+          <InscricaoMunicipal>10259627</InscricaoMunicipal>
+          <SerieNFTS>A</SerieNFTS>
+          <NumeroDocumento>36898</NumeroDocumento>
+        </ChaveDocumento>
+      </IdentificacaoDocumento>
+    </Alerta>
+    <Erro>
+      <Codigo>429</Codigo>
+      <Descricao>Detalhe: O campo Inscrição Municipal do prestador (10259627) só deverá ser preenchido para prestadores estabelecidos no município de São Paulo.</Descricao>
+      <IdentificacaoDocumento>
+        <Posicao>1</Posicao>
+        <ChaveDocumento>
+          <InscricaoMunicipal>10259627</InscricaoMunicipal>
+          <SerieNFTS>A</SerieNFTS>
+          <NumeroDocumento>36898</NumeroDocumento>
+        </ChaveDocumento>
+      </IdentificacaoDocumento>
+    </Erro>
+    <Erro>
+      <Codigo>444</Codigo>
+      <Descricao>Detalhe: Data de pagamento da NFTS somente pode ser preenchida por tomadores ou intermediários Órgãos Públicos.</Descricao>
+      <IdentificacaoDocumento>
+        <Posicao>1</Posicao>
+        <ChaveDocumento>
+          <InscricaoMunicipal>10259627</InscricaoMunicipal>
+          <SerieNFTS>A</SerieNFTS>
+          <NumeroDocumento>36898</NumeroDocumento>
+        </ChaveDocumento>
+      </IdentificacaoDocumento>
+    </Erro>
+    <Erro>
+      <Codigo>611</Codigo>
+      <Descricao>Detalhe: O tomador de serviços informado é o próprio intermediário.</Descricao>
+      <IdentificacaoDocumento>
+        <Posicao>1</Posicao>
+        <ChaveDocumento>
+          <InscricaoMunicipal>10259627</InscricaoMunicipal>
+          <SerieNFTS>A</SerieNFTS>
+          <NumeroDocumento>36898</NumeroDocumento>
+        </ChaveDocumento>
+      </IdentificacaoDocumento>
+    </Erro>
+  </ListaRetornoLote>
+</RetornoEnvioLoteNFTS>

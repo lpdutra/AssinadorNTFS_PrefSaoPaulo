@@ -91,7 +91,7 @@ public static class MultipleTryRequests
             try
             {
                 // Extrair código de serviço do nome do arquivo
-                string nomeArquivo = Path.GetFileNameWithoutExtension(caminhoRequest);
+                string nomeArquivo = Path.GetFileName(caminhoRequest);
                 int codigoServico = ExtrairCodigoServicoDaNomeArquivo(nomeArquivo);
                 
                 if (codigoServico == 0)
@@ -524,8 +524,10 @@ public static class MultipleTryRequests
     /// <returns>Código de serviço ou 0 se não encontrado</returns>
     private static int ExtrairCodigoServicoDaNomeArquivo(string nomeArquivo)
     {
+        nomeArquivo = nomeArquivo.ToLower().Replace(".xml", "");
+
         // Tentar extrair números do final do nome do arquivo
-        // Exemplos esperados: "nfts_minimum_data_2350.assinado", "request_7889", etc.
+        // Exemplos esperados: "nfts_minimum_data_2350.assinado", "lote_7889", etc.
         
         // Remover sufixo .assinado se existir
         nomeArquivo = nomeArquivo.Replace(".assinado", "");

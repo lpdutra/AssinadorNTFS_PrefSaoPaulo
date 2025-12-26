@@ -1,0 +1,1 @@
+py sign_xml_soap_nfts_corrigido_com_debug.py LOTE_421.xml "Fesp cert A1.pfx" Unimed2025 LOTE_421.assinado.xml

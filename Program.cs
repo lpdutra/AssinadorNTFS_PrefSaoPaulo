@@ -28,9 +28,10 @@ class Program
             // string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
             //await MultipleTryRequests.GerarArquivosERealizarTentativas(caminhoXml, caminhoCertificado, senhaCertificado);
 
-            // string caminhoPastaRequests = "D:\\Workspace\\FESP\\Projeto_NTFS\\multiple_tries";
-            // await MultipleTryRequests.FazerRequisicoesDosRequestsExistentes(caminhoPastaRequests, caminhoCertificado, senhaCertificado);
+            string caminhoPastaRequests = "D:\\Workspace\\FESP\\Projeto_NTFS\\multiple_tries";
+            await MultipleTryRequests.FazerRequisicoesDosRequestsExistentes(caminhoPastaRequests, caminhoCertificado, senhaCertificado);
             
+            // string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
             string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\LOTE_421.xml";
             // RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
             
@@ -38,7 +39,7 @@ class Program
             // string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.assinado.xml";
             string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\LOTE_421.assinado.xml";
             string caminhoResponse = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\response.xml";
-            await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado, caminhoResponse);
+            // await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado, caminhoResponse);
 
             // === EXEMPLO 2: Recalcular apenas a assinatura XMLDSig de um XML existente ===
             // string caminhoXMLReassinar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-recalcular-signature.xml";

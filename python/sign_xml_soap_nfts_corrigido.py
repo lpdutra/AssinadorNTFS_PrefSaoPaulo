@@ -87,6 +87,9 @@ def read_pkcs12(pfx_path: str, password: Optional[str]) -> Tuple[object, object]
 # ---------------- Normalizações ----------------
 
 def normalize_numeric_string(text: Optional[str]) -> str:
+    """
+    Normaliza retirando os zeros a esquerda de strings numéricas.
+    """
     if text is None:
         return ""
     clean_text = text.replace('\xa0', ' ').strip()
@@ -103,12 +106,26 @@ def normalize_serie_nfts(text: Optional[str]) -> str:
     clean_text = text.replace('\xa0', ' ').strip()
     return (clean_text + "     ")[:5]
 
-def normalize_float_value(text: Optional[str]) -> str:
+def normalize_float_value(text: Optional[str], format_decimals: bool = True) -> str:
+    """
+    Normaliza valor float.
+    
+    Args:
+        text: Texto a ser normalizado
+        format_decimals: Se True, formata para 2 casas decimais (ex: 3.5 -> 3.50)
+                        Se False, mantém casas decimais originais mas remove zeros à esquerda (ex: 03.025 -> 3.025)
+    """
     if text is None:
         return ""
     clean_text = text.replace('\xa0', ' ').replace(',', '.').strip()
     try:
-        return "{:.2f}".format(float(clean_text))
+        float_value = float(clean_text)
+        if format_decimals:
+            return "{:.2f}".format(float_value)
+        else:
+            # Converte para float e volta para string, removendo zeros à esquerda
+            # mas mantendo as casas decimais originais
+            return str(float_value)
     except Exception:
         return clean_text
 
@@ -133,7 +150,7 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
         clean_tp.remove(assin)
 
     canonical_order_map = OrderedDict([
-        ("TipoDocumento", "num_str"),
+        ("TipoDocumento", "str"),
         ("ChaveDocumento", {
             "InscricaoMunicipal": "str",
             "SerieNFTS": "serie",
@@ -142,8 +159,8 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
         ("DataPrestacao", "str"),
         ("StatusNFTS", "str"),
         ("TributacaoNFTS", "str"),
-        ("ValorServicos", "float"),
-        ("ValorDeducoes", "float"),
+        ("ValorServicos", "float_currency"),
+        ("ValorDeducoes", "float_currency"),
         ("CodigoServico", "num_str"),
         ("CodigoSubItem", "num_str"),
         ("AliquotaServicos", "float"),
@@ -151,8 +168,8 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
         ("ISSRetidoIntermediario", "bool"),
         ("Prestador", {
             "CPFCNPJ": {
-                "CNPJ": "num_str",
-                "CPF": "num_str",
+                "CNPJ": "str",
+                "CPF": "str",
             },
             "InscricaoMunicipal": "str",
             "RazaoSocialPrestador": "str",
@@ -174,8 +191,8 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
         ("TipoNFTS", "num_str"),
         ("Tomador", {
             "CPFCNPJ": {
-                "CPF": "num_str",
-                "CNPJ": "num_str",
+                "CPF": "str",
+                "CNPJ": "str",
             },
             "RazaoSocial": "str",
         }),
@@ -190,10 +207,12 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
             if isinstance(definition, str):
                 text_value = original_child.text or ""
                 if definition == "num_str":
-                    #final = normalize_numeric_string(text_value)
-                    final = text_value.replace('\xa0', ' ').strip()
+                    final = normalize_numeric_string(text_value)
+                    # final = text_value.replace('\xa0', ' ').strip()
+                elif definition == "float_currency":
+                    final = normalize_float_value(text_value, format_decimals=True)
                 elif definition == "float":
-                    final = normalize_float_value(text_value)
+                    final = normalize_float_value(text_value, format_decimals=False)
                 elif definition == "bool":
                     final = normalize_boolean_value(text_value)
                 elif definition == "serie":
