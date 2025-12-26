@@ -1,0 +1,1 @@
+py sign_xml_soap_nfts_corrigido_com_debug.py --verify LOTE_421.validar.ass.xml "Fesp cert A1.pfx" Unimed2025

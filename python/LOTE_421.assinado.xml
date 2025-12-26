@@ -4,7 +4,7 @@
     <ns0:TesteEnvioLoteNFTSRequest xmlns:ns0="http://www.prefeitura.sp.gov.br/nfts">
       <ns0:VersaoSchema>2</ns0:VersaoSchema>
       <ns0:MensagemXML><![CDATA[<?xml version='1.0' encoding='utf-8'?>
-<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho xmlns="" Versao="1"><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>false</transacao><dtInicio>2025-02-01</dtInicio><dtFim>2025-02-28</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>54707.56</ValorTotalServicos></Cabecalho><NFTS xmlns=""><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>A</SerieNFTS><NumeroDocumento>36898</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-02-04</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>54707.56</ValorServicos><ValorDeducoes>0.00</ValorDeducoes><CodigoServico>05312</CodigoServico><CodigoSubItem>0423</CodigoSubItem><AliquotaServicos>0.025</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>01608379000180</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocialPrestador><Endereco><TipoLogradouro>Rua</TipoLogradouro><Logradouro>R RIO BRANCO 27</Logradouro><NumeroEndereco>65</NumeroEndereco><Bairro>JD PAULISTA</Bairro><Cidade>BAURU</Cidade><UF>SP</UF><CEP>17017220</CEP></Endereco></Prestador><RegimeTributacao>0</RegimeTributacao><DataPagamento>2025-03-31</DataPagamento><Discriminacao>Atendimentos realizados</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>UNIMED ESTSP FED ESTAD COOP MEDICA</RazaoSocial></Tomador><Assinatura>ICc9PL4eUgxmdV7eH0rqYe6tI1uKLslrIpDcWQ91KZhLYSCAOul6r3riXMZhNK+MlmxwE4IGn5FhhiS9k0+X9FuH3P4cPpRgr1R47d+wko75graa3JSFQ5OgQWoSAJvRKWbmouP5DNKL2dztd+ykDjzBBJX0ox2GS0vSPH775tWurDe6vh239jFtZNVUnyYfvl4qOfDjtdk7O3Sg/OigGGzpbpRteXzAOdEv+3TFBNVc9tPDVC1VPVqXqFaqYUDZyAZDi+tPWaojPwMcGpgc0ocWem7/UbJQaLxQzh5PWPd8ju/hu5ahhdg5EhGZontlFVRm6YefiKj0w1qyCMAmMQ==</Assinatura></NFTS><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho xmlns="" Versao="1"><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>false</transacao><dtInicio>2025-02-01</dtInicio><dtFim>2025-02-28</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>54707.56</ValorTotalServicos></Cabecalho><NFTS xmlns=""><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>A</SerieNFTS><NumeroDocumento>36898</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-02-04</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>54707.56</ValorServicos><ValorDeducoes>0.00</ValorDeducoes><CodigoServico>05312</CodigoServico><CodigoSubItem>0423</CodigoSubItem><AliquotaServicos>0.025</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>01608379000180</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocialPrestador><Endereco><TipoLogradouro>Rua</TipoLogradouro><Logradouro>R RIO BRANCO 27</Logradouro><NumeroEndereco>65</NumeroEndereco><Bairro>JD PAULISTA</Bairro><Cidade>BAURU</Cidade><UF>SP</UF><CEP>17017220</CEP></Endereco></Prestador><RegimeTributacao>0</RegimeTributacao><DataPagamento>2025-03-31</DataPagamento><Discriminacao>Atendimentos realizados</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>UNIMED ESTSP FED ESTAD COOP MEDICA</RazaoSocial></Tomador><Assinatura>WzEHyd+jYBaOxulbfQ/SeBJt6fAjk8d/V7GgaAS7HHlPTkvm8sB2Luw7J4XoGjhU4xWQnzyec/7y7Yhbl/7bkbISLd3GdagljY1J/sDgRvRoHVC20XFkQJ3VbJQhAfO6eqNh/4Z+K0YMgftYY8UWyZqCbhCU6qFJ2t+2ZqGfep6IyvEWO5tWU/wAMbL7G6Em4SEa/oFQzjSRPkCguOkKMVq1c4FxGyxzDKXE6qKy6GGq4f7Qx1OT9lJDQgucHTpDPhZMyE6sBOuTy4TVd90HK5KJETsE5Btm3zkrL3rIWeRCBhAPqA55Jfm0/VmEhaw3o69shDmgQshMoGSt1zv3gA==</Assinatura></NFTS><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
 <ds:SignedInfo>
 <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
@@ -13,15 +13,15 @@
 <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
 </ds:Transforms>
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>+hCFPq9xgVfVoa9ThvR53DivalI=</ds:DigestValue>
+<ds:DigestValue>n7t1bJK61l1AkpuGmS2FzEj+qKs=</ds:DigestValue>
 </ds:Reference>
 </ds:SignedInfo>
-<ds:SignatureValue>eiQqdSQQ85ppdL+GNABRRWCEDr8jkIAiYlHYnUG2FvOKZzvvzgKVvkwV6TacG+ui
-w7oVF3Wdb3sv8II5JHI7mC4mVKYUhNcNeQcmNs9UGqAYvYY5AUudxMFw3QXboE/D
-qQQvwfBykpCrJ81yLE1Aku6piIBJyUPuijfHbydJBPIP7gIBodP3/dQzrZJOah3z
-sVrbGn/IihX1rDYU2Zyqjy6JbaTYQ8+uCBMfOlaejTYpXjW35Qct+lmmWzY43jev
-r47LzALXblwYsx4P+sS8ZGAfLzR9iYrfLZgKVPVVHqi06UqlUPzusc9zV4CaDdyo
-klmQC1YUkTgK8CskwZLGvg==</ds:SignatureValue>
+<ds:SignatureValue>WZIO0lTVN3GcOQQCJPV6G4zY11hk0zpB5fr359tZ23qFdDtgzT+c/aBb/1Gicltr
+cY0gmIDb29PYY/WQHIY9WpIzmoonuKJyFouOLyiuf5/4O+hy/vNmfWqfDUYWk5YG
+deLnV5IexpW2P4I0MG+Hhfpo6OMuZwc94EVm5Xe2C+z9rmDByxazSwnC99PQAbtK
+A68qPksNrKlzZG2zbnJar5/faMPLsHp62bYTIN3FEY3ov2ootAlfXxR8+P3/JGys
+CARyVJ3WtzVlE9T/0nwM4yNdXc8pwq8VhAA/GviChH0axWQmq9UL+Hpwln3XNiOS
+ZYzMb3sf31C2pc2Gg1t8SA==</ds:SignatureValue>
 <ds:KeyInfo>
 <ds:X509Data>
 <ds:X509Certificate>MIIIJTCCBg2gAwIBAgIQcclX3XrAmRWmNUSp7HuLZzANBgkqhkiG9w0BAQsFADB4

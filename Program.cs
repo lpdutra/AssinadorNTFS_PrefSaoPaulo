@@ -7,12 +7,13 @@ using AssinadorNFTS.Models;
 
 namespace AssinadorNFTS;
 
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
 class Program
 {
 
-    private static string xmlExemplo = "<tpNFTS><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.31</ValorServicos><ValorDeducoes>1300.31</ValorDeducoes><CodigoServico>1001</CodigoServico><AliquotaServicos>0.05</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><Prestador><CPFCNPJ><CNPJ>45443039000111</CNPJ></CPFCNPJ><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>1001</NumeroEndereco><ComplementoEndereco>SALA</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco></Prestador><RegimeTributacao>5</RegimeTributacao><TipoNFTS>1</TipoNFTS></tpNFTS>";
+    private static readonly string xmlExemplo = "<tpNFTS><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.31</ValorServicos><ValorDeducoes>1300.31</ValorDeducoes><CodigoServico>1001</CodigoServico><AliquotaServicos>0.05</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><Prestador><CPFCNPJ><CNPJ>45443039000111</CNPJ></CPFCNPJ><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>1001</NumeroEndereco><ComplementoEndereco>SALA</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco></Prestador><RegimeTributacao>5</RegimeTributacao><TipoNFTS>1</TipoNFTS></tpNFTS>";
 
-    private static string DEBUG_DIR = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_debug";
+    private static readonly string DEBUG_DIR = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_debug";
     
     static async Task Main(string[] args)
     {
@@ -28,18 +29,19 @@ class Program
             // string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
             //await MultipleTryRequests.GerarArquivosERealizarTentativas(caminhoXml, caminhoCertificado, senhaCertificado);
 
+
             string caminhoPastaRequests = "D:\\Workspace\\FESP\\Projeto_NTFS\\multiple_tries";
-            await MultipleTryRequests.FazerRequisicoesDosRequestsExistentes(caminhoPastaRequests, caminhoCertificado, senhaCertificado);
-            
+            // await MultipleTryRequests.FazerRequisicoesDosRequestsExistentes(caminhoPastaRequests, caminhoCertificado, senhaCertificado);
+
             // string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
             string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\LOTE_421.xml";
-            // RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
+            RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
             
             // Enviar para o servidor
             // string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.assinado.xml";
             string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\LOTE_421.assinado.xml";
             string caminhoResponse = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\response.xml";
-            // await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado, caminhoResponse);
+            await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado, caminhoResponse);
 
             // === EXEMPLO 2: Recalcular apenas a assinatura XMLDSig de um XML existente ===
             // string caminhoXMLReassinar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-recalcular-signature.xml";
@@ -167,3 +169,4 @@ class Program
     }
 
 }
+#pragma warning restore CS0219 // Variable is assigned but its value is never used

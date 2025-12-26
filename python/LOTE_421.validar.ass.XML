@@ -1,0 +1,59 @@
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts">
+	<Cabecalho xmlns="" Versao="1">
+		<Remetente>
+			<CPFCNPJ>
+				<CNPJ>43643139000166</CNPJ>
+			</CPFCNPJ>
+		</Remetente>
+		<transacao>false</transacao>
+		<dtInicio>2025-02-01</dtInicio>
+		<dtFim>2025-02-28</dtFim>
+		<QtdNFTS>1</QtdNFTS>
+		<ValorTotalServicos>54707.56</ValorTotalServicos>
+	</Cabecalho>
+	<NFTS xmlns="">
+		<TipoDocumento>01</TipoDocumento>
+		<ChaveDocumento>
+			<InscricaoMunicipal>10259627</InscricaoMunicipal>
+			<SerieNFTS>A</SerieNFTS>
+			<NumeroDocumento>36898</NumeroDocumento>
+		</ChaveDocumento>
+		<DataPrestacao>2025-02-04</DataPrestacao>
+		<StatusNFTS>N</StatusNFTS>
+		<TributacaoNFTS>T</TributacaoNFTS>
+		<ValorServicos>54707.56</ValorServicos>
+		<ValorDeducoes>0.00</ValorDeducoes>
+		<CodigoServico>05312</CodigoServico>
+		<CodigoSubItem>0423</CodigoSubItem>
+		<AliquotaServicos>0.025</AliquotaServicos>
+		<ISSRetidoTomador>false</ISSRetidoTomador>
+		<ISSRetidoIntermediario>false</ISSRetidoIntermediario>
+		<Prestador>
+			<CPFCNPJ>
+				<CNPJ>01608379000180</CNPJ>
+			</CPFCNPJ>
+			<InscricaoMunicipal>10259627</InscricaoMunicipal>
+			<RazaoSocialPrestador>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocialPrestador>
+			<Endereco>
+				<TipoLogradouro>Rua</TipoLogradouro>
+				<Logradouro>R RIO BRANCO 27</Logradouro>
+				<NumeroEndereco>65</NumeroEndereco>
+				<Bairro>JD PAULISTA</Bairro>
+				<Cidade>BAURU</Cidade>
+				<UF>SP</UF>
+				<CEP>17017220</CEP>
+			</Endereco>
+		</Prestador>
+		<RegimeTributacao>0</RegimeTributacao>
+		<DataPagamento>2025-03-31</DataPagamento>
+		<Discriminacao>Atendimentos realizados</Discriminacao>
+		<TipoNFTS>2</TipoNFTS>
+		<Tomador>
+			<CPFCNPJ>
+				<CNPJ>43643139000166</CNPJ>
+			</CPFCNPJ>
+			<RazaoSocial>UNIMED ESTSP FED ESTAD COOP MEDICA</RazaoSocial>
+		</Tomador>
+		<Assinatura>ICc9PL4eUgxmdV7eH0rqYe6tI1uKLslrIpDcWQ91KZhLYSCAOul6r3riXMZhNK+MlmxwE4IGn5FhhiS9k0+X9FuH3P4cPpRgr1R47d+wko75graa3JSFQ5OgQWoSAJvRKWbmouP5DNKL2dztd+ykDjzBBJX0ox2GS0vSPH775tWurDe6vh239jFtZNVUnyYfvl4qOfDjtdk7O3Sg/OigGGzpbpRteXzAOdEv+3TFBNVc9tPDVC1VPVqXqFaqYUDZyAZDi+tPWaojPwMcGpgc0ocWem7/UbJQaLxQzh5PWPd8ju/hu5ahhdg5EhGZontlFVRm6YefiKj0w1qyCMAmMQ==</Assinatura>
+	</NFTS>
+</PedidoEnvioLoteNFTS>

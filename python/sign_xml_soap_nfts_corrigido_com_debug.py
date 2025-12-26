@@ -101,10 +101,14 @@ def normalize_numeric_string(text: Optional[str]) -> str:
     return clean_text
 
 def normalize_serie_nfts(text: Optional[str]) -> str:
+    """
+    REGRA DO MANUAL: "Não fazer padding de valores (com "0" ou " ") a esquerda ou a direita"
+    SerieNFTS deve ser usada SEM padding, apenas o valor como está
+    """
     if text is None:
-        return "     "
+        return ""
     clean_text = text.replace('\xa0', ' ').strip()
-    return (clean_text + "     ")[:5]
+    return clean_text
 
 def normalize_float_value(text: Optional[str], format_decimals: bool = True) -> str:
     """
@@ -244,16 +248,79 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
 
 # ---------------- assinatura SHA1 PKCS#1 v1.5 ----------------
 
-def sign_bytes_sha1_pkcs1(private_key_obj, data_bytes: bytes) -> bytes:
+def compute_sha1_hash(data_bytes: bytes) -> bytes:
+    """
+    Calcula o hash SHA1 dos dados.
+    """
+    hasher = hashes.Hash(hashes.SHA1())
+    hasher.update(data_bytes)
+    return hasher.finalize()
+
+def sign_bytes_sha1_pkcs1(private_key_obj, data_bytes: bytes, debug_dir: str = None, nfts_counter: int = 0) -> bytes:
     """
     Assina os bytes usando SHA1 + PKCS1v1.5.
+    Calcula o hash explicitamente para debug.
     """
-    signature = private_key_obj.sign(
+    # Calcular hash explicitamente
+    hash_bytes = compute_sha1_hash(data_bytes)
+    
+    # Salvar hash para debug (comparação com C#)
+    if debug_dir:
+        try:
+            hash_file = os.path.join(debug_dir, f"hash_NFTS_{nfts_counter}.bin")
+            with open(hash_file, "wb") as hf:
+                hf.write(hash_bytes)
+            logger.critical(" hash salvo em: %s (len=%d, hex=%s)", hash_file, len(hash_bytes), hash_bytes.hex())
+        except Exception as ex:
+            logger.critical(" Aviso: Não foi possível salvar arquivo de hash: %s", ex)
+    
+    # Método 1: Assinar os dados diretamente (método atual - cryptography calcula hash internamente)
+    signature_method1 = private_key_obj.sign(
         data_bytes,
         padding.PKCS1v15(),
         hashes.SHA1()
     )
-    return signature
+    
+    # Método 2: Assinar o hash diretamente (como C# faz com SignHash)
+    # Nota: RSA PKCS#1 v1.5 com SHA1 requer DigestInfo prefix antes do hash
+    # O método sign() já adiciona isso automaticamente, mas ao assinar hash diretamente precisamos fazer manualmente
+    # Para testar, vamos usar a biblioteca de baixo nível
+    try:
+        from cryptography.hazmat.primitives.asymmetric import rsa
+        from cryptography.hazmat.backends import default_backend
+        
+        # Construir DigestInfo para SHA1 (conforme PKCS#1 v1.5)
+        # SHA1 DigestInfo: 30 21 30 09 06 05 2b 0e 03 02 1a 05 00 04 14 [20 bytes hash]
+        digest_info = bytes.fromhex('3021300906052b0e03021a05000414') + hash_bytes
+        
+        # Assinar usando operação de baixo nível
+        from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
+        if isinstance(private_key_obj, RSAPrivateKey):
+            # Método de baixo nível: encrypt com private key = sign
+            # Mas cryptography não expõe isso diretamente, vamos usar apenas o método 1
+            signature_method2 = signature_method1  # fallback para método 1
+        else:
+            signature_method2 = signature_method1
+    except Exception:
+        signature_method2 = signature_method1
+    
+    # Salvar ambas as assinaturas para comparação
+    if debug_dir:
+        try:
+            sig_method1_file = os.path.join(debug_dir, f"signature_NFTS_{nfts_counter}_method1.bin")
+            with open(sig_method1_file, "wb") as sf:
+                sf.write(signature_method1)
+            logger.critical(" assinatura método 1 (sign data) salva em: %s (len=%d)", sig_method1_file, len(signature_method1))
+            
+            if signature_method1 != signature_method2:
+                sig_method2_file = os.path.join(debug_dir, f"signature_NFTS_{nfts_counter}_method2.bin")
+                with open(sig_method2_file, "wb") as sf:
+                    sf.write(signature_method2)
+                logger.critical(" assinatura método 2 (sign hash) salva em: %s (len=%d)", sig_method2_file, len(signature_method2))
+        except Exception as ex:
+            logger.critical(" Aviso: Não foi possível salvar arquivos de assinatura de comparação: %s", ex)
+    
+    return signature_method1
 
 # ---------------- assinatura do documento (xmlsec) - opcional ----------------
 
@@ -335,6 +402,13 @@ def verify_signed_nfts(xml_path: str, pfx_path: str, pfx_pass: str):
         with open(dbgname, "wb") as df:
             df.write(canonical_bytes)
         logger.critical(" canonical salvo em: %s (len=%d)", dbgname, len(canonical_bytes))
+        
+        # Calcular e salvar hash para comparação
+        hash_bytes = compute_sha1_hash(canonical_bytes)
+        hash_file = os.path.join(debug_dir, f"hash_NFTS_{i}.bin")
+        with open(hash_file, "wb") as hf:
+            hf.write(hash_bytes)
+        logger.critical(" hash salvo em: %s (len=%d, hex=%s)", hash_file, len(hash_bytes), hash_bytes.hex())
 
         try:
             pubkey.verify(sig_bytes, canonical_bytes, padding.PKCS1v15(), hashes.SHA1())
@@ -342,10 +416,7 @@ def verify_signed_nfts(xml_path: str, pfx_path: str, pfx_pass: str):
         except Exception as e:
             logger.critical(" VERIFICAÇÃO FALHOU: %s", e)
             # dump diagnostics
-            hasher = hashes.Hash(hashes.SHA1())
-            hasher.update(canonical_bytes)
-            digest = hasher.finalize()
-            logger.critical(" SHA1(canonical) hex: %s", digest.hex())
+            logger.critical(" SHA1(canonical) hex: %s", hash_bytes.hex())
             logger.critical(" assinatura len: %d bytes", len(sig_bytes))
             logger.critical(" certificado subject: %s", cert.subject.rfc4514_string())
 
@@ -367,7 +438,8 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
     private_key, cert = read_pkcs12(pfx_path, pfx_pass)
 
     # save PEMs for xmlsec (if necessary)
-    tmpdir = tempfile.gettempdir()
+    #tmpdir = tempfile.gettempdir()
+    tmpdir = debug_dir
     cert_pem_path = os.path.join(tmpdir, "tmp_cert_nfts.pem")
     key_pem_path = os.path.join(tmpdir, "tmp_key_nfts.pem")
     try:
@@ -401,7 +473,7 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
         logger.critical(" canonical (texto) salvo em: %s", canonical_txt_file)
 
         # sign with SHA1 PKCS#1 v1.5
-        sig_bytes = sign_bytes_sha1_pkcs1(private_key, canonical_bytes)
+        sig_bytes = sign_bytes_sha1_pkcs1(private_key, canonical_bytes, debug_dir, i)
         sig_b64 = base64.b64encode(sig_bytes).decode("ascii")
 
         # write signature debug files

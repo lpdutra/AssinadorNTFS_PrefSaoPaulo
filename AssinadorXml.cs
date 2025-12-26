@@ -57,7 +57,7 @@ public class AssinadorXml
             }
         }
         
-        byte[] signature = CreateSignaturePKCS1(x509certificate, arrayToSign);
+        byte[] signature = CreateSignaturePKCS1(x509certificate, arrayToSign, debugDir, nftsCounter);
         
         // Salvar arquivos de assinatura para debug
         if (!string.IsNullOrEmpty(debugDir))
@@ -99,7 +99,7 @@ public class AssinadorXml
     /// <param name="x509">Certificado digital</param>
     /// <param name="value">Dados a serem assinados</param>
     /// <returns>Assinatura digital</returns>
-    private static byte[] CreateSignaturePKCS1(X509Certificate2 x509, byte[] value)
+    private static byte[] CreateSignaturePKCS1(X509Certificate2 x509, byte[] value, string? debugDir = null, int nftsCounter = 0)
     {
         // Usar GetRSAPrivateKey() em vez de PrivateKey (obsoleto)
         using (RSA? rsa = x509.GetRSAPrivateKey())
@@ -111,6 +111,20 @@ public class AssinadorXml
             using (var sha1 = SHA1.Create())
             {
                 byte[] hash = sha1.ComputeHash(value);
+
+                if(!string.IsNullOrEmpty(debugDir))
+                {
+                    try
+                    {
+                        string hashFile = Path.Combine(debugDir, $"hash_NFTS_{nftsCounter}.bin");
+                        File.WriteAllBytes(hashFile, hash);
+                        Console.WriteLine($" hash salvo em: {hashFile} (len={hash.Length})");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Aviso: Não foi possível salvar arquivo de hash: {ex.Message}");
+                    }
+                }
                 
                 // Assinar usando SignHash diretamente
                 return rsa.SignHash(hash, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
