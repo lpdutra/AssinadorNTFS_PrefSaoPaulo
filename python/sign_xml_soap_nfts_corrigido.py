@@ -158,7 +158,7 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
         ("ChaveDocumento", {
             "InscricaoMunicipal": "str",
             "SerieNFTS": "serie",
-            "NumeroDocumento": "num_str",
+            "NumeroDocumento": "str",
         }),
         ("DataPrestacao", "str"),
         ("StatusNFTS", "str"),
@@ -185,7 +185,7 @@ def build_tpNFTS_bytes(nfts_node: etree._Element) -> bytes:
                 "Bairro": "str",
                 "Cidade": "num_str",
                 "UF": "str",
-                "CEP": "str",
+                "CEP": "num_str",
             },
             "Email": "str_opt",
         }),

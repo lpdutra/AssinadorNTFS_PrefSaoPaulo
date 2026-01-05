@@ -11,7 +11,7 @@ namespace AssinadorNFTS;
 class Program
 {
 
-    private static readonly string xmlExemplo = "<tpNFTS><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>12345</SerieNFTS><NumeroDocumento>12345</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-15</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.31</ValorServicos><ValorDeducoes>1300.31</ValorDeducoes><CodigoServico>1001</CodigoServico><AliquotaServicos>0.05</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><Prestador><CPFCNPJ><CNPJ>45443039000111</CNPJ></CPFCNPJ><RazaoSocialPrestador>EMPRESAFICTICIALTDA</RazaoSocialPrestador><Endereco><TipoLogradouro>RUA</TipoLogradouro><Logradouro>TESTEPRESTADOR</Logradouro><NumeroEndereco>1001</NumeroEndereco><ComplementoEndereco>SALA</ComplementoEndereco><Bairro>CENTRO</Bairro><Cidade>3550308</Cidade><UF>SP</UF><CEP>95082200</CEP></Endereco></Prestador><RegimeTributacao>5</RegimeTributacao><TipoNFTS>1</TipoNFTS></tpNFTS>";
+    private static readonly string xmlExemplo = "<tpNFTS><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>A</SerieNFTS><NumeroDocumento>36898</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-02-04</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>54707.56</ValorServicos><ValorDeducoes>0.00</ValorDeducoes><CodigoServico>5312</CodigoServico><CodigoSubItem>423</CodigoSubItem><AliquotaServicos>0.025</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>01608379000180</CNPJ></CPFCNPJ><InscricaoMunicipal>10259627</InscricaoMunicipal><RazaoSocialPrestador>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocialPrestador><Endereco><TipoLogradouro>Rua</TipoLogradouro><Logradouro>R RIO BRANCO 27</Logradouro><NumeroEndereco>65</NumeroEndereco><Bairro></Bairro><Cidade>BAURU</Cidade><UF>SP</UF><CEP>17017220</CEP></Endereco></Prestador><RegimeTributacao>0</RegimeTributacao><Discriminacao>Atendimentos realizados</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ><RazaoSocial>UNIMED ESTSP FED ESTAD COOP MEDICA</RazaoSocial></Tomador></tpNFTS>";
 
     private static readonly string DEBUG_DIR = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_debug";
     
@@ -27,7 +27,7 @@ class Program
         {
             // === EXEMPLO 1: Gerar múltiplos XMLs com diferentes códigos de serviço, assinar e enviar ===
             // string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
-            //await MultipleTryRequests.GerarArquivosERealizarTentativas(caminhoXml, caminhoCertificado, senhaCertificado);
+            // await MultipleTryRequests.GerarArquivosERealizarTentativas(caminhoXml, caminhoCertificado, senhaCertificado);
 
 
             string caminhoPastaRequests = "D:\\Workspace\\FESP\\Projeto_NTFS\\multiple_tries";
@@ -35,7 +35,7 @@ class Program
 
             // string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.xml";
             string caminhoXml = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\LOTE_421.xml";
-            RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
+            // RealizarAssinaturasXML.ProcessarNFTS(caminhoXml, caminhoCertificado, senhaCertificado, true);
             
             // Enviar para o servidor
             // string caminhoRequestAssinado = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts_minimum_data-prest-cpf.assinado.xml";
@@ -44,7 +44,7 @@ class Program
             await SoapClient.CallTesteEnvioLoteNFTS(caminhoRequestAssinado, caminhoCertificado, senhaCertificado, caminhoResponse);
 
             // === EXEMPLO 2: Recalcular apenas a assinatura XMLDSig de um XML existente ===
-            // string caminhoXMLReassinar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-recalcular-signature.xml";
+            string caminhoXMLReassinar = "D:\\Workspace\\FESP\\Projeto_NTFS\\processamento\\nfts-recalcular-signature.xml";
             // RecalcularAssinaturaXmlDSigByPathArquivo.DoProcess(caminhoXMLReassinar, caminhoCertificado, senhaCertificado);
 
             // RealizarAssinaturasXML.GetValorTagAssinaturaNFTS(xmlExemplo, caminhoCertificado, senhaCertificado);

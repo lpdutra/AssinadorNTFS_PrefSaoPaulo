@@ -38,17 +38,11 @@
           <InscricaoMunicipal>10259627</InscricaoMunicipal>
           <RazaoSocialPrestador>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocialPrestador>
           <Endereco>
-              <TipoLogradouro>Rua</TipoLogradouro>
-              <Logradouro>R RIO BRANCO 27</Logradouro>
               <NumeroEndereco>65</NumeroEndereco>
-              <Bairro>JD PAULISTA</Bairro>
-              <Cidade>BAURU</Cidade>
-              <UF>SP</UF>
               <CEP>17017220</CEP>
           </Endereco>
       </Prestador>
       <RegimeTributacao>0</RegimeTributacao>
-      <DataPagamento>2025-03-31</DataPagamento>
       <Discriminacao>Atendimentos realizados</Discriminacao>
       <TipoNFTS>2</TipoNFTS>
       <Tomador>

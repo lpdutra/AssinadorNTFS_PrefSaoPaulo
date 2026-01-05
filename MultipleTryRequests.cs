@@ -86,6 +86,8 @@ public static class MultipleTryRequests
         // Mapa para armazenar código de serviço e seus códigos de erro
         var mapaErros = new Dictionary<int, List<string>>();
 
+        var errosPorArquivo = new Dictionary<string, List<RetornoEnvioLote>>();
+
         foreach (string caminhoRequest in arquivosRequest)
         {
             try
@@ -115,6 +117,8 @@ public static class MultipleTryRequests
                     {
                         Console.WriteLine($"[{contadorEnviados}/{arquivosRequest.Count}] ✓ Response salvo: {nomeResponse}");
                         
+                        errosPorArquivo[nomeArquivo] = ExtrairRetornosEnvioLote(destinoResponse);
+
                         // Extrair códigos de erro da resposta
                         var codigosErro = ExtrairCodigosErro(codigoServico, destinoResponse);
                         mapaErros[codigoServico] = codigosErro;
@@ -153,7 +157,7 @@ public static class MultipleTryRequests
         Console.WriteLine($"Requests sem erros: {contadorSemErros}");
         
         // Exibir e salvar mapa de erros
-        ExibirESalvarMapaErros(mapaErros, dirBase);
+        SalvarArquivoDeErros(errosPorArquivo, mapaErros, dirBase);
     }
 
     /// <summary>
@@ -412,6 +416,166 @@ public static class MultipleTryRequests
         
         return codigosErro;
     }
+
+    /// <summary>
+    /// Classe para representar o retorno de envio de lote
+    /// </summary>
+    public class RetornoEnvioLote
+    {
+        public string Tipo { get; set; } // Tipo de retorno: Erro ou Alerta
+        public string Codigo { get; set; } // Código do retorno
+        public string Descricao { get; set; } // Descrição do retorno
+    }
+
+    /// <summary>
+    /// Extrai os retornos (erros e alertas) do XML de resposta
+    /// </summary>
+    /// <param name="caminhoXmlResposta">Caminho do XML de resposta</param>
+    /// <returns>Lista de retornos de envio de lote</returns>
+    private static List<RetornoEnvioLote> ExtrairRetornosEnvioLote(string caminhoXmlResposta)
+    {
+        var retornos = new List<RetornoEnvioLote>();
+
+        try
+        {
+            // Ler o arquivo com a codificação correta (UTF-16)
+            string xmlContent = File.ReadAllText(caminhoXmlResposta);
+
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xmlContent);
+
+            // Criar namespace manager para lidar com namespaces
+            var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
+            namespaceManager.AddNamespace("soap", "http://schemas.xmlsoap.org/soap/envelope/");
+            namespaceManager.AddNamespace("nfts", "http://www.prefeitura.sp.gov.br/nfts");
+
+            // Buscar nós de erro e alerta
+            var nodosRetorno = xmlDoc.SelectNodes("//Erro | //Alerta | //nfts:Erro | //nfts:Alerta", namespaceManager);
+
+            if (nodosRetorno != null)
+            {
+                foreach (XmlNode nodoRetorno in nodosRetorno)
+                {
+                    var retorno = new RetornoEnvioLote();
+
+                    // Determinar o tipo de retorno (Erro ou Alerta)
+                    retorno.Tipo = nodoRetorno.Name.Contains("Erro", StringComparison.OrdinalIgnoreCase) ? "Erro" : "Alerta";
+
+                    // Extrair código do retorno
+                    var nodoCodigo = nodoRetorno.SelectSingleNode("Codigo | CodigoErro | nfts:Codigo | nfts:CodigoErro", namespaceManager);
+                    retorno.Codigo = nodoCodigo != null ? nodoCodigo.InnerText.Trim() : "N/A";
+
+                    // Extrair descrição do retorno
+                    var nodoDescricao = nodoRetorno.SelectSingleNode("Descricao | Mensagem | Message | nfts:Descricao | nfts:Mensagem", namespaceManager);
+                    retorno.Descricao = nodoDescricao != null ? nodoDescricao.InnerText.Trim() : "Descrição não encontrada";
+
+                    retornos.Add(retorno);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            retornos.Add(new RetornoEnvioLote
+            {
+                Tipo = "Erro",
+                Codigo = "Exceção",
+                Descricao = $"Erro ao processar XML: {ex.Message}"
+            });
+        }
+
+        return retornos;
+    }
+
+    private static void SalvarArquivoDeErros(Dictionary<string, List<RetornoEnvioLote>> retornosPorArquivo, 
+        Dictionary<int, List<string>> mapaErros, string dirBase)
+    {
+        var sb = new System.Text.StringBuilder();
+        
+        sb.AppendLine(new string('=', 80));
+        sb.AppendLine("=== RESUMO: Códigos aquivos x Erros ===");
+        sb.AppendLine(new string('=', 80));
+        
+        if (retornosPorArquivo.Count == 0)
+        {
+            sb.AppendLine("Nenhum resultado para exibir.");
+            Console.WriteLine(sb.ToString());
+            return;
+        }
+        
+        var servicosSemErro = new List<string>();
+        var todosErros = new Dictionary<string, string>();
+
+        sb.AppendLine("\n❌ CÓDIGOS COM ERROS:");
+        
+        foreach (var item in retornosPorArquivo.OrderBy(x => x.Key))
+        {
+            if (item.Value == null || item.Value.Count == 0)
+            {
+                servicosSemErro.Add(item.Key);
+                continue;
+            }
+
+            sb.AppendLine($"\nArquivo: {item.Key}");
+
+            var listaRetornos = item.Value.OrderBy(x=> x.Tipo).ToList();
+            sb.AppendLine($"   Erros encontrados ({listaRetornos.Count}):");
+            foreach (var erro in listaRetornos)
+            {
+                sb.AppendLine($"   • {erro.Tipo} -> {erro.Codigo} - {erro.Descricao}");
+
+                if(erro.Tipo == "Erro" && !todosErros.ContainsKey(erro.Codigo))
+                {
+                    todosErros[erro.Codigo] = erro.Descricao;
+                }
+            }
+        }
+        
+        // Exibir serviços SEM erros
+        if (servicosSemErro.Count > 0)
+        {
+            sb.AppendLine("\n✅ ARQUIVOS SEM ERROS (SUCESSO):");
+            sb.AppendLine($"   {string.Join("\n   ", servicosSemErro)}");
+            sb.AppendLine($"\n   Total: {servicosSemErro.Count} arquivo(s) processado(s) com sucesso!");
+        }
+        else
+        {
+            sb.AppendLine("\n⚠️ Nenhum arquivo foi processado sem erros.");
+        }
+        
+        
+
+        sb.AppendLine("\n" + new string('=', 80));
+        sb.AppendLine("=== DICIONÁRIO DE CÓDIGOS DE ERRO ===");
+        sb.AppendLine(new string('=', 80));
+        
+        // Filtrar apenas códigos que estão no dicionário
+        var codigosComDescricao = todosErros
+            .OrderBy(x => x.Key);
+        
+        foreach (var codigoErro in codigosComDescricao)
+        {
+            sb.AppendLine($"\n{codigoErro.Key}   {codigoErro.Value}");
+        }
+
+        sb.AppendLine("\n" + new string('=', 80));
+        
+        // Exibir no console
+        // Console.WriteLine(sb.ToString());
+        
+        
+        // Salvar em arquivo
+        try
+        {
+            string caminhoArquivo = Path.Combine(dirBase, "resumo_testes.txt");
+            File.WriteAllText(caminhoArquivo, sb.ToString(), System.Text.Encoding.UTF8);
+            Console.WriteLine($"📄 Resumo salvo em: {caminhoArquivo}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"⚠️ Erro ao salvar resumo em arquivo: {ex.Message}");
+        }
+    }
+
     
     /// <summary>
     /// Exibe e salva o mapa de códigos de serviço e seus erros

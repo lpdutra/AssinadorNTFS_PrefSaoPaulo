@@ -267,13 +267,19 @@ public static class RealizarAssinaturasXML
                     if (nfts.Prestador.Endereco != null)
                     {
                         xmlWriter.WriteStartElement("Endereco");
+                        if (!string.IsNullOrEmpty(nfts.Prestador.Endereco.TipoLogradouro))
                         xmlWriter.WriteElementString("TipoLogradouro", nfts.Prestador.Endereco.TipoLogradouro ?? "");
+                        if (!string.IsNullOrEmpty(nfts.Prestador.Endereco.Logradouro))
                         xmlWriter.WriteElementString("Logradouro", nfts.Prestador.Endereco.Logradouro ?? "");
+                        if (!string.IsNullOrEmpty(nfts.Prestador.Endereco.NumeroEndereco))
                         xmlWriter.WriteElementString("NumeroEndereco", nfts.Prestador.Endereco.NumeroEndereco ?? "");
                         if (!string.IsNullOrEmpty(nfts.Prestador.Endereco.ComplementoEndereco))
                             xmlWriter.WriteElementString("ComplementoEndereco", nfts.Prestador.Endereco.ComplementoEndereco);
+                        if (!string.IsNullOrEmpty(nfts.Prestador.Endereco.Bairro))
                         xmlWriter.WriteElementString("Bairro", nfts.Prestador.Endereco.Bairro ?? "");
+                        if (!string.IsNullOrEmpty(nfts.Prestador.Endereco.Cidade))
                         xmlWriter.WriteElementString("Cidade", nfts.Prestador.Endereco.Cidade ?? "");
+                        if (!string.IsNullOrEmpty(nfts.Prestador.Endereco.Uf))
                         xmlWriter.WriteElementString("UF", nfts.Prestador.Endereco.Uf ?? "");
                         if (nfts.Prestador.Endereco.CepSpecified)
                             xmlWriter.WriteElementString("CEP", nfts.Prestador.Endereco.Cep.ToString());
