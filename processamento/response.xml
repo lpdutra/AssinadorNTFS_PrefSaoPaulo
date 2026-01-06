@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-16"?>
 <RetornoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts">
   <Cabecalho Versao="1" xmlns="">
-    <Sucesso>false</Sucesso>
+    <Sucesso>true</Sucesso>
     <InformacoesLoteNFTS>
-      <NumeroLote>0</NumeroLote>
-      <dtEnvioLote>2026-01-02T11:33:04.5332547-03:00</dtEnvioLote>
-      <QtdeNFTSProcessadas>0</QtdeNFTSProcessadas>
+      <NumeroLote>1645758479</NumeroLote>
+      <Remetente>
+        <CPFCNPJ>
+          <CNPJ>43643139000166</CNPJ>
+        </CPFCNPJ>
+      </Remetente>
+      <dtEnvioLote>2026-01-06T14:52:51.3865996-03:00</dtEnvioLote>
+      <QtdeNFTSProcessadas>1</QtdeNFTSProcessadas>
       <TempoProcessamento>0</TempoProcessamento>
-      <ValorTotalServicos>0</ValorTotalServicos>
+      <ValorTotalServicos>1500.31</ValorTotalServicos>
     </InformacoesLoteNFTS>
   </Cabecalho>
-  <ListaRetornoLote xmlns="">
-    <Erro>
-      <Codigo>999</Codigo>
-      <Descricao>The element 'NFTS' has incomplete content. List of possible elements expected: 'CodigoCEI, MatriculaObra, clocalPrestServ, cPaisPrestServ, ValorPIS, ValorCOFINS, ValorINSS, ValorIR, ValorCSLL, ValorIPI, ValorInicialCobrado, ValorFinalCobrado, ValorMulta, ValorJuros, ExigibilidadeSuspensa'.</Descricao>
-    </Erro>
-  </ListaRetornoLote>
+  <ListaRetornoLote xmlns="" />
 </RetornoEnvioLoteNFTS>

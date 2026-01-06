@@ -30,6 +30,7 @@ public static class RealizarAssinaturasXML
         // 2. Carregar NFTS do arquivo XML
         Console.WriteLine($"Carregando NFTS do arquivo: {caminhoXml}");
         TpNfts nfts = CarregarNFTSDoXml(caminhoXml);
+
         CabecalhoPedidoEnvioLote? cabecalho = CarregarCabecalhoDoXml(caminhoXml);
         Console.WriteLine($"NFTS carregada - Inscrição: {nfts.ChaveDocumento?.InscricaoMunicipal}, Valor: {nfts.ValorServicos:C2}");
         if (cabecalho != null)

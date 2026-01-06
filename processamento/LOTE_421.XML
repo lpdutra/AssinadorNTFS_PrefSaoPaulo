@@ -48,7 +48,24 @@
           <CPFCNPJ>
               <CNPJ>01608379000180</CNPJ>
           </CPFCNPJ>
-          <RazaoSocial>UNIMED ESTSP FED ESTAD COOP MEDICA</RazaoSocial>
+          <RazaoSocial>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocial>
       </Tomador>
+    <CodigoCEI>281595391881</CodigoCEI>
+    <MatriculaObra>111111111111</MatriculaObra>
+    <clocalPrestServ>3550308</clocalPrestServ>
+    <cPaisPrestServ>BR</cPaisPrestServ>
+    <ValorPIS>0.00</ValorPIS>
+    <ValorCOFINS>0.00</ValorCOFINS>
+    <ValorINSS>0.00</ValorINSS>
+    <ValorIR>0.00</ValorIR>
+    <ValorCSLL>0.00</ValorCSLL>
+    <ValorIPI>0.00</ValorIPI>
+    <RetornoComplementarIBSCBS>0</RetornoComplementarIBSCBS>
+    <ValorInicialCobrado>1500.31</ValorInicialCobrado>
+    <ValorFinalCobrado>1500.31</ValorFinalCobrado>
+    <ValorMulta>0.00</ValorMulta>
+    <ValorJuros>0.00</ValorJuros>
+    <ExigibilidadeSuspensa>0</ExigibilidadeSuspensa>
+    <PagamentoParceladoAntecipado>0</PagamentoParceladoAntecipado>      
   </NFTS>
 </PedidoEnvioLoteNFTS>
