@@ -4,7 +4,7 @@
     <ns0:TesteEnvioLoteNFTSRequest xmlns:ns0="http://www.prefeitura.sp.gov.br/nfts">
       <ns0:VersaoSchema>2</ns0:VersaoSchema>
       <ns0:MensagemXML><![CDATA[<?xml version='1.0' encoding='utf-8'?>
-<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho xmlns="" Versao="1"><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>true</transacao><dtInicio>2025-01-01</dtInicio><dtFim>2025-01-31</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>1500.31</ValorTotalServicos><ValorTotalDeducoes>0.00</ValorTotalDeducoes></Cabecalho><NFTS xmlns=""><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>A</SerieNFTS><NumeroDocumento>368988</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-01-04</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>1500.31</ValorServicos><ValorDeducoes>0.00</ValorDeducoes><CodigoServico>5312</CodigoServico><CodigoSubItem>423</CodigoSubItem><AliquotaServicos>0.025</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>01608379000180</CNPJ></CPFCNPJ><RazaoSocialPrestador>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocialPrestador><Endereco><NumeroEndereco>65</NumeroEndereco><CEP>17017220</CEP></Endereco></Prestador><RegimeTributacao>0</RegimeTributacao><Discriminacao>Atendimentos realizados</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>01608379000180</CNPJ></CPFCNPJ><RazaoSocial>UNIMED ESTSP FED ESTAD COOP MEDICA</RazaoSocial></Tomador><Assinatura>XNJvRCeX8JBVfkROUIlJQctM1qR2y8/ApX6WkN2m5C6aB5C22GgdVlt0I/LRGLJjc4mWc++KWb9/p5LLHkv+olGvKGyNIdTo1eEltgq0JiUVNRToRAd6enp+Jppo/oD1zg1skpH9MPgeIFqWGo3Dtkps3nvPHybSwTCVuLfHzDq6zT9/nUtFU4f/8P0S4QESkm6dpDYatM+NRNseCIuW8VMcHix2KtOc+awxVjdbMgQEVU3KijZWIyUM9J5UuY0mdRqJ7eiu7Qr6B1xJoP7BBghbKAdECFqbpDiD67YIcUoWUle1YToOL5/oniLfgBZAkynqNd86DOqTHBgj/ebC+Q==</Assinatura><ExigibilidadeSuspensa>0</ExigibilidadeSuspensa><PagamentoParceladoAntecipado>0</PagamentoParceladoAntecipado></NFTS><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<PedidoEnvioLoteNFTS xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.prefeitura.sp.gov.br/nfts"><Cabecalho xmlns="" Versao="1"><Remetente><CPFCNPJ><CNPJ>43643139000166</CNPJ></CPFCNPJ></Remetente><transacao>false</transacao><dtInicio>2025-02-01</dtInicio><dtFim>2025-02-28</dtFim><QtdNFTS>1</QtdNFTS><ValorTotalServicos>54707.56</ValorTotalServicos></Cabecalho><NFTS xmlns=""><TipoDocumento>01</TipoDocumento><ChaveDocumento><InscricaoMunicipal>10259627</InscricaoMunicipal><SerieNFTS>A</SerieNFTS><NumeroDocumento>36898</NumeroDocumento></ChaveDocumento><DataPrestacao>2025-02-04</DataPrestacao><StatusNFTS>N</StatusNFTS><TributacaoNFTS>T</TributacaoNFTS><ValorServicos>54707.56</ValorServicos><ValorDeducoes>0.00</ValorDeducoes><CodigoServico>05312</CodigoServico><CodigoSubItem>0423</CodigoSubItem><AliquotaServicos>0.025</AliquotaServicos><ISSRetidoTomador>false</ISSRetidoTomador><ISSRetidoIntermediario>false</ISSRetidoIntermediario><Prestador><CPFCNPJ><CNPJ>01608379000180</CNPJ></CPFCNPJ><RazaoSocialPrestador>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocialPrestador><Endereco><NumeroEndereco>65</NumeroEndereco><CEP>17017220</CEP></Endereco></Prestador><RegimeTributacao>0</RegimeTributacao><Discriminacao>Atendimentos realizados</Discriminacao><TipoNFTS>2</TipoNFTS><Tomador><CPFCNPJ><CNPJ>01608379000180</CNPJ></CPFCNPJ><RazaoSocial>UNIMED CENTROOESTE PTAFEDINTCOOP MED</RazaoSocial></Tomador><Assinatura>lMObNhiD0PxG+57X1/vwGMqgrD+Mw+Z9lwsYHbnbKga3EicbAjLC/kP3hkIHPKrhfFa86rgu6xF7hBrrJMqu4syZBP3vniLAaUqXxsrirLFBBplZ62mW4XmTziJdnXAuYoHZDUw8xMSnOKk0nY2uy9FS52FWK5b/zePw/ybUOL3htPiretufdfLsWiR/PeuSOLwn0CA64z5WyIASikItv8h1oCuAJZZl+Fu470z1mD98xz6zztUHPHCBzTqm78fLXUlFxRq1AcDbmlkHxizZxHQWHUzT+YJyzaVmi2Xkoih9sDQPKUy2ONJEu1/FLNn26EQHkEEPpazkuqmBkh2RGA==</Assinatura><ExigibilidadeSuspensa>0</ExigibilidadeSuspensa><PagamentoParceladoAntecipado>0</PagamentoParceladoAntecipado></NFTS><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
 <ds:SignedInfo>
 <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
@@ -13,15 +13,15 @@
 <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
 </ds:Transforms>
 <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<ds:DigestValue>NlsGDBTWbxxcEtP2WzU1osvpxeY=</ds:DigestValue>
+<ds:DigestValue>beDrtRIv45ERoEwjsz7hDg+wy+A=</ds:DigestValue>
 </ds:Reference>
 </ds:SignedInfo>
-<ds:SignatureValue>MkWHMzGWhsXMfjndQ+uB3wugrFnL7dFLoOXu0dphVB0kkZ7ixKws9uwfQBC5dayE
-SSqE/lvl9iQkarg53RQJ94MX1o0EoaIvDd5ZNDOZG5dEoz5sowhoCH+bRRLgj3nH
-dlQy17njX3TvYQy4yzm5Bt1ajABb0CexDl7CTaw/vEcjiK+Axoy7jPi4g0j9IApN
-y3HBF1Fglgg/qDu5V0kcVnzuPgl381coV0ImUfnTiLD4Nkklcg5TgcW+qQbkjv++
-35yI31Pb1ewIOmlrjHPdRmiJuksK1ENhhkcKokbJQ+WDV88EfusZGjqBbfEr4HZO
-5PmqXdW0N1TtfIKHFFBsDQ==</ds:SignatureValue>
+<ds:SignatureValue>WAt/ra0LxCWlS/mrGMYVXVaHjwPocJF7nWH2z1qaygbueRReJx0kZxbkpAHLFzo7
+LpIxUDrbkAyDz5BnhT15DPrgcyGqZjnJbL6gV4NDTgkolt2AnKaiWxeyW8/tVoBn
+dYlj74i9SvCbXBB5IWfftvUZ1E58ZdDCICEwi/G15fZtUMmh/T6jmB7btrIaEfSF
+1VrcoqKtuxcVLL0h5KLgEgM7WcoZbMJAgWzgOdDTvcmiVJtDvNYPPuocGrxTwFOp
+NtqjBvQRQuR/3ffMqrOLxDx5/nxE6HQhBA6yV2RwejnUHLXYmYAlzmT/dG+HFVsE
+6tf8GQrhpQ9kYqY3D+Bp+g==</ds:SignatureValue>
 <ds:KeyInfo>
 <ds:X509Data>
 <ds:X509Certificate>MIIIJTCCBg2gAwIBAgIQcclX3XrAmRWmNUSp7HuLZzANBgkqhkiG9w0BAQsFADB4

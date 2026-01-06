@@ -3,16 +3,16 @@
   <Cabecalho Versao="1" xmlns="">
     <Sucesso>true</Sucesso>
     <InformacoesLoteNFTS>
-      <NumeroLote>1645758479</NumeroLote>
+      <NumeroLote>1645834041</NumeroLote>
       <Remetente>
         <CPFCNPJ>
           <CNPJ>43643139000166</CNPJ>
         </CPFCNPJ>
       </Remetente>
-      <dtEnvioLote>2026-01-06T14:52:51.3865996-03:00</dtEnvioLote>
+      <dtEnvioLote>2026-01-06T16:33:51.2981604-03:00</dtEnvioLote>
       <QtdeNFTSProcessadas>1</QtdeNFTSProcessadas>
       <TempoProcessamento>0</TempoProcessamento>
-      <ValorTotalServicos>1500.31</ValorTotalServicos>
+      <ValorTotalServicos>54707.56</ValorTotalServicos>
     </InformacoesLoteNFTS>
   </Cabecalho>
   <ListaRetornoLote xmlns="" />

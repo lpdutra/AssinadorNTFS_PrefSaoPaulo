@@ -1002,6 +1002,122 @@ namespace AssinadorNFTS.Models
         [System.ComponentModel.DescriptionAttribute("Dados do tomador de serviço.")]
         [System.Xml.Serialization.XmlElementAttribute("Tomador", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public TpTomador Tomador { get; set; }
+        
+        /// <summary>
+        /// <para>Informe o Código CEI.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("CodigoCEI", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[0-9]{12}")]
+        public string CodigoCEI { get; set; }
+
+        /// <summary>
+        /// <para>Informe a Matrícula da Obra.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("MatriculaObra", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[0-9]{12}")]
+        public string MatriculaObra { get; set; }
+
+        /// <summary>
+        /// <para>Informe o código do local de prestação de serviço.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("clocalPrestServ", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[0-9]{7}")]
+        public string ClocalPrestServ { get; set; }
+
+        /// <summary>
+        /// <para>Informe o código do país de prestação de serviço.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("cPaisPrestServ", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CPaisPrestServ { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do PIS.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorPIS", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorPIS { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do COFINS.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorCOFINS", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorCOFINS { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do INSS.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorINSS", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorINSS { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do IR.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorIR", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorIR { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do CSLL.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorCSLL", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorCSLL { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do IPI.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorIPI", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorIPI { get; set; }
+
+        /// <summary>
+        /// <para>Informe o retorno complementar IBS CBS.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("RetornoComplementarIBSCBS", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int RetornoComplementarIBSCBS { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor inicial cobrado.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorInicialCobrado", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorInicialCobrado { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor final cobrado.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorFinalCobrado", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorFinalCobrado { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor da multa.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorMulta", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorMulta { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor dos juros.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorJuros", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorJuros { get; set; }
+
+        /// <summary>
+        /// <para>Informe se há exigibilidade suspensa.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ExigibilidadeSuspensa", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int ExigibilidadeSuspensa { get; set; }
+
+        /// <summary>
+        /// <para>Informe se há pagamento parcelado antecipado.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("PagamentoParceladoAntecipado", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int PagamentoParceladoAntecipado { get; set; }
     }
     
     /// <summary>
@@ -1462,6 +1578,124 @@ namespace AssinadorNFTS.Models
         [System.ComponentModel.DescriptionAttribute("Dados do tomador de serviço.")]
         [System.Xml.Serialization.XmlElementAttribute("Tomador", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public TpTomador Tomador { get; set; }
+
+   /*
+        /// <summary>
+        /// <para>Informe o Código CEI.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("CodigoCEI", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[0-9]{12}")]
+        public string CodigoCEI { get; set; }
+
+        /// <summary>
+        /// <para>Informe a Matrícula da Obra.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("MatriculaObra", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[0-9]{12}")]
+        public string MatriculaObra { get; set; }
+
+        /// <summary>
+        /// <para>Informe o código do local de prestação de serviço.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("clocalPrestServ", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[0-9]{7}")]
+        public string ClocalPrestServ { get; set; }
+
+        /// <summary>
+        /// <para>Informe o código do país de prestação de serviço.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("cPaisPrestServ", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CPaisPrestServ { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do PIS.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorPIS", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorPIS { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do COFINS.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorCOFINS", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorCOFINS { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do INSS.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorINSS", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorINSS { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do IR.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorIR", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorIR { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do CSLL.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorCSLL", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorCSLL { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor do IPI.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorIPI", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorIPI { get; set; }
+
+        /// <summary>
+        /// <para>Informe o retorno complementar IBS CBS.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("RetornoComplementarIBSCBS", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int RetornoComplementarIBSCBS { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor inicial cobrado.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorInicialCobrado", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorInicialCobrado { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor final cobrado.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorFinalCobrado", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorFinalCobrado { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor da multa.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorMulta", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorMulta { get; set; }
+
+        /// <summary>
+        /// <para>Informe o valor dos juros.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("ValorJuros", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        [System.ComponentModel.DataAnnotations.Range(0, double.MaxValue)]
+        public decimal ValorJuros { get; set; }
+*/
+
+        /// <summary>
+        /// <para>Informe se há exigibilidade suspensa.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public int ExigibilidadeSuspensa { get; set; }
+
+        /// <summary>
+        /// <para>Informe se há pagamento parcelado antecipado.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public int PagamentoParceladoAntecipado { get; set; }        
         
         /// <summary>
         /// <para>Assinatura digital da NFTS.</para>
@@ -1471,350 +1705,6 @@ namespace AssinadorNFTS.Models
         [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
         [System.Xml.Serialization.XmlElementAttribute("Assinatura", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="base64Binary")]
         public byte[] Assinatura { get; set; }
-    }
-    
-    /// <summary>
-    /// <para>Lista de mensagens de retorno</para>
-    /// </summary>
-    [System.ComponentModel.DescriptionAttribute("Lista de mensagens de retorno")]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "3.0.1188.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("tpRetornoCPOM", Namespace="http://www.prefeitura.sp.gov.br/nfts/tipos")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TpRetornoCpom
-    {
-        
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        private System.Collections.ObjectModel.Collection<TpEvento> _alerta;
-        
-        /// <summary>
-        /// <para>Elemento que representa a ocorrência de eventos de alerta durante o processamento da mensagem XML.</para>
-        /// </summary>
-        [System.ComponentModel.DescriptionAttribute(("Elemento que representa a ocorrência de eventos de alerta durante o processamento" +
-            " da mensagem XML."))]
-        [System.Xml.Serialization.XmlElementAttribute("Alerta", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public System.Collections.ObjectModel.Collection<TpEvento> Alerta
-        {
-            get
-            {
-                return _alerta;
-            }
-            private set
-            {
-                _alerta = value;
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">Gets a value indicating whether the Alerta collection is empty.</para>
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool AlertaSpecified
-        {
-            get
-            {
-                return (this.Alerta.Count != 0);
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">Initializes a new instance of the <see cref="TpRetornoCpom" /> class.</para>
-        /// </summary>
-        public TpRetornoCpom()
-        {
-            this._alerta = new System.Collections.ObjectModel.Collection<TpEvento>();
-            this._erro = new System.Collections.ObjectModel.Collection<TpEvento>();
-        }
-        
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        private System.Collections.ObjectModel.Collection<TpEvento> _erro;
-        
-        /// <summary>
-        /// <para>Elemento que representa a ocorrência de eventos de erro durante o processamento da mensagem XML.</para>
-        /// </summary>
-        [System.ComponentModel.DescriptionAttribute(("Elemento que representa a ocorrência de eventos de erro durante o processamento d" +
-            "a mensagem XML."))]
-        [System.Xml.Serialization.XmlElementAttribute("Erro", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public System.Collections.ObjectModel.Collection<TpEvento> Erro
-        {
-            get
-            {
-                return _erro;
-            }
-            private set
-            {
-                _erro = value;
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">Gets a value indicating whether the Erro collection is empty.</para>
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ErroSpecified
-        {
-            get
-            {
-                return (this.Erro.Count != 0);
-            }
-        }
-        
-        /// <summary>
-        /// <para>Elemento que representa os detalhes de retorno da consulta ao CPOM no processamento da mensagem XML.</para>
-        /// </summary>
-        [System.ComponentModel.DescriptionAttribute(("Elemento que representa os detalhes de retorno da consulta ao CPOM no processamen" +
-            "to da mensagem XML."))]
-        [System.Xml.Serialization.XmlElementAttribute("DetalheCPOM", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public TpDetalheCpomRetorno DetalheCpom { get; set; }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "3.0.1188.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("tpDetalheCPOMRetorno", Namespace="http://www.prefeitura.sp.gov.br/nfts/tipos")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TpDetalheCpomRetorno
-    {
-        
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("CPFCNPJPrestador", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public TpCpfcnpj CpfcnpjPrestador { get; set; }
-        
-        /// <summary>
-        /// <para>Situação do cadastro no CPOM em formato texto.</para>
-        /// <para xml:lang="en">Maximum length: 200.</para>
-        /// </summary>
-        [System.ComponentModel.DataAnnotations.MaxLengthAttribute(200)]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("SituacaoCPOM", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string SituacaoCpom { get; set; }
-        
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        private System.Collections.ObjectModel.Collection<TpServicos> _servicos;
-        
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("Servicos", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public System.Collections.ObjectModel.Collection<TpServicos> Servicos
-        {
-            get
-            {
-                return _servicos;
-            }
-            private set
-            {
-                _servicos = value;
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">Initializes a new instance of the <see cref="TpDetalheCpomRetorno" /> class.</para>
-        /// </summary>
-        public TpDetalheCpomRetorno()
-        {
-            this._servicos = new System.Collections.ObjectModel.Collection<TpServicos>();
-        }
-    }
-    
-    /// <summary>
-    /// <para>Código e descriçao da atividade</para>
-    /// </summary>
-    [System.ComponentModel.DescriptionAttribute("Código e descriçao da atividade")]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "3.0.1188.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("tpServicos", Namespace="http://www.prefeitura.sp.gov.br/nfts/tipos")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TpServicos
-    {
-        
-        /// <summary>
-        /// <para>Tipo código de serviço.</para>
-        /// <para xml:lang="en">Pattern: [0-9]{4,5}.</para>
-        /// </summary>
-        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[0-9]{4,5}")]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("CodigoServico", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int CodigoServico { get; set; }
-        
-        /// <summary>
-        /// <para>Tipo código de serviço.</para>
-        /// <para xml:lang="en">Maximum length: 250.</para>
-        /// </summary>
-        [System.ComponentModel.DataAnnotations.MaxLengthAttribute(250)]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("DescricaoServico", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string DescricaoServico { get; set; }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "3.0.1188.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("tpDetalheNFSERetorno", Namespace="http://www.prefeitura.sp.gov.br/nfts/tipos")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TpDetalheNfseRetorno
-    {
-        
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("CPFCNPJPrestador", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public TpCpfcnpj CpfcnpjPrestador { get; set; }
-        
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        private System.Collections.ObjectModel.Collection<TpListaInscricaoMunicipal> _listaInscricaoMunicipal;
-        
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("ListaInscricaoMunicipal", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public System.Collections.ObjectModel.Collection<TpListaInscricaoMunicipal> ListaInscricaoMunicipal
-        {
-            get
-            {
-                return _listaInscricaoMunicipal;
-            }
-            private set
-            {
-                _listaInscricaoMunicipal = value;
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">Initializes a new instance of the <see cref="TpDetalheNfseRetorno" /> class.</para>
-        /// </summary>
-        public TpDetalheNfseRetorno()
-        {
-            this._listaInscricaoMunicipal = new System.Collections.ObjectModel.Collection<TpListaInscricaoMunicipal>();
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "3.0.1188.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("tpListaInscricaoMunicipal", Namespace="http://www.prefeitura.sp.gov.br/nfts/tipos")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TpListaInscricaoMunicipal
-    {
-        
-        /// <summary>
-        /// <para>Tipo padrão referente a inscrição municipal.</para>
-        /// <para xml:lang="en">Pattern: [0-9]{8,8}.</para>
-        /// </summary>
-        [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[0-9]{8,8}")]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("InscricaoMunicipal", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public long InscricaoMunicipal { get; set; }
-        
-        /// <summary>
-        /// <para>Situação da Inscrição Municipal em formato texto.</para>
-        /// <para xml:lang="en">Maximum length: 200.</para>
-        /// </summary>
-        [System.ComponentModel.DataAnnotations.MaxLengthAttribute(200)]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("SituacaoInscricaoMunicipal", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string SituacaoInscricaoMunicipal { get; set; }
-        
-        /// <summary>
-        /// <para>Situação da autorização de emissão da NFSE em formato texto.</para>
-        /// <para xml:lang="en">Maximum length: 200.</para>
-        /// </summary>
-        [System.ComponentModel.DataAnnotations.MaxLengthAttribute(200)]
-        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=true)]
-        [System.Xml.Serialization.XmlElementAttribute("SituacaoEmissaoNFSE", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public string SituacaoEmissaoNfse { get; set; }
-    }
-    
-    /// <summary>
-    /// <para>Lista de mensagens de retorno</para>
-    /// </summary>
-    [System.ComponentModel.DescriptionAttribute("Lista de mensagens de retorno")]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "3.0.1188.0")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("tpRetornoEmissaoNFSE", Namespace="http://www.prefeitura.sp.gov.br/nfts/tipos")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TpRetornoEmissaoNfse
-    {
-        
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        private System.Collections.ObjectModel.Collection<TpEvento> _alerta;
-        
-        /// <summary>
-        /// <para>Elemento que representa a ocorrência de eventos de alerta durante o processamento da mensagem XML.</para>
-        /// </summary>
-        [System.ComponentModel.DescriptionAttribute(("Elemento que representa a ocorrência de eventos de alerta durante o processamento" +
-            " da mensagem XML."))]
-        [System.Xml.Serialization.XmlElementAttribute("Alerta", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public System.Collections.ObjectModel.Collection<TpEvento> Alerta
-        {
-            get
-            {
-                return _alerta;
-            }
-            private set
-            {
-                _alerta = value;
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">Gets a value indicating whether the Alerta collection is empty.</para>
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool AlertaSpecified
-        {
-            get
-            {
-                return (this.Alerta.Count != 0);
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">Initializes a new instance of the <see cref="TpRetornoEmissaoNfse" /> class.</para>
-        /// </summary>
-        public TpRetornoEmissaoNfse()
-        {
-            this._alerta = new System.Collections.ObjectModel.Collection<TpEvento>();
-            this._erro = new System.Collections.ObjectModel.Collection<TpEvento>();
-        }
-        
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        private System.Collections.ObjectModel.Collection<TpEvento> _erro;
-        
-        /// <summary>
-        /// <para>Elemento que representa a ocorrência de eventos de erro durante o processamento da mensagem XML.</para>
-        /// </summary>
-        [System.ComponentModel.DescriptionAttribute(("Elemento que representa a ocorrência de eventos de erro durante o processamento d" +
-            "a mensagem XML."))]
-        [System.Xml.Serialization.XmlElementAttribute("Erro", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public System.Collections.ObjectModel.Collection<TpEvento> Erro
-        {
-            get
-            {
-                return _erro;
-            }
-            private set
-            {
-                _erro = value;
-            }
-        }
-        
-        /// <summary>
-        /// <para xml:lang="en">Gets a value indicating whether the Erro collection is empty.</para>
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ErroSpecified
-        {
-            get
-            {
-                return (this.Erro.Count != 0);
-            }
-        }
-        
-        /// <summary>
-        /// <para>Elemento que representa os detalhes de retorno da consulta ao CPOM no processamento da mensagem XML.</para>
-        /// </summary>
-        [System.ComponentModel.DescriptionAttribute(("Elemento que representa os detalhes de retorno da consulta ao CPOM no processamen" +
-            "to da mensagem XML."))]
-        [System.Xml.Serialization.XmlElementAttribute("DetalheEmissaoNFSE", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public TpDetalheNfseRetorno DetalheEmissaoNfse { get; set; }
     }
     
     /// <summary>

@@ -329,6 +329,24 @@ public static class RealizarAssinaturasXML
                 {
                     xmlWriter.WriteElementString("Assinatura", Convert.ToBase64String(nfts.Assinatura));
                 }
+
+// xmlWriter.WriteElementString("CodigoCEI", nfts.CodigoCEI ?? "");
+                // xmlWriter.WriteElementString("MatriculaObra", nfts.MatriculaObra ?? "");
+                // xmlWriter.WriteElementString("clocalPrestServ", nfts.ClocalPrestServ ?? "");
+                // xmlWriter.WriteElementString("cPaisPrestServ", nfts.CPaisPrestServ ?? "");
+                // xmlWriter.WriteElementString("ValorPIS", nfts.ValorPIS.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("ValorCOFINS", nfts.ValorCOFINS.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("ValorINSS", nfts.ValorINSS.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("ValorIR", nfts.ValorIR.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("ValorCSLL", nfts.ValorCSLL.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("ValorIPI", nfts.ValorIPI.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("RetornoComplementarIBSCBS", nfts.RetornoComplementarIBSCBS.ToString());
+                // xmlWriter.WriteElementString("ValorInicialCobrado", nfts.ValorInicialCobrado.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("ValorFinalCobrado", nfts.ValorFinalCobrado.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("ValorMulta", nfts.ValorMulta.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                // xmlWriter.WriteElementString("ValorJuros", nfts.ValorJuros.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                xmlWriter.WriteElementString("ExigibilidadeSuspensa", nfts.ExigibilidadeSuspensa.ToString());
+                xmlWriter.WriteElementString("PagamentoParceladoAntecipado", nfts.PagamentoParceladoAntecipado.ToString());                
                 
                 xmlWriter.WriteEndElement(); // NFTS
                 
@@ -751,6 +769,57 @@ public static class RealizarAssinaturasXML
                 nfts.Tomador.RazaoSocial = tomadorNode.SelectSingleNode("RazaoSocial")?.InnerText ?? 
                                           tomadorNode.SelectSingleNode("nfts:RazaoSocial", namespaceManager)?.InnerText;
             }
+
+            // nfts.CodigoCEI = nftsNode.SelectSingleNode("CodigoCEI")?.InnerText ?? 
+            //                   nftsNode.SelectSingleNode("nfts:CodigoCEI", namespaceManager)?.InnerText;
+
+            // nfts.MatriculaObra = nftsNode.SelectSingleNode("MatriculaObra")?.InnerText ?? 
+            //                      nftsNode.SelectSingleNode("nfts:MatriculaObra", namespaceManager)?.InnerText;
+
+            // nfts.ClocalPrestServ = nftsNode.SelectSingleNode("clocalPrestServ")?.InnerText ?? 
+            //                         nftsNode.SelectSingleNode("nfts:clocalPrestServ", namespaceManager)?.InnerText;
+
+            // nfts.CPaisPrestServ = nftsNode.SelectSingleNode("cPaisPrestServ")?.InnerText ?? 
+            //                        nftsNode.SelectSingleNode("nfts:cPaisPrestServ", namespaceManager)?.InnerText;
+
+            // nfts.ValorPIS = decimal.TryParse(nftsNode.SelectSingleNode("ValorPIS")?.InnerText ?? 
+            //                                  nftsNode.SelectSingleNode("nfts:ValorPIS", namespaceManager)?.InnerText, out var valorPIS) ? valorPIS : 0;
+
+            // nfts.ValorCOFINS = decimal.TryParse(nftsNode.SelectSingleNode("ValorCOFINS")?.InnerText ?? 
+            //                                     nftsNode.SelectSingleNode("nfts:ValorCOFINS", namespaceManager)?.InnerText, out var valorCOFINS) ? valorCOFINS : 0;
+
+            // nfts.ValorINSS = decimal.TryParse(nftsNode.SelectSingleNode("ValorINSS")?.InnerText ?? 
+            //                                   nftsNode.SelectSingleNode("nfts:ValorINSS", namespaceManager)?.InnerText, out var valorINSS) ? valorINSS : 0;
+
+            // nfts.ValorIR = decimal.TryParse(nftsNode.SelectSingleNode("ValorIR")?.InnerText ?? 
+            //                                 nftsNode.SelectSingleNode("nfts:ValorIR", namespaceManager)?.InnerText, out var valorIR) ? valorIR : 0;
+
+            // nfts.ValorCSLL = decimal.TryParse(nftsNode.SelectSingleNode("ValorCSLL")?.InnerText ?? 
+            //                                   nftsNode.SelectSingleNode("nfts:ValorCSLL", namespaceManager)?.InnerText, out var valorCSLL) ? valorCSLL : 0;
+
+            // nfts.ValorIPI = decimal.TryParse(nftsNode.SelectSingleNode("ValorIPI")?.InnerText ?? 
+            //                                  nftsNode.SelectSingleNode("nfts:ValorIPI", namespaceManager)?.InnerText, out var valorIPI) ? valorIPI : 0;
+
+            // nfts.RetornoComplementarIBSCBS = int.TryParse(nftsNode.SelectSingleNode("RetornoComplementarIBSCBS")?.InnerText ?? 
+            //                                               nftsNode.SelectSingleNode("nfts:RetornoComplementarIBSCBS", namespaceManager)?.InnerText, out var retornoIBSCBS) ? retornoIBSCBS : 0;
+
+            // nfts.ValorInicialCobrado = decimal.TryParse(nftsNode.SelectSingleNode("ValorInicialCobrado")?.InnerText ?? 
+            //                                            nftsNode.SelectSingleNode("nfts:ValorInicialCobrado", namespaceManager)?.InnerText, out var valorInicial) ? valorInicial : 0;
+
+            // nfts.ValorFinalCobrado = decimal.TryParse(nftsNode.SelectSingleNode("ValorFinalCobrado")?.InnerText ?? 
+            //                                          nftsNode.SelectSingleNode("nfts:ValorFinalCobrado", namespaceManager)?.InnerText, out var valorFinal) ? valorFinal : 0;
+
+            // nfts.ValorMulta = decimal.TryParse(nftsNode.SelectSingleNode("ValorMulta")?.InnerText ?? 
+            //                                   nftsNode.SelectSingleNode("nfts:ValorMulta", namespaceManager)?.InnerText, out var valorMulta) ? valorMulta : 0;
+
+            // nfts.ValorJuros = decimal.TryParse(nftsNode.SelectSingleNode("ValorJuros")?.InnerText ?? 
+            //                                   nftsNode.SelectSingleNode("nfts:ValorJuros", namespaceManager)?.InnerText, out var valorJuros) ? valorJuros : 0;
+
+            nfts.ExigibilidadeSuspensa = int.TryParse(nftsNode.SelectSingleNode("ExigibilidadeSuspensa")?.InnerText ?? 
+                                                     nftsNode.SelectSingleNode("nfts:ExigibilidadeSuspensa", namespaceManager)?.InnerText, out var exigibilidade) ? exigibilidade : 0;
+
+            nfts.PagamentoParceladoAntecipado = int.TryParse(nftsNode.SelectSingleNode("PagamentoParceladoAntecipado")?.InnerText ?? 
+                                                            nftsNode.SelectSingleNode("nfts:PagamentoParceladoAntecipado", namespaceManager)?.InnerText, out var pagamentoParcelado) ? pagamentoParcelado : 0;
 
             Console.WriteLine("XML carregado com sucesso!");
             return nfts;
