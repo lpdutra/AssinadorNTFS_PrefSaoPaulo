@@ -204,17 +204,17 @@ def sign_document_xmlsec(root: etree._Element, key_pem_path: str, cert_pem_path:
     key.load_cert_from_file(cert_pem_path, xmlsec.KeyFormat.PEM)
     ctx.key = key
     ctx.sign(signature_node)
-    logger.critical("Assinatura do documento adicionada via xmlsec.")
+    logger.debug("Assinatura do documento adicionada via xmlsec.")
 
 # ---------------- Main Flow ----------------
 
 def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_path: str):
-    logger.critical("Lendo XML de entrada: %s", input_xml_path)
+    logger.debug("Lendo XML de entrada: %s", input_xml_path)
     parser = etree.XMLParser(remove_blank_text=True)
     tree = etree.parse(input_xml_path, parser)
     root = tree.getroot()
 
-    logger.critical("Extraindo chave privada e certificado do PFX...")
+    logger.debug("Extraindo chave privada e certificado do PFX...")
     private_key, cert = read_pkcs12(pfx_path, pfx_pass)
 
     tmpdir = tempfile.gettempdir()
@@ -227,23 +227,24 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
     if not nfts_nodes:
         logger.critical("Nenhum elemento <NFTS> encontrado no XML.")
         return
-    logger.critical("Encontrados %d NFTS nodes", len(nfts_nodes))
+    logger.debug("Encontrados %d NFTS nodes", len(nfts_nodes))
 
     for i, nfts in enumerate(nfts_nodes, start=1):
-        logger.critical("Processando NFTS #%d ...", i)
+        logger.debug("Processando NFTS #%d ...", i)
         canonical_bytes = build_tpNFTS_bytes(nfts)
         
+        #DEBUG LINHA COMENTADA
         # --- EXPORTAÇÃO DA STRING CANÔNICA ---
-        export_folder = r"C:\temp\nfts"
-        export_file = os.path.join(export_folder, "canonica.lst")
-        try:
-            if not os.path.exists(export_folder):
-                os.makedirs(export_folder)
-            with open(export_file, "wb") as f_can:
-                f_can.write(canonical_bytes)
-            logger.critical("String canônica exportada para: %s", export_file)
-        except Exception as e:
-            logger.critical("ERRO ao exportar string canônica: %s", str(e))
+        # export_folder = r"C:\temp\nfts"
+        # export_file = os.path.join(export_folder, "canonica.lst")
+        # try:
+        #     if not os.path.exists(export_folder):
+        #         os.makedirs(export_folder)
+        #     with open(export_file, "wb") as f_can:
+        #         f_can.write(canonical_bytes)
+        #     logger.debug("String canônica exportada para: %s", export_file)
+        # except Exception as e:
+        #     logger.critical("ERRO ao exportar string canônica: %s", str(e))
 
         sig_bytes = private_key.sign(canonical_bytes, padding.PKCS1v15(), hashes.SHA1())
         sig_b64 = base64.b64encode(sig_bytes).decode("ascii")
@@ -258,7 +259,7 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
             if tag in elements_dict: nfts.append(elements_dict[tag])
 
     if XMLSEC_AVAILABLE:
-        logger.critical("Assinando documento inteiro com xmlsec (opcional)...")
+        logger.debug("Assinando documento inteiro com xmlsec (opcional)...")
         sign_document_xmlsec(root, key_pem, cert_pem)
     else:
         logger.critical("xmlsec não disponível — pulando assinatura do documento inteiro.")
@@ -274,7 +275,7 @@ def sign_file(input_xml_path: str, pfx_path: str, pfx_pass: str, output_soap_pat
     with open(output_soap_path, "wb") as f:
         f.write(etree.tostring(envelope, encoding="utf-8", xml_declaration=True, pretty_print=True))
     
-    logger.critical("SOAP TesteEnvioLoteNFTS salvo em: %s", output_soap_path)
+    logger.debug("SOAP TesteEnvioLoteNFTS salvo em: %s", output_soap_path)
 
     try:
         if os.path.exists(cert_pem): os.remove(cert_pem)
